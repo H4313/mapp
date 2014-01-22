@@ -1,0 +1,80 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="MergeRootFrame"
+    android:background="@drawable/background"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:layout_width="917dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="-135dp"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Connexion"
+            android:id="@+id/textConnexion"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="317dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/editTextIP"
+            android:hint="192.168.1.1"
+            android:inputType="text"
+            android:layout_marginLeft="254dp"
+            android:layout_below="@+id/textConnexion"
+            android:layout_alignParentLeft="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editTextPassword"
+            android:hint="Password"
+            android:layout_below="@+id/editTextLogin"
+            android:layout_alignLeft="@+id/editTextIP" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextLogin"
+            android:autoText="false"
+            android:hint="Login"
+            android:layout_below="@+id/editTextIP"
+            android:layout_alignLeft="@+id/editTextIP"
+            android:layout_alignRight="@+id/editTextIP" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retenir les informations"
+            android:id="@+id/checkBoxSaveInfo"
+            android:checked="false"
+            android:layout_below="@+id/editTextPassword"
+            android:layout_alignLeft="@+id/editTextPassword"
+            android:layout_alignRight="@+id/editTextPassword" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connexion"
+            android:id="@+id/connexionButton"
+            android:layout_below="@+id/checkBoxSaveInfo"
+            android:layout_alignLeft="@+id/checkBoxSaveInfo"
+            android:layout_alignRight="@+id/editTextPassword"
+            android:onClick="connexion" />
+    </RelativeLayout>
+
+</FrameLayout>
