@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello_world">Nouvelle activité</string>
+    <string name="app_name">GHome H4313</string>
+    <string name="action_settings">Réglages</string>
+    <string name="title_activity_house">Visualisation de la maison</string>
+    <string name="title_activity_house_config">Configuration des pièces</string>
+    <string name="title_activity_add">Ajout d\'un capteur</string>
+    <string name="title_section1">Salon</string>
+    <string name="title_section2">Cuisine</string>
+    <string name="title_section3">WC/Salle de bain</string>
+    <string name="title_section4">Chambre 1</string>
+    <string name="title_section5">Chambre 2</string>
+    <string name="title_section6">Couloir</string>
+    <string name="title_activity_house_config_activity2">HouseConfigActivity2</string>
+
+</resources>

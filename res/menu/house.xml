@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HouseActivity" >
+
+    <item android:id="@+id/action_deconnexion"
+        android:title="Déconnexion"
+        android:showAsAction="ifRoom"
+        />
+</menu>
