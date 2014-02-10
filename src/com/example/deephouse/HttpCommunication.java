@@ -13,13 +13,11 @@ public class HttpCommunication
  
 	public static void main(String[] args) throws Exception
 	{
-		HttpCommunication http = new HttpCommunication();
- 
 		System.out.println("Testing 1 - Send Http GET request");
-		http.sendGet("");
+		HttpCommunication.sendGet("");
  
 		System.out.println("\nTesting 2 - Send Http POST request");
-		http.sendPost("","");
+		HttpCommunication.sendPost("","");
  
 	}
  

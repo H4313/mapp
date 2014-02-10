@@ -9,6 +9,8 @@ import org.json.*;
  */
 public class EchangesModeleMaison
 {
+	private static String url = "";
+	
     /**
      * Informer le modèle de la maison d’une action utilisateur.
      * @param numPiece
@@ -25,7 +27,7 @@ public class EchangesModeleMaison
         j.put("valeur", valeurCapteur);
         
         try {
-        	HttpCommunication.sendPost("URLURLURL",j.toString());
+        	HttpCommunication.sendPost(url,j.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,7 +49,7 @@ public class EchangesModeleMaison
         j.put("type", typeCapteur);
 
         try {
-        	HttpCommunication.sendPost("URLURLURL",j.toString());
+        	HttpCommunication.sendPost(url,j.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,6 +67,7 @@ public class EchangesModeleMaison
         try {
         	jsonResponse = HttpCommunication.sendGet("URLURLURL");
             JSONObject j = new JSONObject(jsonResponse);
+            
         	House h = House.getInstance();
         	h = (House) j.get("house");
         	// updateVue(h); // MAJ vue
