@@ -228,7 +228,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 		    @Override
 		    public void run(){
 		        try{
-		    		EchangesModeleMaison.testCommunication("Salut Paul"); //fonction de EchangesModeleMaison
+		    		EchangesModeleMaison.testCommunication(); //from EchangesModeleMaison
 		        } 
 		        catch (Exception e) {
 		            e.printStackTrace();

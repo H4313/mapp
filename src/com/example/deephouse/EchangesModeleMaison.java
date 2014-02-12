@@ -1,10 +1,14 @@
 package com.example.deephouse;
 
-import android.view.View;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.example.deephouse.HttpCommunication;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.h4313.deephouse.housemodel.House;
-import org.json.*;
 
 /**
  * Created by Steevens on 30/01/14.
@@ -22,14 +26,13 @@ public class EchangesModeleMaison
      */
     public static void actionUtilisateur(int numPiece, int objetAction, float valeurCapteur) throws JSONException
     {
-        JSONObject j = new JSONObject();
-        
-        j.put("piece", numPiece);
-        j.put("typeAction", objetAction);
-        j.put("valeur", valeurCapteur);
+	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
+	    nameValuePairs.add(new BasicNameValuePair("typeAction", Integer.toString(objetAction)));
+	    nameValuePairs.add(new BasicNameValuePair("valeur", Float.toString(valeurCapteur)));
         
         try {
-        	HttpCommunication.sendPost(url,j.toString());
+        	HttpCommunication.sendPost(url,nameValuePairs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,14 +47,13 @@ public class EchangesModeleMaison
      */
     public static void ajoutCapteur(int numPiece, int idCapteur, int typeCapteur) throws JSONException
     {
-        JSONObject j = new JSONObject();
-        
-        j.put("piece", numPiece);
-        j.put("capteur", idCapteur);
-        j.put("type", typeCapteur);
-
+	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
+	    nameValuePairs.add(new BasicNameValuePair("capteur", Integer.toString(idCapteur)));
+	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
+	    
         try {
-        	HttpCommunication.sendPost(url,j.toString());
+        	HttpCommunication.sendPost(url,nameValuePairs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,13 +80,17 @@ public class EchangesModeleMaison
 		}
     }
     
-    public static void testCommunication(String parametres)
+    public static void testCommunication()
     {
         String jsonResponse;
 
         try{
-        	jsonResponse = HttpCommunication.sendPost(url,parametres); //dans HttpCommunication
-            JSONObject j = new JSONObject(jsonResponse);
+        	//Arguments formatting
+    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+    	    nameValuePairs.add(new BasicNameValuePair("id", "12345"));
+    	    nameValuePairs.add(new BasicNameValuePair("fakepassword", "ilovemum"));
+        	jsonResponse = HttpCommunication.sendPost(url, nameValuePairs); //from HttpCommunication
+            JSONObject j = new JSONObject(jsonResponse); 
             System.out.println(j.toString());
         }
         catch (Exception e) {

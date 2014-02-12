@@ -2,9 +2,23 @@ package com.example.deephouse;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 public class HttpCommunication 
 {
@@ -39,37 +53,33 @@ public class HttpCommunication
 	}
  
 	// HTTP POST request
-	public static String sendPost(String url, String urlParameters) throws Exception {
+	public static String sendPost(String url, List<NameValuePair> argumentsList){
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
 		
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
- 
-		//add request header
-		con.setRequestMethod("POST");
-		//con.setRequestProperty("User-Agent", USER_AGENT);
-		//con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
- 
-		// Send post request
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-		wr.close();
- 
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
- 
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
- 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+		try{
+	    httppost.setEntity(new UrlEncodedFormEntity(argumentsList));
+	    // Execute HTTP Post Request
+	    HttpResponse response = httpclient.execute(httppost);
+        //httppost.releaseConnection();
+
+        HttpEntity entity = response.getEntity();
+        if (entity != null)
+        {
+            InputStream instream = entity.getContent();
+           
+            try
+            {
+                BufferedReader br = new BufferedReader(new InputStreamReader(instream));
+                String json = br.readLine();
+                return json.toString();
+            } 
+            finally{}
+        }
+		
+		} catch (IOException e) {
+		    // TODO Catch block
 		}
-		in.close();
- 
-		return response.toString();
+		return "";
 	}
 }
