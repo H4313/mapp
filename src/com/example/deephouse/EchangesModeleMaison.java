@@ -1,5 +1,7 @@
 package com.example.deephouse;
 
+import android.view.View;
+
 import com.example.deephouse.HttpCommunication;
 import com.h4313.deephouse.housemodel.House;
 import org.json.*;
@@ -9,12 +11,12 @@ import org.json.*;
  */
 public class EchangesModeleMaison
 {
-	private static String url = "";
+	private static String url = "http://www.paul-molins.fr/deephouse/post.php";
 	
     /**
-     * Informer le modèle de la maison d’une action utilisateur.
+     * Informer le modele de la maison d'une action utilisateur.
      * @param numPiece
-     * @param objetAction : ce que l'utilisateur à actionné. EX : temperature, humidité...
+     * @param objetAction : ce que l'utilisateur a actionne. EX : temperature, humidite...
      * @param valeurCapteur
      * @return
      */
@@ -34,10 +36,10 @@ public class EchangesModeleMaison
     }
 
     /**
-     * Informer le modèle de la maison à l’ajout d’un capteur.
+     * Informer le modele de la maison a l'ajout d'un capteur.
      * @param numPiece
      * @param idCapteur : numero de serie du capteur (saisit par l'utilisateur).
-     * @param typeCapteur : nature du capteur (capteur de presence, de lumière...) identifié par un entier.
+     * @param typeCapteur : nature du capteur (capteur de presence, de lumiere...) identifie par un entier.
      * @return
      */
     public static void ajoutCapteur(int numPiece, int idCapteur, int typeCapteur) throws JSONException
@@ -60,18 +62,32 @@ public class EchangesModeleMaison
      * @param jsonHouse
      * @throws JSONException
      */
-    public static void receptionInfosCapteurs() throws JSONException
+    public static void majInfosCapteurs()
     {
         String jsonResponse;
         
         try {
-        	jsonResponse = HttpCommunication.sendGet("URLURLURL");
+        	jsonResponse = HttpCommunication.sendGet(url);
             JSONObject j = new JSONObject(jsonResponse);
             
         	House h = House.getInstance();
         	h = (House) j.get("house");
         	// updateVue(h); // MAJ vue
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public static void testCommunication(String parametres)
+    {
+        String jsonResponse;
+
+        try{
+        	jsonResponse = HttpCommunication.sendPost(url,parametres); //dans HttpCommunication
+            JSONObject j = new JSONObject(jsonResponse);
+            System.out.println(j.toString());
+        }
+        catch (Exception e) {
 			e.printStackTrace();
 		}
     }

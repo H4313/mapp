@@ -220,5 +220,23 @@ public class HouseConfigActivity extends FragmentActivity implements
 			return rootView;
 		}
 	}
+	
+	public static void testCommunication(View view)
+	{	
+		Thread thread = new Thread(new Runnable()
+		{
+		    @Override
+		    public void run(){
+		        try{
+		    		EchangesModeleMaison.testCommunication("Salut Paul"); //fonction de EchangesModeleMaison
+		        } 
+		        catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		});
 
-}
+		thread.start();
+		}
+
+} 

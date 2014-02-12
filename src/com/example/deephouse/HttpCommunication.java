@@ -3,23 +3,12 @@ package com.example.deephouse;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import javax.net.ssl.HttpsURLConnection;
+import java.net.HttpURLConnection;
 
 public class HttpCommunication 
 {
 	// private final String USER_AGENT = "Mozilla/5.0";
- 
-	public static void main(String[] args) throws Exception
-	{
-		System.out.println("Testing 1 - Send Http GET request");
-		HttpCommunication.sendGet("");
- 
-		System.out.println("\nTesting 2 - Send Http POST request");
-		HttpCommunication.sendPost("","");
- 
-	}
  
 	// HTTP GET request
 	public static String sendGet(String url) throws Exception {
@@ -45,18 +34,15 @@ public class HttpCommunication
 			response.append(inputLine);
 		}
 		in.close();
- 
-		//print result
-		System.out.println(response.toString());
 		
 		return response.toString();
 	}
  
 	// HTTP POST request
-	public static void sendPost(String url, String urlParameters) throws Exception {
- 
+	public static String sendPost(String url, String urlParameters) throws Exception {
+		
 		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
  
 		//add request header
 		con.setRequestMethod("POST");
@@ -84,8 +70,6 @@ public class HttpCommunication
 		}
 		in.close();
  
-		//print result
-		System.out.println(response.toString());
- 
+		return response.toString();
 	}
 }
