@@ -10,15 +10,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.h4313.deephouse.housemodel.House;
 
 public class HouseConfigActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -228,7 +228,11 @@ public class HouseConfigActivity extends FragmentActivity implements
 		    @Override
 		    public void run(){
 		        try{
-		    		EchangesModeleMaison.testCommunication(); //from EchangesModeleMaison
+		    		String resultat = EchangesModeleMaison.recupererMaison(); //from EchangesModeleMaison
+		    		//Displaying the context (test purpose)
+		    		System.out.println(resultat);
+		    		//TODO : Traiter la maison pour construire un modele local a partir de la string au format JSON.
+		    		//Puis afficher les connaissances sur ces pieces dans l'IHM
 		        } 
 		        catch (Exception e) {
 		            e.printStackTrace();

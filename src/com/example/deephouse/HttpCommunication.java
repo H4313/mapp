@@ -61,7 +61,6 @@ public class HttpCommunication
 	    httppost.setEntity(new UrlEncodedFormEntity(argumentsList));
 	    // Execute HTTP Post Request
 	    HttpResponse response = httpclient.execute(httppost);
-        //httppost.releaseConnection();
 
         HttpEntity entity = response.getEntity();
         if (entity != null)

@@ -16,6 +16,7 @@ import com.h4313.deephouse.housemodel.House;
 public class EchangesModeleMaison
 {
 	private static String url = "http://www.paul-molins.fr/deephouse/post.php";
+	private static String url_maison = "http://paul-molins.fr/deephouse/houseModel.json";
 	
     /**
      * Informer le modele de la maison d'une action utilisateur.
@@ -24,6 +25,20 @@ public class EchangesModeleMaison
      * @param valeurCapteur
      * @return
      */
+	
+	public static String recupererMaison(){
+        String jsonResponse;
+        try{
+        	//Arguments formatting
+        	jsonResponse = HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
+            return jsonResponse;
+        }
+        catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
     public static void actionUtilisateur(int numPiece, int objetAction, float valeurCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -39,7 +54,7 @@ public class EchangesModeleMaison
     }
 
     /**
-     * Informer le modele de la maison a l'ajout d'un capteur.
+     * Informer le modele de la maison de l'ajout d'un capteur.
      * @param numPiece
      * @param idCapteur : numero de serie du capteur (saisit par l'utilisateur).
      * @param typeCapteur : nature du capteur (capteur de presence, de lumiere...) identifie par un entier.
@@ -80,6 +95,7 @@ public class EchangesModeleMaison
 		}
     }
     
+    //TODO : To be deleted soon, kept as an example 
     public static void testCommunication()
     {
         String jsonResponse;
