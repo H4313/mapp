@@ -73,6 +73,27 @@ public class EchangesModeleMaison
 			e.printStackTrace();
 		}
     }
+    
+     /**
+     * Informer le modele de la maison de l'ajout d'un actioneur.
+     * @param numPiece
+     * @param idActioneur : numero de serie de l'actioneur (saisi par l'utilisateur).
+     * @param typeCapteur : nature de l'actioneur (capteur de presence, de lumiere...) identifie par un entier.
+     * @return
+     */
+    public static void ajoutActioneur(int numPiece, int idActioneur, int typeCapteur) throws JSONException
+    {
+	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
+	    nameValuePairs.add(new BasicNameValuePair("actioneur", Integer.toString(idActioneur)));
+	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
+	    
+        try {
+        	HttpCommunication.sendPost(url,nameValuePairs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
 
     /**
      * reception periodique des valeurs des capteurs depuis le modele de la maison
