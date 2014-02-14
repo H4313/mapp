@@ -15,6 +15,7 @@ import com.h4313.deephouse.housemodel.House;
  */
 public class EchangesModeleMaison
 {
+	// Todo : better use WebServices URL from "Constant" (Utils)
 	private static String url = "http://www.paul-molins.fr/deephouse/post.php";
 	private static String url_maison = "http://paul-molins.fr/deephouse/houseModel.json";
 	
@@ -28,7 +29,6 @@ public class EchangesModeleMaison
 	
 	public static String recupererMaison()
 	{
-        String jsonResponse;
         try{
         	//Arguments formatting
         	return HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
@@ -39,7 +39,6 @@ public class EchangesModeleMaison
 		}
 	}
 
-	
     public static void actionUtilisateur(int numPiece, int objetAction, float valeurCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -49,7 +48,8 @@ public class EchangesModeleMaison
         
         try {
         	HttpCommunication.sendPost(url,nameValuePairs);
-		} catch (Exception e) {
+		} 
+        catch (Exception e) {
 			e.printStackTrace();
 		}
     }
@@ -70,7 +70,8 @@ public class EchangesModeleMaison
 	    
         try {
         	HttpCommunication.sendPost(url,nameValuePairs);
-		} catch (Exception e) {
+		} 
+        catch (Exception e) {
 			e.printStackTrace();
 		}
     }
@@ -91,7 +92,8 @@ public class EchangesModeleMaison
 	    
         try {
         	HttpCommunication.sendPost(url,nameValuePairs);
-		} catch (Exception e) {
+		} 
+        catch (Exception e) {
 			e.printStackTrace();
 		}
     }

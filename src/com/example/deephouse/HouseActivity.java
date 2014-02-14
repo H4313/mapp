@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +22,14 @@ import com.h4313.deephouse.adapter.RoomAdapter;
 import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.util.Constant;
 
 public class HouseActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
     static TextView TEST;
+    public Handler handler;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +57,19 @@ public class HouseActivity extends Activity {
         House.setInstance(house);
         System.out.println("Verif fonctionnement :" + House.getInstance().getRooms().get(0).getSensors().toString());
         
-        //TODO : Fixer la MAJ vue
         //MAJ vue periodique
-        /*Handler viewHandler = new Handler();
-	    Runnable updateView = new Runnable{
-    		@Override
-    		public void run(){
-    			EchangesModeleMaison.majInfosCapteurs();
-    			findViewById(R.id.mainLayout).invalidate();
-    			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
-      		}*/
+        handler = new Handler();
+        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
+	}
+	
+	private final Runnable refresh = new Runnable()
+	{
+		@Override
+	    public void run()
+	    {
+			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }
+	};//runnable
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

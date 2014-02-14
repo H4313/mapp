@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,14 +18,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.os.Handler;
 
 import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.util.Constant;
 
 public class HouseConfigActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public Integer currentTab = 1;
+    public Handler handler;
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -95,17 +99,18 @@ public class HouseConfigActivity extends FragmentActivity implements
         actionBar.setHomeButtonEnabled(true);
         
         //MAJ vue periodique
-        /*Handler viewHandler = new Handler();
-	    Runnable updateView = new Runnable{
-    		@Override
-    		public void run(){
-    			EchangesModeleMaison.majInfosCapteurs();
-    			findViewById(R.id.mainLayout).invalidate();
-    			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
-      		}*/
-  		}
+        handler = new Handler();
+        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
+	}
 	
-		
+	private final Runnable refresh = new Runnable()
+	{
+		@Override
+	    public void run()
+	    {
+			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
+	    }
+	};//runnable
 
 
     public void addSensor(View view){
