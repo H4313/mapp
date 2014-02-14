@@ -39,6 +39,17 @@ public class HouseActivity extends Activity {
         //House maison = new House(); //devra etre une variable globale
         //HumiditySensor h = (HumiditySensor) maison.getRooms().get(0).getSensors().get(0);
         //textViewLR.setText(h.toString());
+        
+        //MAJ vue periodique
+        Handler viewHandler = new Handler();
+	    Runnable updateView = new Runnable{
+    		@Override
+    		public void run(){
+    			EchangesModeleMaison.majInfosCapteurs();
+    			globalView.invalidate();
+    			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
+      		}
+	    }
     }
 
 
