@@ -104,9 +104,9 @@ public class HouseConfigActivity extends FragmentActivity implements
     			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
       		}*/
   		}
-	}
+	
 		
-	}
+
 
     public void addSensor(View view){
         Intent intent = new Intent(this, AddActivity.class);

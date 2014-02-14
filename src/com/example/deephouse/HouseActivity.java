@@ -1,11 +1,5 @@
 package com.example.deephouse;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -16,19 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import com.google.gson.Gson;
 import com.h4313.deephouse.housemodel.House;
-import com.h4313.deephouse.util.Constant;
-
-import android.os.Handler;
 
 public class HouseActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
     //local house model
-    public static House maison;
+    public static House maison; //TODO : singleton, no more variable there
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +26,11 @@ public class HouseActivity extends Activity {
         setContentView(R.layout.activity_house);
 
         //Getting intent content
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-        TextView textViewLR = (TextView) findViewById(R.id.textViewLivingRoom);
         
         //Creating local house model
         String test=recupererMaison();
@@ -53,10 +38,8 @@ public class HouseActivity extends Activity {
     	Gson gson = new Gson();
         maison = gson.fromJson(test,maison.getClass());
         System.out.println("Maison : " + maison.getRooms().get(0).getSensors().toString());
-        //House maison = new House(); //devra etre une variable globale
-        //HumiditySensor h = (HumiditySensor) maison.getRooms().get(0).getSensors().get(0);
-        //textViewLR.setText(h.toString());
-        
+
+        //TODO : Fixer la MAJ vue
         //MAJ vue periodique
         /*Handler viewHandler = new Handler();
 	    Runnable updateView = new Runnable{
@@ -67,9 +50,6 @@ public class HouseActivity extends Activity {
     			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
       		}*/
 	    }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,13 +123,12 @@ public class HouseActivity extends Activity {
         Intent intent = new Intent(this, HouseConfigActivity.class); //creates configuration activity
         //Putting text field content in intent
         intent.putExtra(EXTRA_MESSAGE, position);
-        //Start
         startActivity(intent);
     }
 
 	public static String recupererMaison()
 	{
-		String url = "http://10.0.2.2:8080/deepHouse/rest/houseModel";
+		String url = "http://10.0.2.2:8080/deepHouse/rest/houseModel"; //emulator localhost : 10.0.2.2
         ParseJSON jsonParser = new ParseJSON(url);
         String maison = jsonParser.getJson();
         return maison;
