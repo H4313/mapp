@@ -4,22 +4,30 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.h4313.deephouse.actuator.Actuator;
+import com.h4313.deephouse.adapter.ActuatorAdapter;
+import com.h4313.deephouse.adapter.RoomAdapter;
+import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.housemodel.Room;
 
 public class HouseActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
-    //local house model
-    public static House maison; //TODO : singleton, no more variable there
-
+    static TextView TEST;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +41,19 @@ public class HouseActivity extends Activity {
         }
         
         //Creating local house model
-        String test=recupererMaison();
-        System.out.println("Resultat :"+test);
-    	Gson gson = new Gson();
-        maison = gson.fromJson(test,maison.getClass());
-        System.out.println("Maison : " + maison.getRooms().get(0).getSensors().toString());
-
+        String jHouse=recupererMaison();
+        System.out.println("jHouse" + jHouse);
+    	
+    	//Instantiation de la maison depuis le Json avec Gson
+    	final GsonBuilder builder2 = new GsonBuilder();
+        builder2.registerTypeAdapter(Room.class, new RoomAdapter());
+        builder2.registerTypeAdapter(Sensor.class, new SensorAdapter());
+        builder2.registerTypeAdapter(Actuator.class, new ActuatorAdapter());
+        final Gson gson2 = builder2.create();
+        House house = gson2.fromJson(jHouse, House.class);
+        House.setInstance(house);
+        System.out.println("Verif fonctionnement :" + House.getInstance().getRooms().get(0).getSensors().toString());
+        
         //TODO : Fixer la MAJ vue
         //MAJ vue periodique
         /*Handler viewHandler = new Handler();
@@ -128,11 +143,13 @@ public class HouseActivity extends Activity {
 
 	public static String recupererMaison()
 	{
-		String url = "http://10.0.2.2:8080/deepHouse/rest/houseModel"; //emulator localhost : 10.0.2.2
+		String url = "http://10.0.2.2:8080/deepHouse/rest/houseModel";
         ParseJSON jsonParser = new ParseJSON(url);
         String maison = jsonParser.getJson();
         return maison;
 	}
+	
+	private static void updateView(){
+		//TEST = (TextView)findViewById(R.id.textViewLivingRoom);
+	}
 }
-
-
