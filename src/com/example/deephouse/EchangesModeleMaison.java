@@ -29,7 +29,7 @@ public class EchangesModeleMaison
 	public static String recupererMaison(){
         try{
         	//Arguments formatting
-        	return = HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
+        	return HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
         }
         catch (Exception e) {
 			e.printStackTrace();
