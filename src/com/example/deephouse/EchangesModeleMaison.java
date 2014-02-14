@@ -25,19 +25,16 @@ public class EchangesModeleMaison
      * @param valeurCapteur
      * @return
      */
-	
-	public static String recupererMaison(){
-        String jsonResponse;
-        try{
-        	//Arguments formatting
-        	jsonResponse = HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
-            return jsonResponse;
-        }
-        catch (Exception e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
+     public static String recupererMaison(){
+          try{
+               //Arguments formatting
+               return HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
+          }
+          catch (Exception e) {
+               e.printStackTrace();
+               return "";
+          }
+     }
 	
     public static void actionUtilisateur(int numPiece, int objetAction, float valeurCapteur) throws JSONException
     {
@@ -102,18 +99,17 @@ public class EchangesModeleMaison
      */
     public static void majInfosCapteurs()
     {
-        String jsonResponse;
+        String jsonResponse = recupererMaison();
         
         try {
-        	jsonResponse = HttpCommunication.sendGet(url);
-            JSONObject j = new JSONObject(jsonResponse);
+            	JSONObject jHouse = new JSONObject(jsonResponse);
             
-        	House h = House.getInstance();
-        	h = (House) j.get("house");
+        	House.setInstance(jHouse);
         	// updateVue(h); // MAJ vue
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	} 
+	catch (Exception e) {
+		e.printStackTrace();
+	}
     }
     
     //TODO : To be deleted soon, kept as an example 
@@ -132,7 +128,7 @@ public class EchangesModeleMaison
         }
         catch (Exception e) {
 			e.printStackTrace();
-		}
+	}
     }
 }
 
