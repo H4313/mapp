@@ -220,27 +220,4 @@ public class HouseConfigActivity extends FragmentActivity implements
 			return rootView;
 		}
 	}
-	
-	public static void testCommunication(View view)
-	{	
-		Thread thread = new Thread(new Runnable()
-		{
-		    @Override
-		    public void run(){
-		        try{
-		    		String resultat = EchangesModeleMaison.recupererMaison(); //from EchangesModeleMaison
-		    		//Displaying the context (test purpose)
-		    		System.out.println(resultat);
-		    		//TODO : Traiter la maison pour construire un modele local a partir de la string au format JSON.
-		    		//Puis afficher les connaissances sur ces pieces dans l'IHM
-		        } 
-		        catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		    }
-		});
-
-		thread.start();
-		}
-
 } 

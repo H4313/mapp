@@ -1,5 +1,11 @@
 package com.example.deephouse;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,14 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-//import deephouse.housemodel.House;
-//import deephouse.sensor.HumiditySensor;
-//import deephouse.sensor.SensorType;
+import com.google.gson.Gson;
+import com.h4313.deephouse.housemodel.House;
 
 public class HouseActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
+    //local house model
+    public static House maison;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +43,13 @@ public class HouseActivity extends Activity {
         }
 
         TextView textViewLR = (TextView) findViewById(R.id.textViewLivingRoom);
-        //House maison = new House(); //devra etre une variable globale
-        //HumiditySensor h = (HumiditySensor) maison.getRooms().get(0).getSensors().get(0);
-        //textViewLR.setText(h.toString());
+        
+        //Creating local house model
+        String test=recupererMaison();
+        System.out.println("Resultat :"+test);
+    	Gson gson = new Gson();
+        maison = gson.fromJson(test,maison.getClass());
+        System.out.println("Maison : " + maison.getRooms().get(0).getSensors().toString());
     }
 
 
@@ -119,4 +130,13 @@ public class HouseActivity extends Activity {
         startActivity(intent);
     }
 
+	public static String recupererMaison()
+	{
+		String url = "http://10.0.2.2:8080/deepHouse/rest/houseModel";
+        ParseJSON jsonParser = new ParseJSON(url);
+        String maison = jsonParser.getJson();
+        return maison;
+	}
 }
+
+

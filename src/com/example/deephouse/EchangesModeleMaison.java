@@ -35,7 +35,7 @@ public class EchangesModeleMaison
         }
         catch (Exception e) {
 			e.printStackTrace();
-			return "";
+			return "Fail";
 		}
 	}
 	
