@@ -93,6 +93,18 @@ public class HouseConfigActivity extends FragmentActivity implements
         currentTab = position;
         //Activate back button
         actionBar.setHomeButtonEnabled(true);
+        
+        //MAJ vue periodique
+        /*Handler viewHandler = new Handler();
+	    Runnable updateView = new Runnable{
+    		@Override
+    		public void run(){
+    			EchangesModeleMaison.majInfosCapteurs();
+    			findViewById(R.id.mainLayout).invalidate();
+    			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
+      		}*/
+  		}
+	}
 		
 	}
 

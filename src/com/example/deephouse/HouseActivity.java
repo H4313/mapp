@@ -19,6 +19,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.util.Constant;
+
+import android.os.Handler;
 
 public class HouseActivity extends Activity {
 
@@ -50,7 +53,21 @@ public class HouseActivity extends Activity {
     	Gson gson = new Gson();
         maison = gson.fromJson(test,maison.getClass());
         System.out.println("Maison : " + maison.getRooms().get(0).getSensors().toString());
-    }
+        //House maison = new House(); //devra etre une variable globale
+        //HumiditySensor h = (HumiditySensor) maison.getRooms().get(0).getSensors().get(0);
+        //textViewLR.setText(h.toString());
+        
+        //MAJ vue periodique
+        /*Handler viewHandler = new Handler();
+	    Runnable updateView = new Runnable{
+    		@Override
+    		public void run(){
+    			EchangesModeleMaison.majInfosCapteurs();
+    			findViewById(R.id.mainLayout).invalidate();
+    			viewHandler.postDelayed(updateView, Constant.MILLISECONDS_TILL_UPDATE);
+      		}*/
+	    }
+
 
 
 
