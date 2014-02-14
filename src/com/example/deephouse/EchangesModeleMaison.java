@@ -103,9 +103,7 @@ public class EchangesModeleMaison
         
         try {
             	JSONObject jHouse = new JSONObject(jsonResponse);
-            
         	House.setInstance(jHouse);
-        	// updateVue(h); // MAJ vue
 	} 
 	catch (Exception e) {
 		e.printStackTrace();
@@ -122,7 +120,7 @@ public class EchangesModeleMaison
     	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
     	    nameValuePairs.add(new BasicNameValuePair("id", "12345"));
     	    nameValuePairs.add(new BasicNameValuePair("fakepassword", "ilovemum"));
-        	jsonResponse = HttpCommunication.sendPost(url, nameValuePairs); //from HttpCommunication
+    	    jsonResponse = HttpCommunication.sendPost(url, nameValuePairs); //from HttpCommunication
             JSONObject j = new JSONObject(jsonResponse); 
             System.out.println(j.toString());
         }
