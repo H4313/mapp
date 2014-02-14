@@ -26,7 +26,9 @@ public class EchangesModeleMaison
      * @return
      */
 	
-	public static String recupererMaison(){
+	public static String recupererMaison()
+	{
+        String jsonResponse;
         try{
         	//Arguments formatting
         	return HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
@@ -105,7 +107,8 @@ public class EchangesModeleMaison
         
         try {
             	JSONObject jHouse = new JSONObject(jsonResponse);
-        	House.setInstance(jHouse);
+            	//House maison = obtenirMaisonDepuisJson(jHouse);
+            	//House.setInstance(maison);
 	} 
 	catch (Exception e) {
 		e.printStackTrace();
