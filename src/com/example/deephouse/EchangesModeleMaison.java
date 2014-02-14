@@ -27,11 +27,9 @@ public class EchangesModeleMaison
      */
 	
 	public static String recupererMaison(){
-        String jsonResponse;
         try{
         	//Arguments formatting
-        	jsonResponse = HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
-            return jsonResponse;
+        	return = HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
         }
         catch (Exception e) {
 			e.printStackTrace();
