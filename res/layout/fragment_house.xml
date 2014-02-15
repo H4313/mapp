@@ -105,7 +105,9 @@
         android:layout_alignRight="@+id/textViewBedroom2"
         android:layout_alignTop="@+id/textViewWC"
         android:id="@+id/linearLayoutWC"
-        android:onClick="openConfigurationWC"></LinearLayout>
+        android:onClick="openConfigurationWC">
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -115,18 +117,9 @@
         android:layout_alignLeft="@+id/textViewCorridor"
         android:layout_alignRight="@+id/imageViewHouse"
         android:id="@+id/linearLayoutLivingroom"
-        android:onClick="openConfigurationL"></LinearLayout>
+        android:onClick="openConfigurationL">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textViewWC"
-        android:layout_above="@+id/textViewWC"
-        android:layout_alignRight="@+id/textViewBedroom1"
-        android:id="@+id/linearLayoutBedroom2"
-        android:onClick="openConfigurationB2"></LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -151,5 +144,34 @@
         android:id="@+id/linearLayoutCorridor"
         android:onClick="openConfigurationC"></LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/textViewWC"
+        android:layout_above="@+id/textViewWC"
+        android:layout_alignRight="@+id/textViewBedroom1"
+        android:id="@+id/linearLayoutBedroom2"
+        android:onClick="openConfigurationB2"></LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewBedroom2Temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewBedroom2"
+        android:layout_below="@+id/textViewBedroom2"
+        android:layout_marginTop="24dp"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewBedroom2Presence"
+        android:layout_below="@+id/textViewBedroom2"
+        android:text="Presence"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

@@ -1,5 +1,8 @@
 package com.example.deephouse;
 
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,12 +20,16 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.h4313.deephouse.actuator.Actuator;
+import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.adapter.ActuatorAdapter;
 import com.h4313.deephouse.adapter.RoomAdapter;
 import com.h4313.deephouse.adapter.SensorAdapter;
+import com.h4313.deephouse.exceptions.DeepHouseDuplicateException;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.Constant;
+import com.h4313.deephouse.util.DecToHexConverter;
 
 public class HouseActivity extends Activity {
 
@@ -43,19 +50,7 @@ public class HouseActivity extends Activity {
                     .commit();
         }
         
-        //Creating local house model
-        String jHouse=recupererMaison();
-        System.out.println("jHouse" + jHouse);
-    	
-    	//Instantiation de la maison depuis le Json avec Gson
-    	final GsonBuilder builder2 = new GsonBuilder();
-        builder2.registerTypeAdapter(Room.class, new RoomAdapter());
-        builder2.registerTypeAdapter(Sensor.class, new SensorAdapter());
-        builder2.registerTypeAdapter(Actuator.class, new ActuatorAdapter());
-        final Gson gson2 = builder2.create();
-        House house = gson2.fromJson(jHouse, House.class);
-        House.setInstance(house);
-        System.out.println("Verif fonctionnement :" + House.getInstance().getRooms().get(0).getSensors().toString());
+        localHouseInstanciation();
         
         //MAJ vue periodique
         handler = new Handler();
@@ -67,6 +62,8 @@ public class HouseActivity extends Activity {
 		@Override
 	    public void run()
 	    {
+	    	//Instantiation de la maison depuis le Json avec Gson
+	        EchangesModeleMaison.majHouseModel();
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }
 	};//runnable
@@ -148,13 +145,70 @@ public class HouseActivity extends Activity {
 
 	public static String recupererMaison()
 	{
-		String url = "http://10.0.2.2:8080/deepHouse/rest/houseModel";
+		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel";
         ParseJSON jsonParser = new ParseJSON(url);
         String maison = jsonParser.getJson();
         return maison;
 	}
 	
-	private static void updateView(){
-		//TEST = (TextView)findViewById(R.id.textViewLivingRoom);
+	private void updateView()
+	{
+		House house = House.getInstance();
+		
+		// Affichage de la temperatures et de la presence humaine pour chaque pieces de la maison.
+		for(Room r : house.getRooms())
+		{
+			for(String key : r.getSensors().keySet())
+			{
+				if(r.getSensors().get(key).getType() == SensorType.TEMPERATURE)
+				{
+					System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
+					
+					TextView textView = (TextView) findViewById(R.id.textViewBedroom2Temperature);
+					textView.setText(r.getSensors().get(key).getLastValue() + "°C");
+				}
+				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
+				{
+					System.out.println("Piece " + r.getIdRoom() + " : presence = "  + r.getSensors().get(key).getLastValue());
+
+					TextView textView = (TextView) findViewById(R.id.textViewBedroom2Presence);
+					textView.setText(r.getSensors().get(key).getLastValue()+"");
+				}
+			}
+		}
 	}
+		
+	
+    /**
+     * To be used for debug only
+     */
+    public static void localHouseInstanciation()
+    {
+    	List<Room> rooms = House.getInstance().getRooms();
+        int id = 0;
+        for(Room room : rooms)
+        {
+	        try{
+	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.TEMPERATURE);
+	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.WINDOW);
+	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.LIGHT);
+	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.DOOR);
+	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.FLAP);
+	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.PRESENCE);
+	
+	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.RADIATOR);
+	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.WINDOWCLOSER);
+	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.LIGHTCONTROL);
+	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.DOORCONTROL);
+            }
+            catch (DeepHouseDuplicateException e)
+            {
+            	e.printStackTrace();
+            }
+            catch (Exception e)
+            {
+            	e.printStackTrace();
+            }
+        }
+    }
 }

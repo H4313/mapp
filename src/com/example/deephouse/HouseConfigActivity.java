@@ -108,6 +108,8 @@ public class HouseConfigActivity extends FragmentActivity implements
 		@Override
 	    public void run()
 	    {
+	    	//Instantiation de la maison depuis le Json avec Gson
+	        EchangesModeleMaison.majHouseModel();
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }
 	};//runnable

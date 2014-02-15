@@ -8,7 +8,19 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.hardware.Sensor;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.h4313.deephouse.actuator.Actuator;
+import com.h4313.deephouse.actuator.ActuatorType;
+import com.h4313.deephouse.adapter.ActuatorAdapter;
+import com.h4313.deephouse.adapter.RoomAdapter;
+import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.sensor.SensorType;
+import com.h4313.deephouse.util.DecToHexConverter;
 
 /**
  * Created by Steevens on 30/01/14.
@@ -103,18 +115,18 @@ public class EchangesModeleMaison
      * @param jsonHouse
      * @throws JSONException
      */
-    public static void majInfosCapteurs()
+    public static void majHouseModel()
     {
-        String jsonResponse = recupererMaison();
+        //String jHouse = recupererMaison();
         
         try {
-            	JSONObject jHouse = new JSONObject(jsonResponse);
-            	//House maison = obtenirMaisonDepuisJson(jHouse);
-            	//House.setInstance(maison);
-	} 
-	catch (Exception e) {
-		e.printStackTrace();
-	}
+            //House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
+            //House.setInstance(maison);
+        	System.out.println("House update verification :" + House.getInstance().getRooms().get(0).getSensors().toString());
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
     }
     
     //TODO : To be deleted soon, kept as an example 
@@ -130,12 +142,22 @@ public class EchangesModeleMaison
     	    jsonResponse = HttpCommunication.sendPost(url, nameValuePairs); //from HttpCommunication
             JSONObject j = new JSONObject(jsonResponse); 
             System.out.println(j.toString());
-        }
-        catch (Exception e) {
+	    }
+	    catch (Exception e) {
 			e.printStackTrace();
-	}
+	    }
+    }
+    
+    public static House getHouseFromJson(String jHouse) throws Exception
+    {
+    	final GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Room.class, new RoomAdapter());
+        builder.registerTypeAdapter(Sensor.class, new SensorAdapter());
+        builder.registerTypeAdapter(Actuator.class, new ActuatorAdapter());
+        
+        final Gson gson = builder.create();
+        House house = gson.fromJson(jHouse, House.class);
+        
+        return house;
     }
 }
-
-
-
