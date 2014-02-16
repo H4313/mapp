@@ -27,7 +27,7 @@ import com.h4313.deephouse.util.DecToHexConverter;
  */
 public class EchangesModeleMaison
 {
-	// Todo : better use WebServices URL from "Constant" (Utils)
+	//TODO : better use WebServices URL from "Constant" (Utils)
 	private static String url = "http://www.paul-molins.fr/deephouse/post.php";
 	private static String url_maison = "http://paul-molins.fr/deephouse/houseModel.json";
 	
@@ -48,8 +48,9 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Float.toString(valeurCapteur)));
         
         try {
-        	//HttpCommunication.sendPost(url,nameValuePairs);
-		} 
+            ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
+            String resultat = jsonParser.getJson();
+            } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,8 +71,9 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
 	    
         try {
-        	//HttpCommunication.sendPost(url,nameValuePairs);
-		} 
+            ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
+            String resultat = jsonParser.getJson();
+            } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,8 +94,9 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
 	    
         try {
-        	//HttpCommunication.sendPost(url,nameValuePairs);
-		} 
+            ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
+            String resultat = jsonParser.getJson();
+            } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
