@@ -1,8 +1,10 @@
 package com.example.deephouse;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -17,11 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.os.Handler;
 
 import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.housemodel.RoomConstants;
+import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.Constant;
 
 public class HouseConfigActivity extends FragmentActivity implements
@@ -30,6 +35,8 @@ public class HouseConfigActivity extends FragmentActivity implements
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public Integer currentTab = 1;
     public Handler handler;
+    public ArrayList<TextView> txs;
+    public ArrayList<TableRow> trs;
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,6 +53,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,6 +106,59 @@ public class HouseConfigActivity extends FragmentActivity implements
         currentTab = position;
         //Activate back button
         actionBar.setHomeButtonEnabled(true);
+        
+        // Instanciation des TextView
+        txs = new ArrayList<TextView>();
+        trs = new ArrayList<TableRow>();
+        
+        House house = House.getInstance();
+        Room r = house.getRooms().get(0);
+        
+       // MAJ si le capteur de temperature / presence existe
+		for(String key : r.getSensors().keySet())
+		{
+			SensorType sensorType = r.getSensors().get(key).getType();
+
+			if(sensorType == SensorType.PRESENCE) // traitement 1
+			{
+				TextView tx = new TextView(this);
+			    tx.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			    tx.setText("Presence = " + r.getSensors().get(key).getLastValue());
+			    TableRow tr = new TableRow(this);
+		        tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		        tr.addView(tx);
+			        
+		        txs.add(tx);
+		        trs.add(tr);
+			}
+			else if(sensorType == SensorType.TEMPERATURE) // traitement 2
+			{
+				TextView tx = new TextView(this);
+				tx.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		        tx.setText("Temperature = " + r.getSensors().get(key).getLastValue() + "°C");
+		        TableRow tr = new TableRow(this);
+		        tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		        tr.addView(tx);
+			        
+		        txs.add(tx);
+		        trs.add(tr);
+			}
+			else if(sensorType == SensorType.DOOR 
+				 || sensorType == SensorType.FLAP
+				 || sensorType == SensorType.LIGHT
+				 || sensorType == SensorType.WINDOW) // traitement 3
+			{
+				TextView tx = new TextView(this);
+		        tx.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		        tx.setText(sensorType.getName() + " = " + r.getSensors().get(key).getLastValue());
+		        TableRow tr = new TableRow(this);
+		        tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		        tr.addView(tx);
+		        
+		        txs.add(tx);
+		        trs.add(tr);
+			}
+		}
         
         //MAJ vue periodique
         handler = new Handler();
