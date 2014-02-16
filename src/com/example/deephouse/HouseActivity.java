@@ -132,12 +132,12 @@ public class HouseActivity extends Activity {
         openConfiguration(view,5);
     }
     public void testPost(View view){
-  	   System.out.println("Entering onB");
+  	   System.out.println("Entering testPost");
       	List<NameValuePair> argumentsList = new ArrayList<NameValuePair>(1);
       	argumentsList.add(new BasicNameValuePair("bb","bb"));
           ParseJSONPost jsonParser = new ParseJSONPost("http://www.paul-molins.fr/deephouse/post.php",argumentsList);
-          String maison = jsonParser.getJson();
-          System.out.println(maison);
+          String resultat = jsonParser.getJson();
+          System.out.println(resultat);
       }
 
 
