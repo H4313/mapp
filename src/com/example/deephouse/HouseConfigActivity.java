@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -36,7 +37,8 @@ public class HouseConfigActivity extends FragmentActivity implements
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public Integer currentTab = 1;
     public Handler handler;
-	
+    TableLayout tl;
+    
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -52,7 +54,6 @@ public class HouseConfigActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,56 +107,6 @@ public class HouseConfigActivity extends FragmentActivity implements
         //Activate back button
         actionBar.setHomeButtonEnabled(true);
         
-        // Instanciation des TextView        
-        HouseActivity.localHouseInstanciation();
-        House house = House.getInstance();
-        Room r = house.getRooms().get(0);
-        
-        TableLayout tl = (TableLayout) findViewById(R.id.tableLayout);
-        
-       // MAJ si le capteur de temperature / presence existe
-		for(String key : r.getSensors().keySet())
-		{
-			SensorType sensorType = r.getSensors().get(key).getType();
-
-			if(sensorType == SensorType.PRESENCE) // traitement 1
-			{
-				System.out.println("Presence yeah");
-			
-				TextView tx = new TextView(this);
-			    tx.setText("Presence = " + r.getSensors().get(key).getLastValue());
-			    TableRow tr = new TableRow(this);
-		        tr.addView(tx);
-		        tl.addView(tr);
-			}
-			else if(sensorType == SensorType.TEMPERATURE) // traitement 2
-			{
-				System.out.println("Temperature yeah");
-			
-				TextView tx = new TextView(this);
-			    tx.setText("Temperature = " + r.getSensors().get(key).getLastValue());
-			    TableRow tr = new TableRow(this);
-		        tr.addView(tx);
-		        tl.addView(tr);
-			}
-			else if(sensorType == SensorType.DOOR 
-				 || sensorType == SensorType.FLAP
-				 || sensorType == SensorType.LIGHT
-				 || sensorType == SensorType.WINDOW) // traitement 3
-			{
-				System.out.println("ELSE yeah");
-			
-				TextView tx = new TextView(this);
-			    tx.setText(sensorType + " = " + r.getSensors().get(key).getLastValue());
-				System.out.println(tx.getText());
-
-			    TableRow tr = new TableRow(this);
-		        tr.addView(tx);
-
-		        tl.addView(tr);
-		        }
-		}
-        
         //MAJ vue periodique
         handler = new Handler();
         handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
@@ -168,6 +119,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 	    {
 	    	//Instantiation de la maison depuis le Json avec Gson
 	        EchangesModeleMaison.majHouseModel();
+	        updateView();
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }
 	};//runnable
@@ -292,8 +244,91 @@ public class HouseConfigActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			System.out.println(idPiece);
-			dummyTextView.setText("Nombre de capteurs dans la pièce : " + House.getInstance().getRooms().get(idPiece).getSensors().size());
+			dummyTextView.setText("Nombre de capteurs dans la piece : " + House.getInstance().getRooms().get(idPiece).getSensors().size());
 			return rootView;
+		}
+	}
+	
+	private void updateView()
+	{
+        HouseActivity.localHouseInstanciation();
+        House house = House.getInstance();
+        Room r = house.getRooms().get(currentTab);
+        
+		for(String key : r.getSensors().keySet())
+		{
+			SensorType sensorType = r.getSensors().get(key).getType();
+
+			if(sensorType == SensorType.PRESENCE)
+			{
+				System.out.println("Presence yeah");
+				TextView presence = (TextView) findViewById(R.id.TextViewPresence);
+				TextView presenceValue = (TextView) findViewById(R.id.TextViewPresenceValue);
+				
+				//set visibility
+				presence.setVisibility(TextView.VISIBLE);
+				presenceValue.setVisibility(TextView.VISIBLE);
+				
+				//update value
+				presenceValue.setText(r.getSensors().get(key).getLastValue().toString());
+			}
+			else if(sensorType == SensorType.TEMPERATURE)
+			{
+				System.out.println("Temperature yeah");
+				TextView temperature = (TextView) findViewById(R.id.textViewTemperature);
+				TextView temperatureValue = (TextView) findViewById(R.id.TextViewTemperatureValue);
+				
+				//set visibility
+				temperature.setVisibility(TextView.VISIBLE);
+				temperatureValue.setVisibility(TextView.VISIBLE);
+				
+				//update value
+				temperatureValue.setText(r.getSensors().get(key).getLastValue().toString());
+			}
+			else if(sensorType == SensorType.DOOR)
+			{
+				System.out.println("Door yeah");
+				Switch s = (Switch) findViewById(R.id.switchPorte);
+				
+				//set visibility
+				s.setVisibility(TextView.VISIBLE);
+				
+				//update value
+			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+			}
+			else if(sensorType == SensorType.FLAP)
+			{
+				System.out.println("Flap yeah");
+				Switch s = (Switch) findViewById(R.id.switchVolets);
+				
+				//set visibility
+				s.setVisibility(TextView.VISIBLE);
+				
+				//update value
+			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+			}
+			else if(sensorType == SensorType.LIGHT)
+			{
+				System.out.println("Light yeah");
+				Switch s = (Switch) findViewById(R.id.switchLumiere);
+				
+				//set visibility
+				s.setVisibility(TextView.VISIBLE);
+				
+				//update value
+			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+			}
+			else if(sensorType == SensorType.WINDOW)
+			{
+				System.out.println("Window yeah");
+				Switch s = (Switch) findViewById(R.id.switchFenetre);
+				
+				//set visibility
+				s.setVisibility(TextView.VISIBLE);
+				
+				//update value
+			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+			}
 		}
 	}
 } 

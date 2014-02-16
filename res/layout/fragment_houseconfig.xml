@@ -23,14 +23,133 @@
         android:onClick="addSensor"
         android:text="+" />
 
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <TextView
+        android:id="@+id/textViewTemperature"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/section_label"
-        android:layout_marginTop="189dp"
-        android:layout_toLeftOf="@+id/section_label" >
+        android:layout_marginTop="186dp"
+        android:text="Temperature"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@android:dimen/app_icon_size" />
 
-    </TableLayout>
+    <TextView
+        android:id="@+id/TextViewLumiere"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewTemperature"
+        android:layout_alignBottom="@+id/textViewTemperature"
+        android:layout_marginRight="221dp"
+        android:layout_toLeftOf="@+id/buttonAdd"
+        android:text="Lumiere"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@android:dimen/app_icon_size" />
 
+    <Switch
+        android:id="@+id/switchPorte"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TextViewPorte"
+        android:layout_alignBottom="@+id/TextViewPorte"
+        android:layout_alignLeft="@+id/switchVolets" />
+
+    <TextView
+        android:id="@+id/TextViewVolets"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/TextViewLumiere"
+        android:layout_below="@+id/TextViewFenetre"
+        android:layout_marginTop="24dp"
+        android:text="Volets"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@android:dimen/app_icon_size" />
+
+    <Switch
+        android:id="@+id/switchVolets"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TextViewVolets"
+        android:layout_alignBottom="@+id/TextViewVolets"
+        android:layout_alignLeft="@+id/switchFenetre" />
+
+    <TextView
+        android:id="@+id/TextViewFenetre"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/TextViewVolets"
+        android:layout_below="@+id/TextViewLumiere"
+        android:layout_marginTop="23dp"
+        android:text="Fenetre"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@android:dimen/app_icon_size" />
+
+    <TextView
+        android:id="@+id/TextViewPorte"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/TextViewVolets"
+        android:layout_below="@+id/TextViewVolets"
+        android:layout_marginTop="22dp"
+        android:text="Porte"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@android:dimen/app_icon_size" />
+
+    <TextView
+        android:id="@+id/TextViewPresence"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/switchPorte"
+        android:layout_alignRight="@+id/textViewTemperature"
+        android:layout_marginRight="32dp"
+        android:text="Presence"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@android:dimen/app_icon_size" />
+
+    <TextView
+        android:id="@+id/TextViewPresenceValue"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/TextViewTemperatureValue"
+        android:layout_below="@+id/TextViewPorte"
+        android:text="value"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/TextViewTemperatureValue"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/section_label"
+        android:layout_alignTop="@+id/TextViewFenetre"
+        android:text="value"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Switch
+        android:id="@+id/switchLumiere"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TextViewLumiere"
+        android:layout_alignBottom="@+id/TextViewLumiere"
+        android:layout_marginRight="52dp"
+        android:layout_toLeftOf="@+id/buttonAdd" />
+
+    <Switch
+        android:id="@+id/switchFenetre"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TextViewFenetre"
+        android:layout_alignBottom="@+id/TextViewFenetre"
+        android:layout_alignLeft="@+id/switchLumiere" />
+    
 </RelativeLayout>
