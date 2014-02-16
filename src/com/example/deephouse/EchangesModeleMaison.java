@@ -121,7 +121,7 @@ public class EchangesModeleMaison
 
 	public static String recupererMaison()
 	{
-		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel";
+		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel"; //TODO : Address from const
         ParseJSON jsonParser = new ParseJSON(url);
         String maison = jsonParser.getJson();
         return maison;

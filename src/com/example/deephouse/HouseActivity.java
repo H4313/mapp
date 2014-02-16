@@ -28,7 +28,6 @@ public class HouseActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
-    static TextView TEST;
     public Handler handler;
     
     @Override

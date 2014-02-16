@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.os.Handler;
 
 import com.h4313.deephouse.housemodel.House;
+import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.util.Constant;
 
 public class HouseConfigActivity extends FragmentActivity implements
@@ -180,15 +181,14 @@ public class HouseConfigActivity extends FragmentActivity implements
 			// below) with the page number as its lone argument.
 			Fragment fragment = new DummySectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position+1);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
-			return 6;
+			return RoomConstants.NB_PIECES;
 		}
 
 		@Override
@@ -213,8 +213,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
+	 * A dummy fragment representing a section of the app
 	 */
 	public static class DummySectionFragment extends Fragment {
 		/**
@@ -222,7 +221,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
-
+		
 		public DummySectionFragment() {
 		}
 
@@ -232,10 +231,11 @@ public class HouseConfigActivity extends FragmentActivity implements
 			View rootView = inflater.inflate(
 					R.layout.fragment_houseconfig, container,
 					false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			//Editing the TextViews
+			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
+			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
+			System.out.println(idPiece);
+			dummyTextView.setText("Nombre de capteurs dans la pièce : " + House.getInstance().getRooms().get(idPiece).getSensors().size());
 			return rootView;
 		}
 	}
