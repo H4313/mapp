@@ -23,14 +23,14 @@
         android:src="@drawable/plan_appli" />
 
     <TextView
-        android:id="@+id/textViewBedroom2"
+        android:id="@+id/textViewOffice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageViewHouse"
         android:layout_alignTop="@+id/imageViewHouse"
         android:layout_marginLeft="54dp"
         android:layout_marginTop="47dp"
-        android:text="Chambre 2"
+        android:text="Bureau"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/imageViewHouse"
-        android:layout_alignTop="@+id/textViewBedroom2"
+        android:layout_alignTop="@+id/textViewOffice"
         android:layout_marginRight="194dp"
         android:text="Salon"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -61,14 +61,14 @@
         android:text="" />
 
     <TextView
-        android:id="@+id/textViewBedroom1"
+        android:id="@+id/textViewBedroom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewBedroom2"
+        android:layout_alignLeft="@+id/textViewOffice"
         android:layout_below="@+id/textViewKitchen"
         android:layout_marginLeft="77dp"
         android:layout_marginTop="120dp"
-        android:text="Chambre 1"
+        android:text="Chambre"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -83,7 +83,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
-        android:id="@+id/linearLayoutBedroom1"
+        android:id="@+id/linearLayoutBedroom"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/imageViewHouse"
@@ -101,7 +101,7 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/linearLayoutCorridor"
         android:layout_alignLeft="@+id/imageViewHouse"
-        android:layout_below="@+id/linearLayoutBedroom2"
+        android:layout_below="@+id/linearLayoutOffice"
         android:layout_toLeftOf="@+id/linearLayoutCorridor"
         android:onClick="openConfigurationWC"
         android:orientation="horizontal" >
@@ -122,7 +122,7 @@
         android:id="@+id/linearLayoutKitchen"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewBedroom1"
+        android:layout_alignBottom="@+id/textViewBedroom"
         android:layout_alignLeft="@+id/textViewLivingRoom"
         android:layout_alignRight="@+id/imageViewHouse"
         android:layout_below="@+id/linearLayoutLivingroom"
@@ -135,8 +135,8 @@
         android:id="@+id/linearLayoutCorridor"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/TextView03"
-        android:layout_alignLeft="@+id/textViewBedroom1"
+        android:layout_alignBottom="@+id/TextViewKitchenPresence"
+        android:layout_alignLeft="@+id/textViewBedroom"
         android:layout_alignRight="@+id/textViewLivingRoom"
         android:layout_below="@+id/textViewWC"
         android:onClick="openConfigurationC"
@@ -144,56 +144,56 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayoutBedroom2"
+        android:id="@+id/linearLayoutOffice"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/textViewWC"
         android:layout_alignLeft="@+id/textViewWC"
-        android:layout_alignRight="@+id/textViewBedroom1"
+        android:layout_alignRight="@+id/textViewBedroom"
         android:layout_below="@+id/textView"
         android:onClick="openConfigurationB2"
         android:orientation="vertical" >
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textViewBedroom2Temperature"
+        android:id="@+id/textViewOfficeTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewBedroom2"
-        android:layout_below="@+id/textViewBedroom2"
+        android:layout_alignLeft="@+id/textViewOffice"
+        android:layout_below="@+id/textViewOffice"
         android:layout_marginTop="24dp"
         android:text="T°C"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textViewBedroom2Presence"
+        android:id="@+id/textViewOfficePresence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewBedroom2Temperature"
-        android:layout_below="@+id/textViewBedroom2Temperature"
+        android:layout_alignLeft="@+id/textViewOfficeTemperature"
+        android:layout_below="@+id/textViewOfficeTemperature"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/textViewLivingRoomTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewBedroom2Presence"
+        android:layout_above="@+id/textViewOfficePresence"
         android:layout_centerHorizontal="true"
         android:text="T°C"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/textViewLivingRoomPresence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewBedroom2Presence"
+        android:layout_above="@+id/textViewOfficePresence"
         android:layout_toRightOf="@+id/linearLayoutCorridor"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView04"
+        android:id="@+id/textViewKitchenTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewKitchen"
@@ -203,16 +203,16 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView03"
+        android:id="@+id/textViewKitchenPresence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView04"
-        android:layout_below="@+id/TextView04"
+        android:layout_alignLeft="@+id/textViewKitchenTemperature"
+        android:layout_below="@+id/textViewKitchenTemperature"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView06"
+        android:id="@+id/textViewCorridorTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewCorridor"
@@ -222,11 +222,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView05"
+        android:id="@+id/textViewCorridorPresence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextView06"
-        android:layout_alignBottom="@+id/TextView06"
+        android:layout_alignBaseline="@+id/textViewCorridorTemperature"
+        android:layout_alignBottom="@+id/textViewCorridorTemperature"
         android:layout_toLeftOf="@+id/linearLayoutKitchen"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -237,46 +237,46 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textViewKitchen"
         android:layout_alignBottom="@+id/textViewKitchen"
-        android:layout_toLeftOf="@+id/TextView05"
+        android:layout_toLeftOf="@+id/textViewCorridorPresence"
         android:text="Couloir"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView07"
+        android:id="@+id/textViewBathroomTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewBedroom2Presence"
+        android:layout_alignLeft="@+id/textViewOfficePresence"
         android:layout_below="@+id/textViewWC"
         android:text="T°C"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView08"
+        android:id="@+id/textViewBathroomPresence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextView06"
-        android:layout_alignBottom="@+id/TextView06"
+        android:layout_alignBaseline="@+id/textViewCorridorTemperature"
+        android:layout_alignBottom="@+id/textViewCorridorTemperature"
         android:layout_alignLeft="@+id/textViewWC"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView10"
+        android:id="@+id/textViewBedroomTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/TextView08"
-        android:layout_below="@+id/textViewBedroom1"
+        android:layout_alignRight="@+id/textViewBathroomPresence"
+        android:layout_below="@+id/textViewBedroom"
         android:layout_marginTop="38dp"
         android:text="T°C"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView09"
+        android:id="@+id/textViewBedroomPresence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextView10"
-        android:layout_alignBottom="@+id/TextView10"
-        android:layout_toRightOf="@+id/TextView06"
+        android:layout_alignBaseline="@+id/textViewBedroomTemperature"
+        android:layout_alignBottom="@+id/textViewBedroomTemperature"
+        android:layout_toRightOf="@+id/textViewCorridorTemperature"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

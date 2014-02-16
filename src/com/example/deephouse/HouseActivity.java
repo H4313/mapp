@@ -27,6 +27,7 @@ import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.exceptions.DeepHouseDuplicateException;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.housemodel.RoomConstants;
 import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.Constant;
 import com.h4313.deephouse.util.DecToHexConverter;
@@ -62,8 +63,8 @@ public class HouseActivity extends Activity {
 		@Override
 	    public void run()
 	    {
-	    	//Instantiation de la maison depuis le Json avec Gson
-	        EchangesModeleMaison.majHouseModel();
+	        EchangesModeleMaison.majHouseModel(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
+	        updateView(); // MAJ de la vue avec ce nouveau modele.
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }
 	};//runnable
@@ -151,27 +152,65 @@ public class HouseActivity extends Activity {
         return maison;
 	}
 	
+	// MAJ Affichage de la temperatures et de la presence humaine pour chaque pieces de la maison.
 	private void updateView()
 	{
 		House house = House.getInstance();
 		
-		// Affichage de la temperatures et de la presence humaine pour chaque pieces de la maison.
+		// recuperation pour chaque piece de leurs textViews associes a Temeprature et Presence
 		for(Room r : house.getRooms())
 		{
+			int textViewTemperature;
+			int textViewPresence;
+			
+			switch(r.getIdRoom())
+			{
+				case RoomConstants.ID_LIVING_ROOM : 
+					textViewTemperature = R.id.textViewLivingRoomTemperature;
+					textViewPresence = R.id.textViewLivingRoomPresence;
+					break;
+				case RoomConstants.ID_KITCHEN : 
+					textViewTemperature = R.id.textViewKitchenTemperature;
+					textViewPresence = R.id.textViewKitchenPresence;
+					break;
+				case RoomConstants.ID_BATHROOM : 
+					textViewTemperature = R.id.textViewBathroomTemperature;
+					textViewPresence = R.id.textViewBathroomPresence;
+					break;
+				case RoomConstants.ID_BEDROOM : 
+					textViewTemperature = R.id.textViewBedroomTemperature;
+					textViewPresence = R.id.textViewBedroomPresence;
+					break;
+				case RoomConstants.ID_OFFICE : 
+					textViewTemperature = R.id.textViewOfficeTemperature;
+					textViewPresence = R.id.textViewOfficePresence;
+					break;
+				case RoomConstants.ID_CORRIDOR : 
+					textViewTemperature = R.id.textViewCorridorTemperature;
+					textViewPresence = R.id.textViewCorridorPresence;
+					break;
+				default :
+					textViewTemperature = -1;
+					textViewPresence = -1;
+					System.out.println("Erreur rencontree : tentative de MAJ de la piece n" + r.getIdRoom() + " inexistante.");
+					return;
+			}
+			
+			// MAJ si le capteur de temperature / presence existe
 			for(String key : r.getSensors().keySet())
 			{
 				if(r.getSensors().get(key).getType() == SensorType.TEMPERATURE)
 				{
 					System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
 					
-					TextView textView = (TextView) findViewById(R.id.textViewBedroom2Temperature);
+					TextView textView = (TextView) findViewById(textViewTemperature);
 					textView.setText(r.getSensors().get(key).getLastValue() + "°C");
 				}
 				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
 				{
 					System.out.println("Piece " + r.getIdRoom() + " : presence = "  + r.getSensors().get(key).getLastValue());
 
-					TextView textView = (TextView) findViewById(R.id.textViewBedroom2Presence);
+					TextView textView = (TextView) findViewById(textViewPresence);
 					textView.setText(r.getSensors().get(key).getLastValue()+"");
 				}
 			}
