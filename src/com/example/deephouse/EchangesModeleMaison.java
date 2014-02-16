@@ -32,7 +32,7 @@ public class EchangesModeleMaison
 	private static String url_maison = "http://paul-molins.fr/deephouse/houseModel.json";
 	
     /**
-     * Informer le modele de la maison d'une action utilisateur.
+     * Informer le modele de la maison d'une action a VALEUR de la part de l'utilisateur.
      * @param numPiece
      * @param objetAction : ce que l'utilisateur a actionne. EX : temperature, humidite...
      * @param valeurCapteur
@@ -40,12 +40,37 @@ public class EchangesModeleMaison
      */
 
 
-    public static void actionUtilisateur(int numPiece, int objetAction, float valeurCapteur) throws JSONException
+    public static void actionUtilisateur(int numPiece, String objetAction, float valeurCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
-	    nameValuePairs.add(new BasicNameValuePair("typeAction", Integer.toString(objetAction)));
+	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction));
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Float.toString(valeurCapteur)));
+        
+        try {
+            ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
+            String resultat = jsonParser.getJson();
+            } 
+        catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Informer le modele de la maison d'une action TOUT ou RIEN de l'utilisateur.
+     * @param numPiece
+     * @param objetAction : ce que l'utilisateur a actionne. EX : temperature, humidite...
+     * @param valeurCapteur
+     * @return
+     */
+
+
+    public static void actionUtilisateur(int numPiece, String objetAction, boolean valeurCapteur) throws JSONException
+    {
+	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
+	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction));
+	    nameValuePairs.add(new BasicNameValuePair("valeur", Boolean.toString(valeurCapteur)));
         
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
@@ -109,11 +134,11 @@ public class EchangesModeleMaison
      */
     public static void majHouseModel()
     {
-        String jHouse = recupererMaison();
+        //String jHouse = recupererMaison();
         
         try {
-            House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
-            House.setInstance(maison);
+            //House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
+            //House.setInstance(maison);
         	System.out.println("House update verification :" + House.getInstance().getRooms().get(0).getSensors().toString());
 		} 
 		catch (Exception e) {
@@ -124,6 +149,7 @@ public class EchangesModeleMaison
 
 	public static String recupererMaison()
 	{
+		System.out.println("Recuperation de la maison depuis le serveur.");
 		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel"; //TODO : Address from const
         ParseJSON jsonParser = new ParseJSON(url);
         String maison = jsonParser.getJson();

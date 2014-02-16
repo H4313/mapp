@@ -3,6 +3,8 @@ package com.example.deephouse;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.json.JSONException;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TableLayout;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.os.Handler;
 import android.widget.TableRow.LayoutParams;
 
+import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.housemodel.RoomConstants;
@@ -251,7 +255,6 @@ public class HouseConfigActivity extends FragmentActivity implements
 	
 	private void updateView()
 	{
-        HouseActivity.localHouseInstanciation();
         House house = House.getInstance();
         Room r = house.getRooms().get(currentTab);
         
@@ -285,50 +288,70 @@ public class HouseConfigActivity extends FragmentActivity implements
 				//update value
 				temperatureValue.setText(r.getSensors().get(key).getLastValue().toString());
 			}
-			else if(sensorType == SensorType.DOOR)
+			else
 			{
-				System.out.println("Door yeah");
-				Switch s = (Switch) findViewById(R.id.switchPorte);
+				Switch capteurSwich;
+				TextView capteurText;
 				
+				if(sensorType == SensorType.DOOR)
+				{
+					capteurSwich = (Switch) findViewById(R.id.switchPorte);
+					capteurText = (TextView) findViewById(R.id.TextViewPorte);
+				}
+				else if(sensorType == SensorType.FLAP)
+				{
+					capteurSwich = (Switch) findViewById(R.id.switchVolets);
+					capteurText = (TextView) findViewById(R.id.TextViewVolets);
+				}
+				else if(sensorType == SensorType.LIGHT)
+				{
+					capteurSwich = (Switch) findViewById(R.id.switchLumiere);
+					capteurText = (TextView) findViewById(R.id.TextViewLumiere);
+				}
+				else //(sensorType == SensorType.WINDOW)
+				{
+					capteurSwich = (Switch) findViewById(R.id.switchFenetre);
+					capteurText = (TextView) findViewById(R.id.TextViewFenetre);
+				}
+
 				//set visibility
-				s.setVisibility(TextView.VISIBLE);
+				capteurSwich.setVisibility(TextView.VISIBLE);
+				capteurText.setVisibility(TextView.VISIBLE);
+				capteurSwich.setOnClickListener((OnClickListener) onSwitchClick);
 				
 				//update value
-			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
-			}
-			else if(sensorType == SensorType.FLAP)
-			{
-				System.out.println("Flap yeah");
-				Switch s = (Switch) findViewById(R.id.switchVolets);
-				
-				//set visibility
-				s.setVisibility(TextView.VISIBLE);
-				
-				//update value
-			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
-			}
-			else if(sensorType == SensorType.LIGHT)
-			{
-				System.out.println("Light yeah");
-				Switch s = (Switch) findViewById(R.id.switchLumiere);
-				
-				//set visibility
-				s.setVisibility(TextView.VISIBLE);
-				
-				//update value
-			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
-			}
-			else if(sensorType == SensorType.WINDOW)
-			{
-				System.out.println("Window yeah");
-				Switch s = (Switch) findViewById(R.id.switchFenetre);
-				
-				//set visibility
-				s.setVisibility(TextView.VISIBLE);
-				
-				//update value
-			    s.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+				capteurSwich.setChecked((Boolean) r.getSensors().get(key).getLastValue());
 			}
 		}
 	}
+	
+	private OnClickListener onSwitchClick = new OnClickListener()
+	{
+		public void onClick(View v)
+		{
+			Switch s = (Switch) v;
+			try
+			{
+				switch(v.getId())
+				{
+					case R.id.switchFenetre :
+						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.WINDOWCLOSER.getName(), s.isChecked());
+						break;
+					case R.id.switchLumiere :
+						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.LIGHTCONTROL.getName(), s.isChecked());
+						break;
+					case R.id.switchVolets :
+						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.FLAPCLOSER.getName(), s.isChecked());
+						break;
+					case R.id.switchPorte :
+						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.DOORCONTROL.getName(), s.isChecked());
+						break;
+				}
+			}
+			catch(JSONException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	};
 } 

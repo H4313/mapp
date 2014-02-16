@@ -88,23 +88,23 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/imageViewHouse"
         android:layout_alignLeft="@+id/imageViewHouse"
-        android:layout_alignRight="@+id/textViewLivingRoomTemperature"
-        android:layout_below="@+id/textViewKitchenPresence"
+        android:layout_below="@+id/linearLayoutWC"
+        android:layout_toLeftOf="@+id/ImagePersonCorridor"
         android:onClick="openConfigurationB1"
         android:orientation="horizontal" >
-
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutWC"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewKitchenPresence"
+        android:layout_alignBottom="@+id/ImagePersonKitchen"
         android:layout_alignLeft="@+id/imageViewHouse"
         android:layout_below="@+id/linearLayoutOffice"
         android:layout_toLeftOf="@+id/linearLayoutCorridor"
         android:onClick="openConfigurationWC"
         android:orientation="horizontal" >
+
     </LinearLayout>
 
     <LinearLayout
@@ -112,33 +112,36 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/textViewWC"
-        android:layout_alignLeft="@+id/textViewCorridor"
         android:layout_alignRight="@+id/imageViewHouse"
+        android:layout_alignTop="@+id/imageViewHouse"
+        android:layout_toRightOf="@+id/linearLayoutOffice"
         android:onClick="openConfigurationL"
         android:orientation="horizontal" >
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutKitchen"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewBedroom"
+        android:layout_above="@+id/ImagePersonBedroom"
         android:layout_alignLeft="@+id/textViewLivingRoom"
         android:layout_alignRight="@+id/imageViewHouse"
         android:layout_below="@+id/linearLayoutLivingroom"
         android:layout_marginLeft="62dp"
         android:onClick="openConfigurationK"
         android:orientation="horizontal" >
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutCorridor"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewBedroom"
+        android:layout_alignBottom="@+id/linearLayoutWC"
         android:layout_alignLeft="@+id/textViewBedroom"
         android:layout_alignRight="@+id/textViewLivingRoom"
-        android:layout_below="@+id/textViewWC"
+        android:layout_alignTop="@+id/linearLayoutKitchen"
         android:onClick="openConfigurationC"
         android:orientation="horizontal" >
     </LinearLayout>
@@ -155,131 +158,6 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewOfficeTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewOffice"
-        android:layout_below="@+id/textViewOffice"
-        android:layout_marginTop="24dp"
-        android:text="T°C"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewOfficePresence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewOfficeTemperature"
-        android:layout_below="@+id/textViewOfficeTemperature"
-        android:text="Presence"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewLivingRoomTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewOfficePresence"
-        android:layout_centerHorizontal="true"
-        android:text="T°C"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewLivingRoomPresence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewOfficePresence"
-        android:layout_toRightOf="@+id/linearLayoutCorridor"
-        android:text="Presence"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewKitchenTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewKitchen"
-        android:layout_below="@+id/textViewKitchen"
-        android:layout_marginTop="36dp"
-        android:text="T°C"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewKitchenPresence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewKitchenTemperature"
-        android:layout_below="@+id/textViewKitchenTemperature"
-        android:text="Presence"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewCorridorTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewCorridor"
-        android:layout_marginLeft="21dp"
-        android:layout_toRightOf="@+id/linearLayoutWC"
-        android:text="T°C"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewCorridorPresence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewCorridorTemperature"
-        android:layout_alignBottom="@+id/textViewCorridorTemperature"
-        android:layout_toLeftOf="@+id/linearLayoutKitchen"
-        android:text="Presence"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewCorridor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewKitchen"
-        android:layout_alignBottom="@+id/textViewKitchen"
-        android:layout_toLeftOf="@+id/textViewCorridorPresence"
-        android:text="Couloir"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewBathroomTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewOfficePresence"
-        android:layout_below="@+id/textViewWC"
-        android:text="T°C"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewBathroomPresence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewCorridorTemperature"
-        android:layout_alignBottom="@+id/textViewCorridorTemperature"
-        android:layout_alignLeft="@+id/textViewWC"
-        android:text="Presence"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewBedroomTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textViewBathroomPresence"
-        android:layout_below="@+id/textViewBedroom"
-        android:layout_marginTop="38dp"
-        android:text="T°C"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textViewBedroomPresence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewBedroomTemperature"
-        android:layout_alignBottom="@+id/textViewBedroomTemperature"
-        android:layout_toRightOf="@+id/textViewCorridorTemperature"
-        android:text="Presence"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -289,5 +167,132 @@
         android:layout_toRightOf="@+id/imageViewHouse"
         android:onClick="testPost"
         android:text="TestPost" />
+
+    <TextView
+        android:id="@+id/textViewOfficeTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewOffice"
+        android:layout_below="@+id/textViewOffice"
+        android:layout_marginTop="41dp"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ImagePersonOffice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewOfficeTemperature"
+        android:layout_toRightOf="@+id/linearLayoutWC"
+        android:focusable="false"
+        android:visibility="invisible"
+        android:src="@drawable/person2" />
+
+    <TextView
+        android:id="@+id/textViewCorridor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewKitchen"
+        android:layout_alignBottom="@+id/textViewKitchen"
+        android:layout_toLeftOf="@+id/textViewLivingRoomTemperature"
+        android:text="Couloir"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ImagePersonCorridor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/linearLayoutCorridor"
+        android:layout_below="@+id/textViewCorridor"
+        android:layout_marginRight="30dp"
+        android:focusable="false"
+        android:visibility="invisible"
+        android:src="@drawable/person2" />
+
+    <TextView
+        android:id="@+id/textViewCorridorTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textViewBedroom"
+        android:layout_alignTop="@+id/ImagePersonBathroom"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewBedroomTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ImagePersonBathroom"
+        android:layout_below="@+id/textViewBedroom"
+        android:layout_marginTop="30dp"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ImagePersonBedroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewBedroomTemperature"
+        android:layout_toLeftOf="@+id/textViewLivingRoomTemperature"
+        android:focusable="false"
+        android:visibility="invisible"
+        android:src="@drawable/person2" />
+
+    <TextView
+        android:id="@+id/textViewLivingRoomTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ImagePersonOffice"
+        android:layout_centerHorizontal="true"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ImagePersonLivingroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewLivingRoomTemperature"
+        android:layout_alignLeft="@+id/textViewKitchen"
+        android:focusable="false"
+        android:visibility="invisible"
+        android:src="@drawable/person2" />
+
+    <TextView
+        android:id="@+id/textViewKitchenTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/ImagePersonLivingroom"
+        android:layout_below="@+id/textViewCorridorTemperature"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ImagePersonKitchen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textViewKitchen"
+        android:layout_below="@+id/textViewKitchenTemperature"
+        android:focusable="false"
+        android:visibility="invisible"
+        android:src="@drawable/person2" />
+
+    <ImageView
+        android:id="@+id/ImagePersonBathroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textViewWC"
+        android:layout_below="@+id/textViewCorridor"
+        android:focusable="false"
+        android:src="@drawable/person2"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textViewBathroomTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ImagePersonBathroom"
+        android:layout_alignLeft="@+id/ImagePersonBathroom"
+        android:text="T°C"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

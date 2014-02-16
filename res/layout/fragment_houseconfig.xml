@@ -54,7 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/TextViewPorte"
         android:layout_alignBottom="@+id/TextViewPorte"
-        android:layout_alignLeft="@+id/switchVolets" />
+        android:layout_alignLeft="@+id/switchVolets"
+        android:onClick="onDoorSwitchClick" />
 
     <TextView
         android:id="@+id/TextViewVolets"
@@ -75,7 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/TextViewVolets"
         android:layout_alignBottom="@+id/TextViewVolets"
-        android:layout_alignLeft="@+id/switchFenetre" />
+        android:layout_alignLeft="@+id/switchFenetre"
+        android:onClick="onFlapSwitchClick" />
 
     <TextView
         android:id="@+id/TextViewFenetre"
@@ -141,7 +143,8 @@
         android:layout_alignBaseline="@+id/TextViewLumiere"
         android:layout_alignBottom="@+id/TextViewLumiere"
         android:layout_marginRight="52dp"
-        android:layout_toLeftOf="@+id/buttonAdd" />
+        android:layout_toLeftOf="@+id/buttonAdd"
+        android:onClick="onLightSwitchClick" />
 
     <Switch
         android:id="@+id/switchFenetre"
@@ -150,6 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/TextViewFenetre"
         android:layout_alignBottom="@+id/TextViewFenetre"
-        android:layout_alignLeft="@+id/switchLumiere" />
+        android:layout_alignLeft="@+id/switchLumiere"
+        android:onClick="onWindowSwitchClick" />
     
 </RelativeLayout>

@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.h4313.deephouse.actuator.ActuatorType;
@@ -46,7 +47,7 @@ public class HouseActivity extends Activity {
                     .commit();
         }
         
-        //localHouseInstanciation();
+        localHouseInstanciation();
         
         //MAJ vue periodique
         handler = new Handler();
@@ -158,37 +159,37 @@ public class HouseActivity extends Activity {
 		for(Room r : house.getRooms())
 		{
 			int textViewTemperature;
-			int textViewPresence;
+			int idImagePerson;
 			
 			switch(r.getIdRoom())
 			{
 				case RoomConstants.ID_LIVING_ROOM : 
 					textViewTemperature = R.id.textViewLivingRoomTemperature;
-					textViewPresence = R.id.textViewLivingRoomPresence;
+					idImagePerson = R.id.ImagePersonLivingroom;
 					break;
 				case RoomConstants.ID_KITCHEN : 
 					textViewTemperature = R.id.textViewKitchenTemperature;
-					textViewPresence = R.id.textViewKitchenPresence;
+					idImagePerson = R.id.ImagePersonKitchen;
 					break;
 				case RoomConstants.ID_BATHROOM : 
 					textViewTemperature = R.id.textViewBathroomTemperature;
-					textViewPresence = R.id.textViewBathroomPresence;
+					idImagePerson = R.id.ImagePersonBathroom;
 					break;
 				case RoomConstants.ID_BEDROOM : 
 					textViewTemperature = R.id.textViewBedroomTemperature;
-					textViewPresence = R.id.textViewBedroomPresence;
+					idImagePerson = R.id.ImagePersonBedroom;
 					break;
 				case RoomConstants.ID_OFFICE : 
 					textViewTemperature = R.id.textViewOfficeTemperature;
-					textViewPresence = R.id.textViewOfficePresence;
+					idImagePerson = R.id.ImagePersonOffice;
 					break;
 				case RoomConstants.ID_CORRIDOR : 
 					textViewTemperature = R.id.textViewCorridorTemperature;
-					textViewPresence = R.id.textViewCorridorPresence;
+					idImagePerson = R.id.ImagePersonCorridor;
 					break;
 				default :
 					textViewTemperature = -1;
-					textViewPresence = -1;
+					idImagePerson = -1;
 					System.out.println("Erreur rencontree : tentative de MAJ de la piece n" + r.getIdRoom() + " inexistante.");
 					return;
 			}
@@ -201,14 +202,15 @@ public class HouseActivity extends Activity {
 					System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
 					
 					TextView textView = (TextView) findViewById(textViewTemperature);
-					textView.setText(r.getSensors().get(key).getLastValue() + "Â°C");
+					textView.setText(r.getSensors().get(key).getLastValue() + "°C");
 				}
 				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
 				{
 					System.out.println("Piece " + r.getIdRoom() + " : presence = "  + r.getSensors().get(key).getLastValue());
 
-					TextView textView = (TextView) findViewById(textViewPresence);
-					textView.setText(r.getSensors().get(key).getLastValue()+"");
+					ImageView imageView = (ImageView) findViewById(idImagePerson);
+					if((Boolean)r.getSensors().get(key).getLastValue())
+						imageView.setVisibility(ImageView.VISIBLE);
 				}
 			}
 		}
@@ -236,6 +238,8 @@ public class HouseActivity extends Activity {
 	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.WINDOWCLOSER);
 	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.LIGHTCONTROL);
 	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.DOORCONTROL);
+	            
+	            room.getSensorByType(SensorType.PRESENCE).get(0).setLastValue(true);
             }
             catch (DeepHouseDuplicateException e)
             {
