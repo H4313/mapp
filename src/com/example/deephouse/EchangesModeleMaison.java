@@ -117,11 +117,11 @@ public class EchangesModeleMaison
      */
     public static void majHouseModel()
     {
-        //String jHouse = recupererMaison();
+        String jHouse = recupererMaison();
         
         try {
-            //House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
-            //House.setInstance(maison);
+            House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
+            House.setInstance(maison);
         	System.out.println("House update verification :" + House.getInstance().getRooms().get(0).getSensors().toString());
 		} 
 		catch (Exception e) {

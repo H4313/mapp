@@ -51,7 +51,7 @@ public class HouseActivity extends Activity {
                     .commit();
         }
         
-        localHouseInstanciation();
+        //localHouseInstanciation();
         
         //MAJ vue periodique
         handler = new Handler();
