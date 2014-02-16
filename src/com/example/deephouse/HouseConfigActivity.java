@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.TableRow.LayoutParams;
 
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
@@ -35,8 +36,6 @@ public class HouseConfigActivity extends FragmentActivity implements
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public Integer currentTab = 1;
     public Handler handler;
-    public ArrayList<TextView> txs;
-    public ArrayList<TableRow> trs;
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -107,12 +106,12 @@ public class HouseConfigActivity extends FragmentActivity implements
         //Activate back button
         actionBar.setHomeButtonEnabled(true);
         
-        // Instanciation des TextView
-        txs = new ArrayList<TextView>();
-        trs = new ArrayList<TableRow>();
-        
+        // Instanciation des TextView        
+        HouseActivity.localHouseInstanciation();
         House house = House.getInstance();
         Room r = house.getRooms().get(0);
+        
+        TableLayout tl = (TableLayout) findViewById(R.id.tableLayout);
         
        // MAJ si le capteur de temperature / presence existe
 		for(String key : r.getSensors().keySet())
@@ -121,43 +120,40 @@ public class HouseConfigActivity extends FragmentActivity implements
 
 			if(sensorType == SensorType.PRESENCE) // traitement 1
 			{
+				System.out.println("Presence yeah");
+			
 				TextView tx = new TextView(this);
-			    tx.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 			    tx.setText("Presence = " + r.getSensors().get(key).getLastValue());
 			    TableRow tr = new TableRow(this);
-		        tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		        tr.addView(tx);
-			        
-		        txs.add(tx);
-		        trs.add(tr);
+		        tl.addView(tr);
 			}
 			else if(sensorType == SensorType.TEMPERATURE) // traitement 2
 			{
+				System.out.println("Temperature yeah");
+			
 				TextView tx = new TextView(this);
-				tx.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		        tx.setText("Temperature = " + r.getSensors().get(key).getLastValue() + "°C");
-		        TableRow tr = new TableRow(this);
-		        tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			    tx.setText("Temperature = " + r.getSensors().get(key).getLastValue());
+			    TableRow tr = new TableRow(this);
 		        tr.addView(tx);
-			        
-		        txs.add(tx);
-		        trs.add(tr);
+		        tl.addView(tr);
 			}
 			else if(sensorType == SensorType.DOOR 
 				 || sensorType == SensorType.FLAP
 				 || sensorType == SensorType.LIGHT
 				 || sensorType == SensorType.WINDOW) // traitement 3
 			{
+				System.out.println("ELSE yeah");
+			
 				TextView tx = new TextView(this);
-		        tx.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		        tx.setText(sensorType.getName() + " = " + r.getSensors().get(key).getLastValue());
-		        TableRow tr = new TableRow(this);
-		        tr.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			    tx.setText(sensorType + " = " + r.getSensors().get(key).getLastValue());
+				System.out.println(tx.getText());
+
+			    TableRow tr = new TableRow(this);
 		        tr.addView(tx);
-		        
-		        txs.add(tx);
-		        trs.add(tr);
-			}
+
+		        tl.addView(tr);
+		        }
 		}
         
         //MAJ vue periodique
