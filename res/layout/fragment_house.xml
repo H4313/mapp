@@ -88,8 +88,8 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/imageViewHouse"
         android:layout_alignLeft="@+id/imageViewHouse"
-        android:layout_alignRight="@+id/TextView02"
-        android:layout_below="@+id/linearLayoutWC"
+        android:layout_alignRight="@+id/textViewLivingRoomTemperature"
+        android:layout_below="@+id/textViewKitchenPresence"
         android:onClick="openConfigurationB1"
         android:orientation="horizontal" >
 
@@ -99,7 +99,7 @@
         android:id="@+id/linearLayoutWC"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/linearLayoutCorridor"
+        android:layout_alignBottom="@+id/textViewKitchenPresence"
         android:layout_alignLeft="@+id/imageViewHouse"
         android:layout_below="@+id/linearLayoutOffice"
         android:layout_toLeftOf="@+id/linearLayoutCorridor"
@@ -135,7 +135,7 @@
         android:id="@+id/linearLayoutCorridor"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/TextViewKitchenPresence"
+        android:layout_alignBottom="@+id/textViewBedroom"
         android:layout_alignLeft="@+id/textViewBedroom"
         android:layout_alignRight="@+id/textViewLivingRoom"
         android:layout_below="@+id/textViewWC"

@@ -1,13 +1,11 @@
 package com.example.deephouse;
 
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,13 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.h4313.deephouse.actuator.Actuator;
 import com.h4313.deephouse.actuator.ActuatorType;
-import com.h4313.deephouse.adapter.ActuatorAdapter;
-import com.h4313.deephouse.adapter.RoomAdapter;
-import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.exceptions.DeepHouseDuplicateException;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
@@ -144,13 +136,6 @@ public class HouseActivity extends Activity {
         startActivity(intent);
     }
 
-	public static String recupererMaison()
-	{
-		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel";
-        ParseJSON jsonParser = new ParseJSON(url);
-        String maison = jsonParser.getJson();
-        return maison;
-	}
 	
 	// MAJ Affichage de la temperatures et de la presence humaine pour chaque pieces de la maison.
 	private void updateView()
@@ -204,7 +189,7 @@ public class HouseActivity extends Activity {
 					System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
 					
 					TextView textView = (TextView) findViewById(textViewTemperature);
-					textView.setText(r.getSensors().get(key).getLastValue() + "°C");
+					textView.setText(r.getSensors().get(key).getLastValue() + "Â°C");
 				}
 				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
 				{

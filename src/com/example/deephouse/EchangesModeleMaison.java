@@ -38,18 +38,7 @@ public class EchangesModeleMaison
      * @param valeurCapteur
      * @return
      */
-	
-	public static String recupererMaison()
-	{
-        try{
-        	//Arguments formatting
-        	return HttpCommunication.sendPost(url_maison, new ArrayList<NameValuePair>(0)); //from HttpCommunication
-        }
-        catch (Exception e) {
-			e.printStackTrace();
-			return "Fail";
-		}
-	}
+
 
     public static void actionUtilisateur(int numPiece, int objetAction, float valeurCapteur) throws JSONException
     {
@@ -59,7 +48,7 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Float.toString(valeurCapteur)));
         
         try {
-        	HttpCommunication.sendPost(url,nameValuePairs);
+        	//HttpCommunication.sendPost(url,nameValuePairs);
 		} 
         catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +70,7 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
 	    
         try {
-        	HttpCommunication.sendPost(url,nameValuePairs);
+        	//HttpCommunication.sendPost(url,nameValuePairs);
 		} 
         catch (Exception e) {
 			e.printStackTrace();
@@ -103,7 +92,7 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
 	    
         try {
-        	HttpCommunication.sendPost(url,nameValuePairs);
+        	//HttpCommunication.sendPost(url,nameValuePairs);
 		} 
         catch (Exception e) {
 			e.printStackTrace();
@@ -129,24 +118,15 @@ public class EchangesModeleMaison
 		}
     }
     
-    //TODO : To be deleted soon, kept as an example 
-    public static void testCommunication()
-    {
-        String jsonResponse;
 
-        try{
-        	//Arguments formatting
-    	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-    	    nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-    	    nameValuePairs.add(new BasicNameValuePair("fakepassword", "ilovemum"));
-    	    jsonResponse = HttpCommunication.sendPost(url, nameValuePairs); //from HttpCommunication
-            JSONObject j = new JSONObject(jsonResponse); 
-            System.out.println(j.toString());
-	    }
-	    catch (Exception e) {
-			e.printStackTrace();
-	    }
-    }
+	public static String recupererMaison()
+	{
+		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel";
+        ParseJSON jsonParser = new ParseJSON(url);
+        String maison = jsonParser.getJson();
+        return maison;
+	}
+    
     
     public static House getHouseFromJson(String jHouse) throws Exception
     {
