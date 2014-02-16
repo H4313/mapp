@@ -29,10 +29,9 @@ public class ReadJSONPost extends AsyncTask<String, Integer, String>
     	//Getting post arguments back from string tab
     	List<NameValuePair> argumentsList = new ArrayList<NameValuePair>((urls.length-1)/2);
     	String url = urls[0];
-    	for (int i=1;i<urls.length/2;i++){
-    		argumentsList.add(new BasicNameValuePair(urls[2*i],urls[2*(i+1)]));
+    	for (int i=0;i<(urls.length-1)/2;i++){
+    		argumentsList.add(new BasicNameValuePair(urls[2*i+1],urls[2*(i+1)]));
     	}
-    	
     	StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);

@@ -16,9 +16,9 @@ public class ParseJSONPost
 
 	public ParseJSONPost(String url, List<NameValuePair> argumentsList)
 	{    
-		String[] urls={};
+		String[] urls= new String[2*argumentsList.size()+1];
 		urls[0] = url;
-		for (int i=0;i<=argumentsList.size();i++){
+		for (int i=0;i<argumentsList.size();i++){
 			urls[2*i+1] =argumentsList.get(i).getName();
 			urls[2*(i+1)] = argumentsList.get(i).getValue();
 		}
