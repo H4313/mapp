@@ -1,6 +1,10 @@
 package com.example.deephouse;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -127,6 +131,15 @@ public class HouseActivity extends Activity {
     public void openConfigurationC(View view){
         openConfiguration(view,5);
     }
+    public void testPost(View view){
+  	   System.out.println("Entering onB");
+      	List<NameValuePair> argumentsList = new ArrayList<NameValuePair>(1);
+      	argumentsList.add(new BasicNameValuePair("bb","bb"));
+          ParseJSONPost jsonParser = new ParseJSONPost("http://www.paul-molins.fr/deephouse/post.php",argumentsList);
+          String maison = jsonParser.getJson();
+          System.out.println(maison);
+      }
+
 
     public void openConfiguration(View view, Integer position) {
         Intent intent = new Intent(this, HouseConfigActivity.class); //creates configuration activity
