@@ -35,17 +35,17 @@ public class EchangesModeleMaison
      * Informer le modele de la maison d'une action a VALEUR de la part de l'utilisateur.
      * @param numPiece
      * @param objetAction : ce que l'utilisateur a actionne. EX : temperature, humidite...
-     * @param valeurCapteur
+     * @param newValue
      * @return
      */
 
 
-    public static void actionUtilisateur(int numPiece, String objetAction, float valeurCapteur) throws JSONException
+    public static void actionUtilisateur(int numPiece, String objetAction, double newValue) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
 	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction));
-	    nameValuePairs.add(new BasicNameValuePair("valeur", Float.toString(valeurCapteur)));
+	    nameValuePairs.add(new BasicNameValuePair("valeur", Double.toString(newValue)));
         
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);

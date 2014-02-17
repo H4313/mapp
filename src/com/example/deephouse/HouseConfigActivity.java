@@ -21,6 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -261,7 +263,6 @@ public class HouseConfigActivity extends FragmentActivity implements
 	
 	private void updateView()
 	{
-
         House house = House.getInstance();
         Room r = house.getRooms().get(currentTab);
         
@@ -274,10 +275,14 @@ public class HouseConfigActivity extends FragmentActivity implements
 				System.out.println("Presence yeah");
 				TextView presence = (TextView) findViewById(R.id.TextViewPresence);
 				TextView presenceValue = (TextView) findViewById(R.id.TextViewPresenceValue);
+				ImageView imgPerson = (ImageView) findViewById(R.id.imagePerson);
 				
 				//set visibility
 				presence.setVisibility(TextView.VISIBLE);
-				presenceValue.setVisibility(TextView.VISIBLE);
+				if((Boolean) r.getSensors().get(key).getLastValue())
+					imgPerson.setVisibility(TextView.VISIBLE);
+				else
+					presenceValue.setVisibility(TextView.VISIBLE);
 				
 				//update value
 				presenceValue.setText(r.getSensors().get(key).getLastValue().toString());
@@ -287,10 +292,16 @@ public class HouseConfigActivity extends FragmentActivity implements
 				System.out.println("Temperature yeah");
 				TextView temperature = (TextView) findViewById(R.id.textViewTemperature);
 				TextView temperatureValue = (TextView) findViewById(R.id.TextViewTemperatureValue);
+				ImageView imgTemperature = (ImageView) findViewById(R.id.imageTemperature);
+				Button increaseTemperatureButton = (Button) findViewById(R.id.increaseTemperatureButton);
+				Button lowerTemperatureButton = (Button) findViewById(R.id.lowerTemperatureButton);
 				
 				//set visibility
+				imgTemperature.setVisibility(TextView.VISIBLE);
 				temperature.setVisibility(TextView.VISIBLE);
 				temperatureValue.setVisibility(TextView.VISIBLE);
+				increaseTemperatureButton.setOnClickListener(onTemperatureChangeRequest);
+				lowerTemperatureButton.setOnClickListener(onTemperatureChangeRequest);
 				
 				//update value
 				temperatureValue.setText(r.getSensors().get(key).getLastValue().toString());
@@ -299,31 +310,37 @@ public class HouseConfigActivity extends FragmentActivity implements
 			{
 				Switch capteurSwitch;
 				TextView capteurText;
+				ImageView capteurImg;
 				
 				if(sensorType == SensorType.DOOR)
 				{
 					capteurSwitch = (Switch) findViewById(R.id.switchPorte);
 					capteurText = (TextView) findViewById(R.id.TextViewPorte);
+					capteurImg = (ImageView) findViewById(R.id.imageDoor);
 				}
 				else if(sensorType == SensorType.FLAP)
 				{
 					capteurSwitch = (Switch) findViewById(R.id.switchVolets);
 					capteurText = (TextView) findViewById(R.id.TextViewVolets);
+					capteurImg = (ImageView) findViewById(R.id.imageVolets);
 				}
 				else if(sensorType == SensorType.LIGHT)
 				{
 					capteurSwitch = (Switch) findViewById(R.id.switchLumiere);
 					capteurText = (TextView) findViewById(R.id.TextViewLumiere);
+					capteurImg = (ImageView) findViewById(R.id.imageLight);
 				}
 				else //(sensorType == SensorType.WINDOW)
 				{
 					capteurSwitch = (Switch) findViewById(R.id.switchFenetre);
 					capteurText = (TextView) findViewById(R.id.TextViewFenetre);
+					capteurImg = (ImageView) findViewById(R.id.imageWindow);
 				}
 
 				//set visibility
 				capteurSwitch.setVisibility(TextView.VISIBLE);
 				capteurText.setVisibility(TextView.VISIBLE);
+				capteurImg.setVisibility(TextView.VISIBLE);
 				capteurSwitch.setOnClickListener((OnClickListener) onSwitchClick);
 				
 				//update value
@@ -361,4 +378,43 @@ public class HouseConfigActivity extends FragmentActivity implements
 			}
 		}
 	};
+	
+	private OnClickListener onTemperatureChangeRequest = new OnClickListener()
+	{
+		public void onClick(View v)
+		{
+			if(v.getId() == R.id.increaseTemperatureButton)
+				temperatureChangeRequest(true);
+			else //v.getId() == R.id.lowerTemperatureButton
+				temperatureChangeRequest(false);
+		}
+	};
+	
+	private void temperatureChangeRequest(boolean isIncrease)
+	{
+		House house = House.getInstance();
+        Room r = house.getRooms().get(currentTab);
+        
+		for(String key : r.getSensors().keySet())
+		{
+			SensorType sensorType = r.getSensors().get(key).getType();
+
+			if(sensorType == SensorType.TEMPERATURE)
+			{
+				//update value
+				double lastValue = (Double) r.getSensors().get(key).getLastValue();
+				double newValue = isIncrease? lastValue + 2 : lastValue - 2;
+				System.out.println("Temperature change request : from " + lastValue + " to " + newValue);
+				
+				try
+				{
+					EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.RADIATOR.getName(), newValue);
+				}
+				catch (JSONException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 } 
