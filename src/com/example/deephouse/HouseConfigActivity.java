@@ -4,9 +4,11 @@ import java.util.Locale;
 
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -39,6 +41,7 @@ public class HouseConfigActivity extends FragmentActivity implements
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public Integer currentTab = 1;
     public Handler handler;
+    public Handler handlerTemperatureButtonMuting;
     public Integer cst = 0;
     
 	/**
@@ -299,8 +302,10 @@ public class HouseConfigActivity extends FragmentActivity implements
 				imgTemperature.setVisibility(TextView.VISIBLE);
 				temperature.setVisibility(TextView.VISIBLE);
 				temperatureValue.setVisibility(TextView.VISIBLE);
-				increaseTemperatureButton.setOnClickListener(onTemperatureChangeRequest);
-				lowerTemperatureButton.setOnClickListener(onTemperatureChangeRequest);
+				increaseTemperatureButton.setVisibility(TextView.VISIBLE);
+				lowerTemperatureButton.setVisibility(TextView.VISIBLE);
+				increaseTemperatureButton.setOnClickListener((OnClickListener) onTemperatureChangeRequest);
+				lowerTemperatureButton.setOnClickListener((OnClickListener) onTemperatureChangeRequest);
 				
 				//update value
 				temperatureValue.setText(r.getSensors().get(key).getLastValue().toString());
@@ -382,11 +387,49 @@ public class HouseConfigActivity extends FragmentActivity implements
 	{
 		public void onClick(View v)
 		{
+			//muting buttons for now
+			Button increaseTemperatureButton = (Button) findViewById(R.id.increaseTemperatureButton);
+			Button lowerTemperatureButton = (Button) findViewById(R.id.lowerTemperatureButton);
+			TextView temperatureValueTextView = (TextView) findViewById(R.id.TextViewTemperatureValue);
+			
+			increaseTemperatureButton.setClickable(false);
+			lowerTemperatureButton.setClickable(false);
+			
+			increaseTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
+			lowerTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
+			if(v.getId() == R.id.increaseTemperatureButton)
+				temperatureValueTextView.setTextColor(getResources().getColor(R.color.Coral));
+			else if (v.getId() == R.id.lowerTemperatureButton)
+				temperatureValueTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+						
+			//planning to un-mute in the future
+			handlerTemperatureButtonMuting = new Handler();
+			handlerTemperatureButtonMuting.postDelayed(unmuteTemperatureButtons,
+					Constant.MILLISECONDS_TILL_UNMUTING_TEMPERATURE_BUTTONS);// /Constant.TIME_FACTOR
+			
 			if(v.getId() == R.id.increaseTemperatureButton)
 				temperatureChangeRequest(true);
 			else //v.getId() == R.id.lowerTemperatureButton
 				temperatureChangeRequest(false);
 		}
+	};
+	
+	private final Runnable unmuteTemperatureButtons = new Runnable()
+	{
+		@SuppressLint("ResourceAsColor")
+		@Override
+	    public void run()
+	    {
+			//unmuting buttons
+			Button increaseTemperatureButton = (Button) findViewById(R.id.increaseTemperatureButton);
+			Button lowerTemperatureButton = (Button) findViewById(R.id.lowerTemperatureButton);
+
+			increaseTemperatureButton.setBackgroundColor(R.color.Coral);
+			lowerTemperatureButton.setBackgroundColor(R.color.LightSlateGray);
+			
+			increaseTemperatureButton.setClickable(true);
+			lowerTemperatureButton.setClickable(true);
+	    }
 	};
 	
 	private void temperatureChangeRequest(boolean isIncrease)

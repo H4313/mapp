@@ -34,7 +34,7 @@
         android:text="Lumiere"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Switch
         android:id="@+id/switchPorte"
@@ -44,7 +44,7 @@
         android:layout_alignBottom="@+id/TextViewPorte"
         android:layout_alignLeft="@+id/switchVolets"
         android:onClick="onDoorSwitchClick"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/TextViewVolets"
@@ -56,7 +56,7 @@
         android:text="Volets"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Switch
         android:id="@+id/switchVolets"
@@ -66,8 +66,8 @@
         android:layout_alignBottom="@+id/TextViewVolets"
         android:layout_alignLeft="@+id/switchFenetre"
         android:onClick="onFlapSwitchClick"
-        android:visibility="visible" />
-
+        android:visibility="invisible" />
+ 
     <TextView
         android:id="@+id/TextViewFenetre"
         android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
         android:text="Fenetre"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/TextViewPorte"
@@ -90,7 +90,7 @@
         android:text="Porte"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Switch
         android:id="@+id/switchLumiere"
@@ -101,7 +101,7 @@
         android:layout_marginRight="52dp"
         android:layout_toLeftOf="@+id/buttonAdd"
         android:onClick="onLightSwitchClick"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Switch
         android:id="@+id/switchFenetre"
@@ -111,7 +111,7 @@
         android:layout_alignBottom="@+id/TextViewFenetre"
         android:layout_alignLeft="@+id/switchLumiere"
         android:onClick="onWindowSwitchClick"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageTemperature"
@@ -124,7 +124,7 @@
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/temperature"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/TextViewTemperatureValue"
@@ -135,7 +135,7 @@
         android:layout_marginLeft="72dp"
         android:text="value"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/textViewTemperature"
@@ -147,7 +147,7 @@
         android:text="Temperature"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/TextViewPresence"
@@ -159,7 +159,7 @@
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/TextViewPresenceValue"
@@ -169,7 +169,7 @@
         android:layout_alignTop="@+id/TextViewPorte"
         android:text="value"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageLight"
@@ -180,7 +180,7 @@
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/light_bulb"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageDoor"
@@ -191,7 +191,7 @@
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/door"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageWindow"
@@ -202,7 +202,7 @@
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/thumb"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageVolets"
@@ -213,7 +213,7 @@
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/blinds"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imagePerson"
@@ -224,7 +224,7 @@
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/person4"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/increaseTemperatureButton"
@@ -234,7 +234,8 @@
         android:layout_alignBottom="@+id/TextViewTemperatureValue"
         android:layout_alignRight="@+id/TextViewPresence"
         android:background="@drawable/custom_button2"
-        android:text="+" />
+        android:text="+"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/lowerTemperatureButton"
@@ -244,6 +245,7 @@
         android:layout_alignBottom="@+id/TextViewTemperatureValue"
         android:layout_alignLeft="@+id/TextViewPresence"
         android:background="@drawable/custom_button"
-        android:text="-" />
+        android:text="-"
+        android:visibility="invisible" />
 
 </RelativeLayout>
