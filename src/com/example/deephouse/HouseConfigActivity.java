@@ -154,10 +154,9 @@ public class HouseConfigActivity extends FragmentActivity implements
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
         currentTab = tab.getPosition();
-        if (cst > 1){
+        if (cst > 0){
         handler.post(init);}
         cst++;
-        mViewPager.setCurrentItem(tab.getPosition());
 	}
 
 	@Override
@@ -256,12 +255,12 @@ public class HouseConfigActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			System.out.println(idPiece);
-			dummyTextView.setText(House.getInstance().getRooms().get(idPiece).getSensors().size() + " capteurs dans la piece.");
+			dummyTextView.setText("idPiece : " + idPiece);
 			return rootView;
 		}
 	}
 	
-	private void updateView()
+	public void updateView()
 	{
         House house = House.getInstance();
         Room r = house.getRooms().get(currentTab);
