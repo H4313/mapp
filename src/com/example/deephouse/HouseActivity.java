@@ -1,10 +1,6 @@
 package com.example.deephouse;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -49,9 +45,10 @@ public class HouseActivity extends Activity {
         
         localHouseInstanciation();
         
-        //MAJ vue periodique
+        //View updates
         handler = new Handler();
-        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
+        handler.post(refresh); //first refresh
+        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH); //automatic refresh
 	}
 	
 	private final Runnable refresh = new Runnable()
@@ -89,7 +86,7 @@ public class HouseActivity extends Activity {
                         .remove("login")
                         .remove("password")
                         .commit();
-                //Relaunch application
+                // Application automatic launch
                 Intent homeIntent = new Intent(this, MainActivity.class);
                 homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
@@ -132,15 +129,6 @@ public class HouseActivity extends Activity {
     public void openConfigurationC(View view){
         openConfiguration(view,5);
     }
-    public void testPost(View view){
-  	   System.out.println("Entering testPost");
-      	List<NameValuePair> argumentsList = new ArrayList<NameValuePair>(1);
-      	argumentsList.add(new BasicNameValuePair("bb","bb"));
-          ParseJSONPost jsonParser = new ParseJSONPost("http://www.paul-molins.fr/deephouse/post.php",argumentsList);
-          String resultat = jsonParser.getJson();
-          System.out.println(resultat);
-      }
-
 
     public void openConfiguration(View view, Integer position) {
         Intent intent = new Intent(this, HouseConfigActivity.class); //creates configuration activity
@@ -150,12 +138,12 @@ public class HouseActivity extends Activity {
     }
 
 	
-	// MAJ Affichage de la temperatures et de la presence humaine pour chaque pieces de la maison.
+	// Updates temperature and human presence in every room.
 	private void updateView()
 	{
 		House house = House.getInstance();
 		
-		// recuperation pour chaque piece de leurs textViews associes a Temeprature et Presence
+		// Getting TextView's displaying temperature and presence in each room.
 		for(Room r : house.getRooms())
 		{
 			int textViewTemperature;
@@ -194,7 +182,7 @@ public class HouseActivity extends Activity {
 					return;
 			}
 			
-			// MAJ si le capteur de temperature / presence existe
+			// Updates if the sensor exists
 			for(String key : r.getSensors().keySet())
 			{
 				if(r.getSensors().get(key).getType() == SensorType.TEMPERATURE)
@@ -202,7 +190,7 @@ public class HouseActivity extends Activity {
 					System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
 					
 					TextView textView = (TextView) findViewById(textViewTemperature);
-					textView.setText(r.getSensors().get(key).getLastValue() + "°C");
+					textView.setText(r.getSensors().get(key).getLastValue() + " C");
 				}
 				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
 				{

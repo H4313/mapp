@@ -158,16 +158,6 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewKitchen"
-        android:layout_marginLeft="80dp"
-        android:layout_toRightOf="@+id/imageViewHouse"
-        android:onClick="testPost"
-        android:text="TestPost" />
-
     <TextView
         android:id="@+id/textViewOfficeTemperature"
         android:layout_width="wrap_content"

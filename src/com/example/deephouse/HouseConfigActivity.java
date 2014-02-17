@@ -1,15 +1,15 @@
 package com.example.deephouse;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import org.json.JSONException;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -22,11 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Switch;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.os.Handler;
-import android.widget.TableRow.LayoutParams;
 
 import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.housemodel.House;
@@ -41,7 +37,7 @@ public class HouseConfigActivity extends FragmentActivity implements
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public Integer currentTab = 1;
     public Handler handler;
-    TableLayout tl;
+    public Integer cst = 0;
     
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -67,12 +63,11 @@ public class HouseConfigActivity extends FragmentActivity implements
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
+		// Create the adapter that will return a fragment for each of rooms
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getSupportFragmentManager());
 
-        //Enable home button
+        //Enable back button
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.home);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -92,7 +87,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 					}
 				});
 
-		// For each of the sections in the app, add a tab to the action bar.
+		// For each of the sections in the application, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 			// Create a tab with text corresponding to the page title defined by
 			// the adapter. Also specify this Activity object, which implements
@@ -103,35 +98,42 @@ public class HouseConfigActivity extends FragmentActivity implements
 					.setTabListener(this));
 		}
 		
-        //Selection of the clicked room (from the intent)
+        //Getting the clicked room (from the intent)
         Intent intent = getIntent();
         Integer position = intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0);
         mViewPager.setCurrentItem(position);
         currentTab = position;
-        //Activate back button
-        actionBar.setHomeButtonEnabled(true);
         
-        //MAJ vue periodique
+        //Views update
         handler = new Handler();
-        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
+        handler.postAtTime(init, SystemClock.uptimeMillis()+100); //first refresh (delayed because waiting for instantiation)
 	}
+	
+	private final Runnable init = new Runnable()
+	{
+		@Override
+	    public void run()
+	    {
+	        updateView();
+	    }
+	};
 	
 	private final Runnable refresh = new Runnable()
 	{
 		@Override
 	    public void run()
 	    {
-	    	//Instantiation de la maison depuis le Json avec Gson
+	    	//House instantiation from Json using Gson
 	        EchangesModeleMaison.majHouseModel();
 	        updateView();
-			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
+			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
 	    }
-	};//runnable
+	};
 
 
     public void addSensor(View view){
         Intent intent = new Intent(this, AddActivity.class);
-        //Putting current room in intent
+        //Putting current room number in intent
         intent.putExtra(EXTRA_MESSAGE, currentTab);
         startActivity(intent);
     }
@@ -150,6 +152,10 @@ public class HouseConfigActivity extends FragmentActivity implements
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
         currentTab = tab.getPosition();
+        if (cst > 1){
+        handler.post(init);}
+        cst++;
+        mViewPager.setCurrentItem(tab.getPosition());
 	}
 
 	@Override
@@ -248,13 +254,14 @@ public class HouseConfigActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			System.out.println(idPiece);
-			dummyTextView.setText("Nombre de capteurs dans la piece : " + House.getInstance().getRooms().get(idPiece).getSensors().size());
+			dummyTextView.setText(House.getInstance().getRooms().get(idPiece).getSensors().size() + " capteurs dans la piece.");
 			return rootView;
 		}
 	}
 	
 	private void updateView()
 	{
+
         House house = House.getInstance();
         Room r = house.getRooms().get(currentTab);
         
@@ -290,37 +297,37 @@ public class HouseConfigActivity extends FragmentActivity implements
 			}
 			else
 			{
-				Switch capteurSwich;
+				Switch capteurSwitch;
 				TextView capteurText;
 				
 				if(sensorType == SensorType.DOOR)
 				{
-					capteurSwich = (Switch) findViewById(R.id.switchPorte);
+					capteurSwitch = (Switch) findViewById(R.id.switchPorte);
 					capteurText = (TextView) findViewById(R.id.TextViewPorte);
 				}
 				else if(sensorType == SensorType.FLAP)
 				{
-					capteurSwich = (Switch) findViewById(R.id.switchVolets);
+					capteurSwitch = (Switch) findViewById(R.id.switchVolets);
 					capteurText = (TextView) findViewById(R.id.TextViewVolets);
 				}
 				else if(sensorType == SensorType.LIGHT)
 				{
-					capteurSwich = (Switch) findViewById(R.id.switchLumiere);
+					capteurSwitch = (Switch) findViewById(R.id.switchLumiere);
 					capteurText = (TextView) findViewById(R.id.TextViewLumiere);
 				}
 				else //(sensorType == SensorType.WINDOW)
 				{
-					capteurSwich = (Switch) findViewById(R.id.switchFenetre);
+					capteurSwitch = (Switch) findViewById(R.id.switchFenetre);
 					capteurText = (TextView) findViewById(R.id.TextViewFenetre);
 				}
 
 				//set visibility
-				capteurSwich.setVisibility(TextView.VISIBLE);
+				capteurSwitch.setVisibility(TextView.VISIBLE);
 				capteurText.setVisibility(TextView.VISIBLE);
-				capteurSwich.setOnClickListener((OnClickListener) onSwitchClick);
+				capteurSwitch.setOnClickListener((OnClickListener) onSwitchClick);
 				
 				//update value
-				capteurSwich.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+				capteurSwitch.setChecked((Boolean) r.getSensors().get(key).getLastValue());
 			}
 		}
 	}
@@ -333,7 +340,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 			try
 			{
 				switch(v.getId())
-				{
+				{ //TODO : Check if currentTab (0 to 5) is ok for actionUtilisateur (0/5 or 1/6 ?)
 					case R.id.switchFenetre :
 						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.WINDOWCLOSER.getName(), s.isChecked());
 						break;

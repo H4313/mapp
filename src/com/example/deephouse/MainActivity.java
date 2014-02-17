@@ -1,7 +1,5 @@
 package com.example.deephouse;
 
-import com.h4313.deephouse.housemodel.House;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
