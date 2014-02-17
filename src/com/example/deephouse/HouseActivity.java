@@ -47,10 +47,19 @@ public class HouseActivity extends Activity {
         
         //View updates
         handler = new Handler();
-        handler.post(refresh); //first refresh
+        handler.post(init); //first refresh
         handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH); //automatic refresh
 	}
 	
+	private final Runnable init = new Runnable()
+	{
+		@Override
+	    public void run()
+	    {
+	        updateView();
+	    }
+	};
+    
 	private final Runnable refresh = new Runnable()
 	{
 		@Override
@@ -60,7 +69,7 @@ public class HouseActivity extends Activity {
 	        updateView(); // MAJ de la vue avec ce nouveau modele.
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }
-	};//runnable
+	};
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
