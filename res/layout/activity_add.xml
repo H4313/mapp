@@ -7,32 +7,91 @@
     tools:ignore="MergeRootFrame" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="left|top"
         android:id="@+id/mainLayout"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
 
         <Button
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Annuler"
+            android:layout_alignBaseline="@+id/button"
+            android:layout_alignBottom="@+id/button"
+            android:layout_toRightOf="@+id/button"
+            android:text="Ajouter capteur" />
+
+        <Button
             android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="439dp"
-            android:layout_marginBottom="166dp"
+            android:layout_marginBottom="112dp"
+            android:layout_marginLeft="527dp"
             android:onClick="endActivity"
-            />
+            android:text="Annuler" />
 
         <TextView
+            android:id="@+id/textViewIDcapt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Valeur:"
-            android:id="@+id/textCapteur"
             android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/button"
-            android:layout_marginTop="117dp" />
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="74dp"
+            android:text="ID du capteur : "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/editTextIDcapt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewIDcapt"
+            android:layout_alignLeft="@+id/button1"
+            android:ems="10"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/TextViewSensorType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/textViewIDcapt"
+            android:layout_below="@+id/textViewIDcapt"
+            android:layout_marginTop="25dp"
+            android:text="Type de capteur :"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Spinner
+            android:id="@+id/spinnerSensors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/TextViewSensorType"
+            android:layout_alignLeft="@id/editTextIDcapt"
+            android:layout_below="@+id/TextViewSensorType"
+            android:layout_toRightOf="@id/TextViewSensorType" />
+        
+        <TextView
+            android:id="@+id/TextViewActuators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/spinnerSensors"
+            android:layout_alignLeft="@+id/TextViewSensorType"
+            android:text="Action associee :"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <Spinner
+            android:id="@+id/spinnerActuators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/TextViewActuators"
+            android:layout_alignLeft="@id/editTextIDcapt"
+            android:layout_below="@+id/TextViewActuators"
+            android:layout_toRightOf="@id/TextViewActuators" />
+
+
     </RelativeLayout>
+
 </FrameLayout>

@@ -9,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class AddActivity extends Activity {
@@ -24,10 +28,21 @@ public class AddActivity extends Activity {
                     .commit();
         }
         //Getting the room number
+        //TODO : Dynamic page title (display room name) 
         Intent intent = getIntent();
         String position = Integer.toString(intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0));
-        TextView textView = (TextView) findViewById(R.id.textCapteur);
-        textView.setText(position);
+        
+        //Setting sensors list
+        //TODO : Get sensors types dynamically from web server 
+        String[] listeTypesCapteurs = {"Temperature","Humidite","Presence"};
+        Spinner listeCapteurs = (Spinner) findViewById(R.id.spinnerSensors);
+        listeCapteurs.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listeTypesCapteurs));
+        
+        //Setting actuators list
+        //TODO : Get actuators types dynamically from web server 
+        String[] listeTypesActuateurs = {"Actuateur1","Actuateur2","Actuateur3"};
+        Spinner listeActuateurs = (Spinner) findViewById(R.id.spinnerActuators);
+        listeActuateurs.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listeTypesActuateurs));
     }
 
     public void endActivity(View view){

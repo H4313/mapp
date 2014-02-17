@@ -42,7 +42,8 @@
         </activity>
         <activity
             android:name="com.example.deephouse.AddActivity"
-            android:label="@string/title_activity_add" >
+            android:label="@string/title_activity_add"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.HouseConfigActivity" />

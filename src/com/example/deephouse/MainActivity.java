@@ -21,7 +21,6 @@ public class MainActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
-    //public static House maison = new House();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
