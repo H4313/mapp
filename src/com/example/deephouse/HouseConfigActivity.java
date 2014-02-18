@@ -7,8 +7,8 @@ import org.json.JSONException;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -258,9 +258,27 @@ public class HouseConfigActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			System.out.println(idPiece);
-			dummyTextView.setText("idPiece : " + idPiece);
+			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).toLowerCase());
 			return rootView;
 		}
+
+			public String getRoomNameById(int position) {
+				switch (position) {
+		        case 0:
+		            return getString(R.string.title_section1);
+		        case 1:
+		            return getString(R.string.title_section2);
+		        case 2:
+		            return getString(R.string.title_section3);
+		        case 3:
+		            return getString(R.string.title_section4);
+		        case 4:
+		            return getString(R.string.title_section5);
+		        case 5:
+		            return getString(R.string.title_section6);
+				}
+				return null;
+			}
 	}
 	
 	public void updateView()

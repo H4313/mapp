@@ -38,7 +38,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/button"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="74dp"
+            android:layout_marginTop="100dp"
             android:text="ID du capteur : "
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -91,6 +91,15 @@
             android:layout_below="@+id/TextViewActuators"
             android:layout_toRightOf="@id/TextViewActuators" />
 
+        <TextView
+            android:id="@+id/textViewTitre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingTop="20dp"
+            android:paddingLeft="430dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </RelativeLayout>
 

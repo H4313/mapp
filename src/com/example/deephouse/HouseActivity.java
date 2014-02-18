@@ -43,7 +43,8 @@ public class HouseActivity extends Activity {
                     .commit();
         }
         
-        localHouseInstanciation();
+        //localHouseInstanciation();
+        House.setInstance(EchangesModeleMaison.getHouse());
         
         //View updates
         handler = new Handler();

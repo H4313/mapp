@@ -6,30 +6,27 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.hardware.Sensor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.h4313.deephouse.actuator.Actuator;
-import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.adapter.ActuatorAdapter;
 import com.h4313.deephouse.adapter.RoomAdapter;
 import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
-import com.h4313.deephouse.sensor.SensorType;
-import com.h4313.deephouse.util.DecToHexConverter;
 
 /**
  * Created by Steevens on 30/01/14.
  */
 public class EchangesModeleMaison
 {
-	//TODO : better use WebServices URL from "Constant" (Utils)
-	private static String url = "http://www.paul-molins.fr/deephouse/post.php";
-	private static String url_maison = "http://paul-molins.fr/deephouse/houseModel.json";
+	private static String url = "http://10.0.2.2:8080";
+	private static String urlPaul = "http://www.paul-molins.fr";
+	private static String url_maison_paul = urlPaul+"/deephouse/houseModel";
+	private static String url_maison = url+"/deepHouse/rest/houseModel";
 	
     /**
      * Informer le modele de la maison d'une action a VALEUR de la part de l'utilisateur.
@@ -139,7 +136,7 @@ public class EchangesModeleMaison
         try {
             //House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
             //House.setInstance(maison);
-        	System.out.println("House update verification :" + House.getInstance().getRooms().get(0).getSensors().toString());
+        	//System.out.println("House update verification :" + House.getInstance().getRooms().get(0).getSensors().toString());
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -150,8 +147,7 @@ public class EchangesModeleMaison
 	public static String recupererMaison()
 	{
 		System.out.println("Recuperation de la maison depuis le serveur.");
-		String url = "http://10.0.0.2:8080/deepHouse/rest/houseModel"; //TODO : Address from const
-        ParseJSON jsonParser = new ParseJSON(url);
+        ParseJSON jsonParser = new ParseJSON(url_maison);
         String maison = jsonParser.getJson();
         return maison;
 	}
@@ -168,5 +164,18 @@ public class EchangesModeleMaison
         House house = gson.fromJson(jHouse, House.class);
         
         return house;
+    }
+    
+    public static House getHouse(){
+    	System.out.println(url_maison);
+    	String maison = recupererMaison();
+    	House house = new House();
+    	try {
+			house = getHouseFromJson(maison);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return house;
     }
 }

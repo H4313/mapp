@@ -27,10 +27,12 @@ public class AddActivity extends Activity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-        //Getting the room number
-        //TODO : Dynamic page title (display room name) 
+        
+        //Setting the page title
         Intent intent = getIntent();
-        String position = Integer.toString(intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0));
+        Integer position = intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0);
+		TextView textView = (TextView) findViewById(R.id.textViewTitre);
+		textView.setText("Ajout d'un capteur dans la piece " + getRoomNameById(position).toLowerCase());
         
         //Setting sensors list
         //TODO : Get sensors types dynamically from web server 
@@ -85,4 +87,21 @@ public class AddActivity extends Activity {
         }
     }
 
+	public String getRoomNameById(int position) {
+		switch (position) {
+        case 0:
+            return getString(R.string.title_section1);
+        case 1:
+            return getString(R.string.title_section2);
+        case 2:
+            return getString(R.string.title_section3);
+        case 3:
+            return getString(R.string.title_section4);
+        case 4:
+            return getString(R.string.title_section5);
+        case 5:
+            return getString(R.string.title_section6);
+		}
+		return null;
+	}
 }
