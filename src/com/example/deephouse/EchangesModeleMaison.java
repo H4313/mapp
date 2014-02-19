@@ -7,7 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 
-import android.hardware.Sensor;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +17,7 @@ import com.h4313.deephouse.adapter.RoomAdapter;
 import com.h4313.deephouse.adapter.SensorAdapter;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
+import com.h4313.deephouse.sensor.Sensor;
 
 /**
  * Created by Steevens on 30/01/14.
@@ -166,17 +167,17 @@ public class EchangesModeleMaison
         return house;
     }
     
-    public static House getHouse(){
+    public static boolean updateHouse() {
     	System.out.println(url_maison);
     	String maison = recupererMaison();
-    	House house = null;
+    	boolean success = false;
     	try {
-			house = getHouseFromJson(maison);
+			House house = getHouseFromJson(maison);
 			House.setInstance(house);
+			success = false;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	return house;
+    	return success;
     }
 }
