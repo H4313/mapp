@@ -43,9 +43,6 @@ public class HouseActivity extends Activity {
                     .commit();
         }
         
-        //localHouseInstanciation();
-//        House.setInstance(EchangesModeleMaison.getHouse()); // PAUL OUT : 2014.02.19
-        
         // Update House Model
         EchangesModeleMaison.updateHouse();
         
@@ -69,7 +66,7 @@ public class HouseActivity extends Activity {
 		@Override
 	    public void run()
 	    {
-	        EchangesModeleMaison.majHouseModel(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
+	        EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
 	        updateView(); // MAJ de la vue avec ce nouveau modele.
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
 	    }

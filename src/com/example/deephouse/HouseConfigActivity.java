@@ -7,7 +7,6 @@ import org.json.JSONException;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -123,13 +122,13 @@ public class HouseConfigActivity extends FragmentActivity implements
 	    }
 	};
 	
+	//TODO : Use refresh when a tab is selected during a long enough time
 	private final Runnable refresh = new Runnable()
 	{
 		@Override
 	    public void run()
 	    {
-	    	//House instantiation from Json using Gson
-	        EchangesModeleMaison.majHouseModel();
+			//House model is already updated by parent view HouseActivity
 	        updateView();
 			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
 	    }
@@ -157,7 +156,7 @@ public class HouseConfigActivity extends FragmentActivity implements
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
         currentTab = tab.getPosition();
-        if (cst > 0){
+        if (cst > 2){
         handler.post(init);}
         cst++;
 	}

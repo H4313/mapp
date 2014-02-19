@@ -7,8 +7,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.h4313.deephouse.actuator.Actuator;
@@ -25,8 +23,6 @@ import com.h4313.deephouse.sensor.Sensor;
 public class EchangesModeleMaison
 {
 	private static String url = "http://10.0.2.2:8080";
-	private static String urlPaul = "http://www.paul-molins.fr";
-	private static String url_maison_paul = urlPaul+"/deephouse/houseModel";
 	private static String url_maison = url+"/deepHouse/rest/houseModel";
 	
     /**
@@ -48,6 +44,7 @@ public class EchangesModeleMaison
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
             String resultat = jsonParser.getJson();
+            System.out.println(resultat); //TODO : Remove when debug is done
             } 
         catch (Exception e) {
 			e.printStackTrace();
@@ -73,6 +70,7 @@ public class EchangesModeleMaison
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
             String resultat = jsonParser.getJson();
+            System.out.println(resultat); //TODO : Remove when debug is done
             } 
         catch (Exception e) {
 			e.printStackTrace();
@@ -86,16 +84,17 @@ public class EchangesModeleMaison
      * @param typeCapteur : nature du capteur (capteur de presence, de lumiere...) identifie par un entier.
      * @return
      */
-    public static void ajoutCapteur(int numPiece, int idCapteur, int typeCapteur) throws JSONException
+    public static void ajoutCapteur(String numPiece, String idCapteur, String typeCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
-	    nameValuePairs.add(new BasicNameValuePair("capteur", Integer.toString(idCapteur)));
-	    nameValuePairs.add(new BasicNameValuePair("type", Integer.toString(typeCapteur)));
+	    nameValuePairs.add(new BasicNameValuePair("piece", numPiece));
+	    nameValuePairs.add(new BasicNameValuePair("capteur", idCapteur));
+	    nameValuePairs.add(new BasicNameValuePair("type", typeCapteur));
 	    
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
             String resultat = jsonParser.getJson();
+            System.out.println(resultat); //TODO : Remove when debug is done
             } 
         catch (Exception e) {
 			e.printStackTrace();
@@ -119,6 +118,7 @@ public class EchangesModeleMaison
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url,nameValuePairs);
             String resultat = jsonParser.getJson();
+            System.out.println(resultat); //TODO : Remove when debug is done
             } 
         catch (Exception e) {
 			e.printStackTrace();
@@ -130,24 +130,10 @@ public class EchangesModeleMaison
      * @param jsonHouse
      * @throws JSONException
      */
-    public static void majHouseModel()
-    {
-        //String jHouse = recupererMaison();
-        
-        try {
-            //House maison = getHouseFromJson(jHouse); // throws an exception if jHouse isn't a valid representation of a House
-            //House.setInstance(maison);
-        	//System.out.println("House update verification :" + House.getInstance().getRooms().get(0).getSensors().toString());
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
-    
 
 	public static String recupererMaison()
 	{
-		System.out.println("Recuperation de la maison depuis le serveur.");
+		System.out.println("Updating house from server."); //TODO : Delete when debug is done
         ParseJSON jsonParser = new ParseJSON(url_maison);
         String maison = jsonParser.getJson();
         return maison;
@@ -168,7 +154,6 @@ public class EchangesModeleMaison
     }
     
     public static boolean updateHouse() {
-    	System.out.println(url_maison);
     	String maison = recupererMaison();
     	boolean success = false;
     	try {

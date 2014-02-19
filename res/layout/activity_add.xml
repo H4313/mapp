@@ -18,6 +18,7 @@
             android:layout_alignBaseline="@+id/button"
             android:layout_alignBottom="@+id/button"
             android:layout_toRightOf="@+id/button"
+            android:onClick="ajoutCapteur"
             android:text="Ajouter capteur" />
 
         <Button
@@ -49,7 +50,7 @@
             android:layout_alignBottom="@+id/textViewIDcapt"
             android:layout_alignLeft="@+id/button1"
             android:ems="10"
-            android:inputType="number" >
+            android:inputType="textNoSuggestions" >
 
             <requestFocus />
         </EditText>
@@ -72,24 +73,6 @@
             android:layout_alignLeft="@id/editTextIDcapt"
             android:layout_below="@+id/TextViewSensorType"
             android:layout_toRightOf="@id/TextViewSensorType" />
-        
-        <TextView
-            android:id="@+id/TextViewActuators"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/spinnerSensors"
-            android:layout_alignLeft="@+id/TextViewSensorType"
-            android:text="Action associee :"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-        <Spinner
-            android:id="@+id/spinnerActuators"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/TextViewActuators"
-            android:layout_alignLeft="@id/editTextIDcapt"
-            android:layout_below="@+id/TextViewActuators"
-            android:layout_toRightOf="@id/TextViewActuators" />
 
         <TextView
             android:id="@+id/textViewTitre"
