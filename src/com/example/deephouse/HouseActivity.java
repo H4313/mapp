@@ -44,7 +44,9 @@ public class HouseActivity extends Activity {
         }
         
         //localHouseInstanciation();
-        House.setInstance(EchangesModeleMaison.getHouse());
+//        House.setInstance(EchangesModeleMaison.getHouse());
+        
+        EchangesModeleMaison.getHouse();
         
         //View updates
         handler = new Handler();

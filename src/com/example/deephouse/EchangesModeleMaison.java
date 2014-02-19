@@ -162,16 +162,17 @@ public class EchangesModeleMaison
         
         final Gson gson = builder.create();
         House house = gson.fromJson(jHouse, House.class);
-        
+       
         return house;
     }
     
     public static House getHouse(){
     	System.out.println(url_maison);
     	String maison = recupererMaison();
-    	House house = new House();
+    	House house = null;
     	try {
 			house = getHouseFromJson(maison);
+			House.setInstance(house);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
