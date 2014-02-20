@@ -12,13 +12,13 @@
         android:layout_height="fill_parent" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/buttonAddSC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/button"
             android:layout_alignBottom="@+id/button"
             android:layout_toRightOf="@+id/button"
-            android:onClick="ajoutCapteur"
+            android:onClick="boutonAjout"
             android:text="Ajouter capteur" />
 
         <Button
@@ -39,7 +39,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignRight="@+id/button"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="140dp"
             android:text="ID du capteur : "
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewIDcapt"
-            android:layout_alignLeft="@+id/button1"
+            android:layout_alignLeft="@+id/buttonAddSC"
             android:ems="10"
             android:inputType="textNoSuggestions" >
 
@@ -79,10 +79,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:paddingLeft="380dp"
             android:paddingTop="20dp"
-            android:paddingLeft="430dp"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button"
+            android:layout_below="@+id/textViewTitre"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radioCapteur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Capteur" />
+
+            <RadioButton
+                android:id="@+id/radioActionneur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actionneur" />
+        </RadioGroup>
 
     </RelativeLayout>
 

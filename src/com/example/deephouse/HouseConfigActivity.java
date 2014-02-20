@@ -404,7 +404,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 	{
 		public void onClick(View v)
 		{
-			//muting buttons for now
+			//muting buttons for a given time
 			Button increaseTemperatureButton = (Button) findViewById(R.id.increaseTemperatureButton);
 			Button lowerTemperatureButton = (Button) findViewById(R.id.lowerTemperatureButton);
 			TextView temperatureValueTextView = (TextView) findViewById(R.id.TextViewTemperatureValue);
@@ -419,7 +419,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 			else if (v.getId() == R.id.lowerTemperatureButton)
 				temperatureValueTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
 						
-			//planning to un-mute in the future
+			//TODO: enable after a given time
 			handlerTemperatureButtonMuting = new Handler();
 			handlerTemperatureButtonMuting.postDelayed(unmuteTemperatureButtons,
 					Constant.MILLISECONDS_TILL_UNMUTING_TEMPERATURE_BUTTONS);// /Constant.TIME_FACTOR
