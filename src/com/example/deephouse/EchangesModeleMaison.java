@@ -35,8 +35,6 @@ public class EchangesModeleMaison
      * @param newValue
      * @return
      */
-
-
     public static void actionUtilisateur(int numPiece, String objetAction, double newValue) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -61,8 +59,6 @@ public class EchangesModeleMaison
      * @param valeurCapteur
      * @return
      */
-
-
     public static void actionUtilisateur(int numPiece, String objetAction, boolean valeurCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
@@ -87,22 +83,26 @@ public class EchangesModeleMaison
      * @param typeCapteur : nature du capteur (capteur de presence, de lumiere...) identifie par un entier.
      * @return
      */
-    public static void ajoutCapteur(String numPiece, String idCapteur, String typeCapteur) throws JSONException
+    public static boolean ajoutCapteur(String numPiece, String idCapteur, String typeCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", numPiece));
 	    nameValuePairs.add(new BasicNameValuePair("capteur", idCapteur));
 	    nameValuePairs.add(new BasicNameValuePair("type", typeCapteur));
-	    
+	
+	    boolean success = false;
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url_addSensor,nameValuePairs);
             String resultat = jsonParser.getJson();
             System.out.println(resultat); //TODO : Remove when debug is done
             System.out.println(nameValuePairs.toString());
+            success = Boolean.valueOf(resultat);
             } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
+        
+        return success;
     }
     
      /**
@@ -112,21 +112,25 @@ public class EchangesModeleMaison
      * @param typeCapteur : nature de l'actioneur (capteur de presence, de lumiere...) identifie par un entier.
      * @return
      */
-    public static void ajoutActionneur(String numPiece, String idActioneur, String typeCapteur) throws JSONException
+    public static boolean ajoutActionneur(String numPiece, String idActioneur, String typeCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", numPiece));
 	    nameValuePairs.add(new BasicNameValuePair("actioneur", idActioneur));
 	    nameValuePairs.add(new BasicNameValuePair("type", typeCapteur));
 	    
+	    boolean success = false;
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url_addActuator,nameValuePairs);
             String resultat = jsonParser.getJson();
             System.out.println(resultat); //TODO : Remove when debug is done
-            } 
+            success = Boolean.valueOf(resultat);
+        } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
+        
+        return success;
     }
 
     /**
@@ -134,7 +138,6 @@ public class EchangesModeleMaison
      * @param jsonHouse
      * @throws JSONException
      */
-
 	public static String recupererMaison()
 	{
 		System.out.println("Updating house from server."); //TODO : Delete when debug is done

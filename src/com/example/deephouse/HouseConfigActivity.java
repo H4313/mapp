@@ -111,6 +111,7 @@ public class HouseConfigActivity extends FragmentActivity implements
         //Views update
         handler = new Handler();
         handler.postAtTime(init, SystemClock.uptimeMillis()+100); //first refresh (delayed because waiting for instantiation)
+        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
 	}
 	
 	private final Runnable init = new Runnable()
@@ -122,7 +123,6 @@ public class HouseConfigActivity extends FragmentActivity implements
 	    }
 	};
 	
-	//TODO : Use refresh when a tab is selected during a long enough time
 	private final Runnable refresh = new Runnable()
 	{
 		@Override
@@ -257,8 +257,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			System.out.println(idPiece);
-			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).toLowerCase());
-			return rootView;
+			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).substring(0, 1).toLowerCase(Locale.FRANCE));			return rootView;
 		}
 
 			public String getRoomNameById(int position) {
@@ -378,7 +377,8 @@ public class HouseConfigActivity extends FragmentActivity implements
 			try
 			{
 				switch(v.getId())
-				{ //TODO : Check if currentTab (0 to 5) is ok for actionUtilisateur (0/5 or 1/6 ?)
+				// the ID of a room (from 0 to 5) is directly given by its currentTab (from 0 to 5) - according to com.h4313.deephouse.housemodel.room.RoomConstants
+				{	
 					case R.id.switchFenetre :
 						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.WINDOWCLOSER.getName(), s.isChecked());
 						break;
@@ -416,10 +416,10 @@ public class HouseConfigActivity extends FragmentActivity implements
 			lowerTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
 			if(v.getId() == R.id.increaseTemperatureButton)
 				temperatureValueTextView.setTextColor(getResources().getColor(R.color.Coral));
-			else if (v.getId() == R.id.lowerTemperatureButton)
+			else // (v.getId() == R.id.lowerTemperatureButton)
 				temperatureValueTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
 						
-			//TODO: enable after a given time
+			//following is enabling buttons again after a given time
 			handlerTemperatureButtonMuting = new Handler();
 			handlerTemperatureButtonMuting.postDelayed(unmuteTemperatureButtons,
 					Constant.MILLISECONDS_TILL_UNMUTING_TEMPERATURE_BUTTONS);// /Constant.TIME_FACTOR
@@ -437,10 +437,10 @@ public class HouseConfigActivity extends FragmentActivity implements
 		@Override
 	    public void run()
 	    {
-			//unmuting buttons
+			//enable buttons clickable
 			Button increaseTemperatureButton = (Button) findViewById(R.id.increaseTemperatureButton);
 			Button lowerTemperatureButton = (Button) findViewById(R.id.lowerTemperatureButton);
-
+			
 			increaseTemperatureButton.setBackgroundColor(R.color.Coral);
 			lowerTemperatureButton.setBackgroundColor(R.color.LightSlateGray);
 			
@@ -462,7 +462,11 @@ public class HouseConfigActivity extends FragmentActivity implements
 			{
 				//update value
 				double lastValue = (Double) r.getSensors().get(key).getLastValue();
-				double newValue = isIncrease? lastValue + 2 : lastValue - 2;
+				double variationValue = isIncrease? 
+						Constant.RELATIVE_TEMPERATURE_INCREASE_ON_USER_RQST :
+						Constant.RELATIVE_TEMPERATURE_DECREASE_ON_USER_RQST ;
+				double newValue = lastValue + variationValue;
+				
 				System.out.println("Temperature change request : from " + lastValue + " to " + newValue);
 				
 				try

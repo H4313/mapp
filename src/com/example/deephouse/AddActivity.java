@@ -1,7 +1,10 @@
 package com.example.deephouse;
 
+import java.util.Locale;
+
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -24,10 +27,11 @@ import android.widget.TextView;
 
 import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.sensor.SensorType;
+import com.h4313.deephouse.util.Constant;
 
+@SuppressLint("DefaultLocale")
 public class AddActivity extends Activity {
 
-	public Integer tailleId = 8; //TODO : Define as a constant in utils
 	public Integer roomNb = 0;
 
 	@Override
@@ -45,7 +49,7 @@ public class AddActivity extends Activity {
 		Intent intent = getIntent();
 		roomNb = intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0);
 		TextView textView = (TextView) findViewById(R.id.textViewTitre);
-		textView.setText("Ajout d'un capteur ou actionneur dans la piece " + getRoomNameById(roomNb).toLowerCase());
+		textView.setText("Ajout d'un capteur ou actionneur dans la piece " + getRoomNameById(roomNb).substring(0, 1).toLowerCase(Locale.FRANCE));
 		//Setting sensors type
 		setSensors();
 
@@ -90,48 +94,47 @@ public class AddActivity extends Activity {
 	public void setActuators(){
 		ActuatorType[] possibleValues = ActuatorType.DOORCONTROL.getDeclaringClass().getEnumConstants();
 		String[] actuatorsTypesList = new String[possibleValues.length];
-		for (int i=0;i<possibleValues.length;i++){
+		for (int i=0;i<possibleValues.length;i++)
 			actuatorsTypesList[i] = possibleValues[i].toString();
-		}
+		
 		Spinner listeCapteurs = (Spinner) findViewById(R.id.spinnerSensors);
 		listeCapteurs.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,actuatorsTypesList));
 	}
 
 	public void boutonAjout(View view){
 		RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
-		if (rg.getCheckedRadioButtonId()==2131296266){
+		if (rg.getCheckedRadioButtonId()==2131296266)
 			ajoutCapteur(true);
-		}
-		else{
+		else
 			ajoutCapteur(false);
-		}
 	}
 
 	public void ajoutCapteur(boolean isSensor){
 		String idCapteur = ((EditText) findViewById(R.id.editTextIDcapt)).getText().toString();
-		if (idCapteur.matches("^[0-9a-fA-F]+$") && idCapteur.length() == tailleId){ //TODO : Define constant for sensor size
-			//the ID is valid
-			if (1==1){ //TODO : Use webservice response to define if ID is already used (contains "false")
-				//the ID is not used yet
-				String typeCapteur = ((Spinner) findViewById(R.id.spinnerSensors)).getSelectedItem().toString();
-				try {
-					if (isSensor){
-						EchangesModeleMaison.ajoutCapteur(roomNb.toString(), idCapteur, typeCapteur.toUpperCase());
-						}
-					else{
-						EchangesModeleMaison.ajoutActionneur(roomNb.toString(), idCapteur, typeCapteur.toUpperCase());
-						}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				} 
-				onBackPressed();
-			}
-			else{
-				displayErrorDialog("Identifiant de capteur deja en service.");
-			}
+		if (idCapteur.matches("^[0-9a-fA-F]+$") && idCapteur.length() == Constant.SENSOR_ID_LENGTH)
+		{
+			String typeCapteur = ((Spinner) findViewById(R.id.spinnerSensors)).getSelectedItem().toString();
+			try {
+				boolean success;
+				if (isSensor)						
+					success = EchangesModeleMaison.ajoutCapteur(roomNb.toString(), idCapteur, typeCapteur.substring(0, 1).toUpperCase(Locale.FRANCE));
+				else
+					success = EchangesModeleMaison.ajoutActionneur(roomNb.toString(), idCapteur, typeCapteur.substring(0, 1).toUpperCase(Locale.FRANCE));
+				
+				//no success <=> the ID was already used
+				if(!success)
+					displayErrorDialog("Identifiant de capteur deja en service.");
+			} 
+			catch (JSONException e)
+			{
+				e.printStackTrace();
+			} 
+			
+			onBackPressed();
 		}
-		else{
-			displayErrorDialog("Identifiant de capteur invalide !\nVeuillez verifier que votre identifiant contient "+ tailleId + " chiffres (0-9) ou lettres (a-f) et n'est pas deja renseigne.");
+		else
+		{
+			displayErrorDialog("Identifiant de capteur invalide !\nVeuillez verifier que votre identifiant contient "+ Constant.SENSOR_ID_LENGTH + " chiffres (0-9) ou lettres (a-f) et n'est pas deja renseigne.");
 		}
 	}
 
