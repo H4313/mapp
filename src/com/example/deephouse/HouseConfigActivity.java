@@ -289,7 +289,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 
 			if(sensorType == SensorType.PRESENCE)
 			{
-				System.out.println("Presence yeah");
+				//System.out.println("Presence yeah");
 				TextView presence = (TextView) findViewById(R.id.TextViewPresence);
 				TextView presenceValue = (TextView) findViewById(R.id.TextViewPresenceValue);
 				ImageView imgPerson = (ImageView) findViewById(R.id.imagePerson);
@@ -297,16 +297,18 @@ public class HouseConfigActivity extends FragmentActivity implements
 				//set visibility
 				presence.setVisibility(TextView.VISIBLE);
 				if((Boolean) r.getSensors().get(key).getLastValue())
+				{
 					imgPerson.setVisibility(TextView.VISIBLE);
+				}
 				else
+				{
 					presenceValue.setVisibility(TextView.VISIBLE);
-				
-				//update value
-				presenceValue.setText(((BooleanSensor)r.getSensors().get(key)).getFalseText());
+					presenceValue.setText("Aucune");
+				}
 			}
 			else if(sensorType == SensorType.TEMPERATURE)
 			{
-				System.out.println("Temperature yeah");
+				//System.out.println("Temperature yeah");
 				TextView temperature = (TextView) findViewById(R.id.textViewTemperature);
 				TextView temperatureValue = (TextView) findViewById(R.id.TextViewTemperatureValue);
 				ImageView imgTemperature = (ImageView) findViewById(R.id.imageTemperature);
