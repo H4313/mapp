@@ -165,7 +165,6 @@
         android:layout_alignLeft="@+id/textViewOffice"
         android:layout_below="@+id/textViewOffice"
         android:layout_marginTop="41dp"
-        android:text="T°C"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
@@ -205,7 +204,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/textViewBedroom"
         android:layout_alignTop="@+id/ImagePersonBathroom"
-        android:text="T°C"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -215,7 +214,7 @@
         android:layout_alignRight="@+id/ImagePersonBathroom"
         android:layout_below="@+id/textViewBedroom"
         android:layout_marginTop="30dp"
-        android:text="T°C"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
@@ -234,7 +233,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ImagePersonOffice"
         android:layout_centerHorizontal="true"
-        android:text="T°C"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
@@ -253,7 +252,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/ImagePersonLivingroom"
         android:layout_below="@+id/textViewCorridorTemperature"
-        android:text="T°C"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
@@ -282,7 +281,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/ImagePersonBathroom"
         android:layout_alignLeft="@+id/ImagePersonBathroom"
-        android:text="T°C"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

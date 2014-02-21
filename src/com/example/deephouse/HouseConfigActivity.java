@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.h4313.deephouse.actuator.ActuatorType;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.housemodel.RoomConstants;
@@ -111,7 +110,7 @@ public class HouseConfigActivity extends FragmentActivity implements
         //Views update
         handler = new Handler();
         handler.postAtTime(init, SystemClock.uptimeMillis()+100); //first refresh (delayed because waiting for instantiation)
-        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
+        //handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH); //TODO : Refresh management
 	}
 	
 	private final Runnable init = new Runnable()
@@ -257,7 +256,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			System.out.println(idPiece);
-			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).substring(0, 1).toLowerCase(Locale.FRANCE));			return rootView;
+			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).toLowerCase(Locale.FRANCE));			return rootView;
 		}
 
 			public String getRoomNameById(int position) {
@@ -303,7 +302,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 					presenceValue.setVisibility(TextView.VISIBLE);
 				
 				//update value
-				presenceValue.setText(r.getSensors().get(key).getLastValue().toString());
+				presenceValue.setText(((BooleanSensor)r.getSensors().get(key)).getFalseText());
 			}
 			else if(sensorType == SensorType.TEMPERATURE)
 			{
@@ -380,16 +379,16 @@ public class HouseConfigActivity extends FragmentActivity implements
 				// the ID of a room (from 0 to 5) is directly given by its currentTab (from 0 to 5) - according to com.h4313.deephouse.housemodel.room.RoomConstants
 				{	
 					case R.id.switchFenetre :
-						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.WINDOWCLOSER.getName(), s.isChecked());
+						EchangesModeleMaison.actionUtilisateur(currentTab, RoomConstants.windAction, s.isChecked());
 						break;
 					case R.id.switchLumiere :
-						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.LIGHTCONTROL.getName(), s.isChecked());
+						EchangesModeleMaison.actionUtilisateur(currentTab, RoomConstants.lightAction, s.isChecked());
 						break;
 					case R.id.switchVolets :
-						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.FLAPCLOSER.getName(), s.isChecked());
+						EchangesModeleMaison.actionUtilisateur(currentTab, RoomConstants.flapAction, s.isChecked());
 						break;
 					case R.id.switchPorte :
-						EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.DOORCONTROL.getName(), s.isChecked());
+						EchangesModeleMaison.actionUtilisateur(currentTab, RoomConstants.doorAction, s.isChecked());
 						break;
 				}
 			}
@@ -467,11 +466,10 @@ public class HouseConfigActivity extends FragmentActivity implements
 						Constant.RELATIVE_TEMPERATURE_DECREASE_ON_USER_RQST ;
 				double newValue = lastValue + variationValue;
 				
-				System.out.println("Temperature change request : from " + lastValue + " to " + newValue);
-				
+				//System.out.println("Temperature change request : from " + lastValue + " to " + newValue);
 				try
 				{
-					EchangesModeleMaison.actionUtilisateur(currentTab, ActuatorType.RADIATOR.getName(), newValue);
+					EchangesModeleMaison.actionUtilisateur(currentTab, RoomConstants.tempAction, newValue);
 				}
 				catch (JSONException e)
 				{

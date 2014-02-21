@@ -85,7 +85,7 @@ public class AddActivity extends Activity {
 		SensorType[] possibleValues = SensorType.FLAP.getDeclaringClass().getEnumConstants();
 		String[] listeTypesCapteurs = new String[possibleValues.length];
 		for (int i=0;i<possibleValues.length;i++){
-			listeTypesCapteurs[i] = possibleValues[i].toString();
+			listeTypesCapteurs[i] = possibleValues[i].name();
 		}
 		Spinner listeCapteurs = (Spinner) findViewById(R.id.spinnerSensors);
 		listeCapteurs.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,listeTypesCapteurs));
@@ -95,8 +95,8 @@ public class AddActivity extends Activity {
 		ActuatorType[] possibleValues = ActuatorType.DOORCONTROL.getDeclaringClass().getEnumConstants();
 		String[] actuatorsTypesList = new String[possibleValues.length];
 		for (int i=0;i<possibleValues.length;i++)
-			actuatorsTypesList[i] = possibleValues[i].toString();
-		
+			actuatorsTypesList[i] = possibleValues[i].name();
+
 		Spinner listeCapteurs = (Spinner) findViewById(R.id.spinnerSensors);
 		listeCapteurs.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,actuatorsTypesList));
 	}
@@ -116,21 +116,23 @@ public class AddActivity extends Activity {
 			String typeCapteur = ((Spinner) findViewById(R.id.spinnerSensors)).getSelectedItem().toString();
 			try {
 				boolean success;
-				if (isSensor)						
-					success = EchangesModeleMaison.ajoutCapteur(roomNb.toString(), idCapteur, typeCapteur.substring(0, 1).toUpperCase(Locale.FRANCE));
+				if (isSensor)			
+					success = EchangesModeleMaison.ajoutCapteur(roomNb.toString(), idCapteur, typeCapteur);
 				else
-					success = EchangesModeleMaison.ajoutActionneur(roomNb.toString(), idCapteur, typeCapteur.substring(0, 1).toUpperCase(Locale.FRANCE));
-				
+					success = EchangesModeleMaison.ajoutActionneur(roomNb.toString(), idCapteur, typeCapteur);
+
 				//no success <=> the ID was already used
-				if(!success)
+				if(success){
+					onBackPressed();
+				}
+				else{
 					displayErrorDialog("Identifiant de capteur deja en service.");
+				}
 			} 
 			catch (JSONException e)
 			{
 				e.printStackTrace();
 			} 
-			
-			onBackPressed();
 		}
 		else
 		{

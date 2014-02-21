@@ -30,7 +30,8 @@ public class HouseActivity extends Activity {
     public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
     public static final String PREFS_NAME = "DeepHousePrefs";
     public Handler handler;
-    
+    public volatile Boolean stop = false;
+   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,7 @@ public class HouseActivity extends Activity {
 		@Override
 	    public void run()
 	    {
+			if (!stop)
 	        updateView();
 	    }
 	};
@@ -66,11 +68,18 @@ public class HouseActivity extends Activity {
 		@Override
 	    public void run()
 	    {
+			if (!stop){
 	        EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
 	        updateView(); // MAJ de la vue avec ce nouveau modele.
-			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);            
+			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);}         
 	    }
 	};
+	
+    @Override
+    protected void onDestroy(){
+    	stop = true;
+    	super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -197,15 +206,13 @@ public class HouseActivity extends Activity {
 			{
 				if(r.getSensors().get(key).getType() == SensorType.TEMPERATURE)
 				{
-					System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
-					
+					//System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
 					TextView textView = (TextView) findViewById(textViewTemperature);
 					textView.setText(r.getSensors().get(key).getLastValue() + " C");
 				}
 				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
 				{
-					System.out.println("Piece " + r.getIdRoom() + " : presence = "  + r.getSensors().get(key).getLastValue());
-
+					//System.out.println("Piece " + r.getIdRoom() + " : presence = "  + r.getSensors().get(key).getLastValue());
 					ImageView imageView = (ImageView) findViewById(idImagePerson);
 					if((Boolean)r.getSensors().get(key).getLastValue())
 						imageView.setVisibility(ImageView.VISIBLE);

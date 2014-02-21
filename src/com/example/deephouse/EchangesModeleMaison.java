@@ -22,11 +22,12 @@ import com.h4313.deephouse.sensor.Sensor;
  */
 public class EchangesModeleMaison
 {
-	private static String url = "http://10.0.2.2:8080";
+	//private static String url = "http://10.0.2.2:8080"; //EMULATOR URL
+	private static String url = "http://192.168.43.141:53500"; //real device url
 	private static String url_maison = url+"/deepHouse/rest/houseModel";
 	private static String url_userAction = url+"/deepHouse/rest/userAction";
 	private static String url_addSensor = url+"/deepHouse/rest/addSensor";
-	private static String url_addActuator = url+"deepHouse/rest/addActuator";
+	private static String url_addActuator = url+"/deepHouse/rest/addActuator";
 	
     /**
      * Informer le modele de la maison d'une action a VALEUR de la part de l'utilisateur.
@@ -39,7 +40,7 @@ public class EchangesModeleMaison
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
-	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction));
+	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction.toUpperCase()));
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Double.toString(newValue)));
         
         try {
@@ -96,7 +97,7 @@ public class EchangesModeleMaison
             String resultat = jsonParser.getJson();
             System.out.println(resultat); //TODO : Remove when debug is done
             System.out.println(nameValuePairs.toString());
-            success = Boolean.valueOf(resultat);
+            success = resultat.contains("true");
             } 
         catch (Exception e) {
 			e.printStackTrace();
@@ -106,17 +107,17 @@ public class EchangesModeleMaison
     }
     
      /**
-     * Informer le modele de la maison de l'ajout d'un actioneur.
+     * Informer le modele de la maison de l'ajout d'un actionneur.
      * @param numPiece
-     * @param idActioneur : numero de serie de l'actioneur (saisi par l'utilisateur).
-     * @param typeCapteur : nature de l'actioneur (capteur de presence, de lumiere...) identifie par un entier.
+     * @param idactionneur : numero de serie de l'actionneur (saisi par l'utilisateur).
+     * @param typeCapteur : nature de l'actionneur (capteur de presence, de lumiere...) identifie par un entier.
      * @return
      */
-    public static boolean ajoutActionneur(String numPiece, String idActioneur, String typeCapteur) throws JSONException
+    public static boolean ajoutActionneur(String numPiece, String idactionneur, String typeCapteur) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", numPiece));
-	    nameValuePairs.add(new BasicNameValuePair("actioneur", idActioneur));
+	    nameValuePairs.add(new BasicNameValuePair("actionneur", idactionneur));
 	    nameValuePairs.add(new BasicNameValuePair("type", typeCapteur));
 	    
 	    boolean success = false;
@@ -124,7 +125,7 @@ public class EchangesModeleMaison
             ParseJSONPost jsonParser = new ParseJSONPost(url_addActuator,nameValuePairs);
             String resultat = jsonParser.getJson();
             System.out.println(resultat); //TODO : Remove when debug is done
-            success = Boolean.valueOf(resultat);
+            success = resultat.contains("true");
         } 
         catch (Exception e) {
 			e.printStackTrace();

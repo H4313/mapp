@@ -46,6 +46,8 @@
         android:layout_alignBottom="@+id/TextViewPorte"
         android:layout_alignLeft="@+id/switchVolets"
         android:onClick="onDoorSwitchClick"
+        android:textOff="Fermée"
+        android:textOn="Ouverte"
         android:visibility="invisible" />
 
     <TextView
@@ -68,6 +70,8 @@
         android:layout_alignBottom="@+id/TextViewVolets"
         android:layout_alignLeft="@+id/switchFenetre"
         android:onClick="onFlapSwitchClick"
+        android:textOff="Fermés"
+        android:textOn="Ouverts"
         android:visibility="invisible" />
  
     <TextView
@@ -103,6 +107,8 @@
         android:layout_marginRight="52dp"
         android:layout_toLeftOf="@+id/buttonAdd"
         android:onClick="onLightSwitchClick"
+        android:textOff="Éteinte"
+        android:textOn="Allumée"
         android:visibility="invisible" />
 
     <Switch
@@ -113,6 +119,8 @@
         android:layout_alignBottom="@+id/TextViewFenetre"
         android:layout_alignLeft="@+id/switchLumiere"
         android:onClick="onWindowSwitchClick"
+        android:textOff="Fermée"
+        android:textOn="Ouverte"
         android:visibility="invisible" />
 
     <ImageView
