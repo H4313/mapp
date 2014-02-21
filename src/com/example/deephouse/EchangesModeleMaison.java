@@ -22,12 +22,11 @@ import com.h4313.deephouse.sensor.Sensor;
  */
 public class EchangesModeleMaison
 {
-	//private static String url = "http://10.0.2.2:8080"; //EMULATOR URL
-	private static String url = "http://192.168.43.141:53500"; //real device url
-	private static String url_maison = url+"/deepHouse/rest/houseModel";
-	private static String url_userAction = url+"/deepHouse/rest/userAction";
-	private static String url_addSensor = url+"/deepHouse/rest/addSensor";
-	private static String url_addActuator = url+"/deepHouse/rest/addActuator";
+	private static String url; //"http://192.168.43.141:53500"; //real device url
+	private static String url_maison;
+	private static String url_userAction;
+	private static String url_addSensor;
+	private static String url_addActuator;
 	
     /**
      * Informer le modele de la maison d'une action a VALEUR de la part de l'utilisateur.
@@ -36,6 +35,15 @@ public class EchangesModeleMaison
      * @param newValue
      * @return
      */
+	
+	public static void setIp(String ip){
+		url = "http://"+ip;
+		url_maison = url+"/deepHouse/rest/houseModel";
+		url_userAction = url+"/deepHouse/rest/userAction";
+		url_addSensor = url+"/deepHouse/rest/addSensor";
+		url_addActuator = url+"/deepHouse/rest/addActuator";
+	}
+	
     public static void actionUtilisateur(int numPiece, String objetAction, double newValue) throws JSONException
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
