@@ -303,7 +303,7 @@ public class HouseConfigActivity extends FragmentActivity implements
 					presenceValue.setVisibility(TextView.VISIBLE);
 				
 				//update value
-				presenceValue.setText(r.getSensors().get(key).getLastValue().toString());
+				presenceValue.setText(((BooleanSensor)r.getSensors().get(key)).getFalseText());
 			}
 			else if(sensorType == SensorType.TEMPERATURE)
 			{
