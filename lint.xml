@@ -4,4 +4,7 @@
         <ignore path="src/com/example/deephouse/AddActivity.java" />
         <ignore path="src/com/example/deephouse/HouseConfigActivity.java" />
     </issue>
+    <issue id="HardcodedText">
+        <ignore path="res/layout/fragment_houseconfig.xml" />
+    </issue>
 </lint>

@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="126dp"
         android:text="Configuration de la piece"
-        android:textSize="32sp" />
+        android:textSize="42sp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/buttonAdd"
@@ -127,7 +128,7 @@
         android:id="@+id/imageTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/section_label"
+        android:layout_below="@+id/justToHold"
         android:layout_marginRight="27dp"
         android:layout_marginTop="149dp"
         android:layout_toLeftOf="@+id/textViewTemperature"
@@ -140,9 +141,10 @@
         android:id="@+id/TextViewTemperatureValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextViewPresence"
-        android:layout_alignTop="@+id/TextViewFenetre"
-        android:layout_marginLeft="72dp"
+        android:layout_alignLeft="@+id/textViewTemperature"
+        android:layout_marginLeft="112dp"
+        android:layout_alignTop="@+id/textViewTemperature"
+        android:layout_marginTop="80dp"
         android:text="value"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="invisible" />
@@ -165,7 +167,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/TextViewVolets"
         android:layout_alignBottom="@+id/TextViewVolets"
-        android:layout_alignLeft="@+id/section_label"
+        android:layout_alignLeft="@+id/textViewTemperature"
+        android:layout_marginLeft="40dp"
         android:text="Presence"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
@@ -175,8 +178,10 @@
         android:id="@+id/TextViewPresenceValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextViewTemperatureValue"
-        android:layout_alignTop="@+id/TextViewPorte"
+        android:layout_alignLeft="@+id/TextViewPresence"
+        android:layout_marginLeft = "65dp"
+        android:layout_alignTop="@+id/TextViewPresence"
+        android:layout_marginTop = "60dp"
         android:text="value"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:visibility="invisible" />
@@ -185,43 +190,47 @@
         android:id="@+id/imageLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/TextViewTemperatureValue"
-        android:layout_alignRight="@+id/buttonAdd"
+        android:layout_alignBottom="@+id/switchLumiere"
+        android:layout_toRightOf="@+id/switchLumiere"
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/light_bulb"
+        android:layout_marginLeft="-20dp"
         android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageDoor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonAdd"
-        android:layout_below="@+id/imageVolets"
+        android:layout_alignBottom="@+id/switchPorte"
+        android:layout_toRightOf="@+id/switchPorte"
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/door"
+        android:layout_marginLeft="50dp"
         android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageLight"
-        android:layout_alignTop="@+id/TextViewFenetre"
+        android:layout_alignBottom="@+id/switchFenetre"
+        android:layout_toRightOf="@+id/switchFenetre"
         android:focusable="false"
         android:scaleType="center"
         android:src="@drawable/thumb"
+        android:layout_marginLeft="40dp"
         android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageVolets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageWindow"
-        android:layout_alignTop="@+id/TextViewVolets"
+        android:layout_alignBottom="@+id/switchVolets"
+        android:layout_toRightOf="@+id/switchVolets"
         android:focusable="false"
         android:scaleType="center"
+        android:layout_marginLeft="40dp"
         android:src="@drawable/blinds"
         android:visibility="invisible" />
 
@@ -240,9 +249,10 @@
         android:id="@+id/increaseTemperatureButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="40dp"
         android:layout_alignBaseline="@+id/TextViewTemperatureValue"
         android:layout_alignBottom="@+id/TextViewTemperatureValue"
-        android:layout_alignRight="@+id/TextViewPresence"
+        android:layout_alignRight="@+id/textViewTemperature"
         android:background="@drawable/custom_button2"
         android:onClick="temperatureButton"
         android:text="+"
@@ -252,12 +262,22 @@
         android:id="@+id/lowerTemperatureButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:layout_alignBaseline="@+id/TextViewTemperatureValue"
         android:layout_alignBottom="@+id/TextViewTemperatureValue"
-        android:layout_alignLeft="@+id/TextViewPresence"
+        android:layout_alignLeft="@+id/textViewTemperature"
         android:background="@drawable/custom_button"
         android:onClick="temperatureButton"
         android:text="-"
         android:visibility="invisible" />
+
+    <FrameLayout
+        android:id="@+id/justToHold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewTemperature"
+        android:layout_alignTop="@+id/justToHold" >
+
+    </FrameLayout>
 
 </RelativeLayout>

@@ -39,14 +39,13 @@ ActionBar.TabListener {
 	public Integer currentTab = 1;
 	public Handler handler = new Handler();
 	public List<Integer> toEnable = new ArrayList<Integer>(); //ordered list of tabs where temperature buttons will be re-enabled
-    public volatile Boolean stop = false; //to disable handlers when the activity is destroyed
+	public volatile Boolean stop = false; //to disable handlers when the activity is destroyed
 	public static Boolean temperatureOrder0 = false;
 	public static Boolean temperatureOrder1 = false;
 	public static Boolean temperatureOrder2 = false;
 	public static Boolean temperatureOrder3 = false;
 	public static Boolean temperatureOrder4 = false;
 	public static Boolean temperatureOrder5 = false;
-
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -123,7 +122,7 @@ ActionBar.TabListener {
 		@Override
 		public void run()
 		{
-			//House model is already updated by parent view HouseActivity
+			//NB : House model is already updated by parent view HouseActivity
 			if (!stop){
 				//Update the view
 				FragmentPagerAdapter adapter = (FragmentPagerAdapter) mViewPager.getAdapter();
@@ -132,15 +131,6 @@ ActionBar.TabListener {
 			}
 		}
 	};
-
-	/*@Override //TODO : Delete ??? Test purpose
-    public void onWindowFocusChanged(boolean hasFocus) {
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		FragmentPagerAdapter adapter = (FragmentPagerAdapter) mViewPager.getAdapter();
-		Fragment cool = adapter.getItem(mViewPager.getCurrentItem());
-		cool.unregisterForContextMenu(mViewPager);
-		super.onWindowFocusChanged(hasFocus);
-	}*/
 
 	public void addSensor(View view){
 		Intent intent = new Intent(this, AddActivity.class);
@@ -212,7 +202,7 @@ ActionBar.TabListener {
 			return fragment;
 		}
 
-		@Override //TODO : Remove ? Useful to force refresh
+		@Override //To force refresh. Avoid it if there are performance issues.
 		public int getItemPosition(Object object) {
 			return POSITION_NONE;
 		}
@@ -244,7 +234,7 @@ ActionBar.TabListener {
 	}
 
 	/**
-	 * A dummy fragment representing a section of the app
+	 * A dummy fragment representing a section of the application
 	 */
 	public static class DummySectionFragment extends Fragment {
 		/**
@@ -252,7 +242,6 @@ ActionBar.TabListener {
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
-		public static View usefulView;
 
 		public DummySectionFragment() {
 		}
@@ -268,15 +257,8 @@ ActionBar.TabListener {
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
 			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).toLowerCase(Locale.FRANCE));	
 			updateFragment(idPiece,inflater,container, rootView);
-			usefulView=rootView;
 			return rootView;
 		}
-
-		////////////
-		public View getUsefulView(){
-			return usefulView;
-		}
-		/////////////
 
 		public void updateFragment(int position, LayoutInflater inflater, ViewGroup container, View rootView)
 		{
@@ -319,8 +301,6 @@ ActionBar.TabListener {
 					temperatureValue.setVisibility(TextView.VISIBLE);
 					increaseTemperatureButton.setVisibility(TextView.VISIBLE);
 					lowerTemperatureButton.setVisibility(TextView.VISIBLE);
-					//increaseTemperatureButton.setOnClickListener((OnClickListener) onTemperatureChangeRequest);
-					//lowerTemperatureButton.setOnClickListener((OnClickListener) onTemperatureChangeRequest);
 
 					//update value
 					temperatureValue.setText(r.getSensors().get(key).getLastValue().toString());
@@ -360,13 +340,11 @@ ActionBar.TabListener {
 					capteurSwitch.setVisibility(TextView.VISIBLE);
 					capteurText.setVisibility(TextView.VISIBLE);
 					capteurImg.setVisibility(TextView.VISIBLE);
-					//capteurSwitch.setOnClickListener((OnClickListener) onSwitchClick);
 
 					//update value
 					capteurSwitch.setChecked((Boolean) r.getSensors().get(key).getLastValue());
 
-					//Temperature buttons
-					//muting buttons for a given time if already selected soon before
+					//Temperature buttons visibility
 					if (temperatureOrderGiven(position)){
 						Button increaseTemperatureButton = (Button) rootView.findViewById(R.id.increaseTemperatureButton);
 						Button lowerTemperatureButton = (Button) rootView.findViewById(R.id.lowerTemperatureButton);
@@ -545,7 +523,6 @@ ActionBar.TabListener {
 							Constant.RELATIVE_TEMPERATURE_DECREASE_ON_USER_RQST ;
 				double newValue = lastValue + variationValue;
 
-				//System.out.println("Temperature change request : from " + lastValue + " to " + newValue);
 				try
 				{
 					EchangesModeleMaison.actionUtilisateur(currentTab, RoomConstants.tempAction, newValue);
@@ -558,9 +535,9 @@ ActionBar.TabListener {
 		}
 	}
 
-    @Override
-    protected void onDestroy(){
-    	stop = true;
-    	super.onDestroy();
-    }
+	@Override
+	protected void onDestroy(){
+		stop = true; 
+		super.onDestroy();
+	}
 } 
