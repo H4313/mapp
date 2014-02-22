@@ -45,7 +45,7 @@
         android:layout_alignBaseline="@+id/TextViewPorte"
         android:layout_alignBottom="@+id/TextViewPorte"
         android:layout_alignLeft="@+id/switchVolets"
-        android:onClick="onDoorSwitchClick"
+        android:onClick="switchAction"
         android:textOff="Fermée"
         android:textOn="Ouverte"
         android:visibility="invisible" />
@@ -69,7 +69,7 @@
         android:layout_alignBaseline="@+id/TextViewVolets"
         android:layout_alignBottom="@+id/TextViewVolets"
         android:layout_alignLeft="@+id/switchFenetre"
-        android:onClick="onFlapSwitchClick"
+        android:onClick="switchAction"
         android:textOff="Fermés"
         android:textOn="Ouverts"
         android:visibility="invisible" />
@@ -106,7 +106,7 @@
         android:layout_alignBottom="@+id/TextViewLumiere"
         android:layout_marginRight="52dp"
         android:layout_toLeftOf="@+id/buttonAdd"
-        android:onClick="onLightSwitchClick"
+        android:onClick="switchAction"
         android:textOff="Éteinte"
         android:textOn="Allumée"
         android:visibility="invisible" />
@@ -118,7 +118,7 @@
         android:layout_alignBaseline="@+id/TextViewFenetre"
         android:layout_alignBottom="@+id/TextViewFenetre"
         android:layout_alignLeft="@+id/switchLumiere"
-        android:onClick="onWindowSwitchClick"
+        android:onClick="switchAction"
         android:textOff="Fermée"
         android:textOn="Ouverte"
         android:visibility="invisible" />
@@ -244,6 +244,7 @@
         android:layout_alignBottom="@+id/TextViewTemperatureValue"
         android:layout_alignRight="@+id/TextViewPresence"
         android:background="@drawable/custom_button2"
+        android:onClick="temperatureButton"
         android:text="+"
         android:visibility="invisible" />
 
@@ -255,6 +256,7 @@
         android:layout_alignBottom="@+id/TextViewTemperatureValue"
         android:layout_alignLeft="@+id/TextViewPresence"
         android:background="@drawable/custom_button"
+        android:onClick="temperatureButton"
         android:text="-"
         android:visibility="invisible" />
 

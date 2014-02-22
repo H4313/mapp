@@ -2,6 +2,7 @@ package com.example.deephouse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -48,12 +49,13 @@ public class EchangesModeleMaison
     {
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 	    nameValuePairs.add(new BasicNameValuePair("piece", Integer.toString(numPiece)));
-	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction.toUpperCase()));
+	    nameValuePairs.add(new BasicNameValuePair("typeAction", objetAction.toUpperCase(Locale.FRANCE)));
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Double.toString(newValue)));
         
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url_userAction,nameValuePairs);
             String resultat = jsonParser.getJson();
+            System.out.println(nameValuePairs.toString()); //TODO : Remove when debug is done
             System.out.println(resultat); //TODO : Remove when debug is done
             } 
         catch (Exception e) {
@@ -78,6 +80,7 @@ public class EchangesModeleMaison
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url_userAction,nameValuePairs);
             String resultat = jsonParser.getJson();
+            System.out.println(nameValuePairs.toString()); //TODO : Remove when debug is done
             System.out.println(resultat); //TODO : Remove when debug is done
             } 
         catch (Exception e) {
@@ -149,7 +152,7 @@ public class EchangesModeleMaison
      */
 	public static String recupererMaison()
 	{
-		System.out.println("Updating house from server."); //TODO : Delete when debug is done
+		//System.out.println("Updating house from server."); //TODO : Delete when debug is done
         ParseJSON jsonParser = new ParseJSON(url_maison);
         String maison = jsonParser.getJson();
         return maison;
