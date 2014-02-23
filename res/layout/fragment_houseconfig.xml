@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HouseConfigActivity$PlaceholderFragment" >
-
+    
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
@@ -16,15 +16,14 @@
         android:text="Configuration de la piece"
         android:textSize="42sp"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+    
+    <ImageButton
+    	android:id="@+id/buttonAdd"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignRight="@+id/imageLight"
         android:onClick="addSensor"
-        android:text="+" />
+        android:background="@drawable/settings" />
 
     <TextView
         android:id="@+id/TextViewLumiere"
@@ -32,8 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textViewTemperature"
         android:layout_alignBottom="@+id/textViewTemperature"
-        android:layout_marginRight="221dp"
-        android:layout_toLeftOf="@+id/buttonAdd"
+        android:layout_marginLeft="560dp"
         android:text="Lumiere"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@android:dimen/app_icon_size"
@@ -106,7 +104,8 @@
         android:layout_alignBaseline="@+id/TextViewLumiere"
         android:layout_alignBottom="@+id/TextViewLumiere"
         android:layout_marginRight="52dp"
-        android:layout_toLeftOf="@+id/buttonAdd"
+        android:layout_toRightOf="@+id/TextViewLumiere"
+        android:layout_marginLeft="30dp"
         android:onClick="switchAction"
         android:textOff="Éteinte"
         android:textOn="Allumée"

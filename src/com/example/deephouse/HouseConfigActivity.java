@@ -255,7 +255,7 @@ ActionBar.TabListener {
 			//Setting tab title
 			TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label);
 			int idPiece = getArguments().getInt(ARG_SECTION_NUMBER)-1;
-			dummyTextView.setText("				Configuration de la piece " + getRoomNameById(idPiece).toLowerCase(Locale.FRANCE));	
+			dummyTextView.setText("				Visualisation de la piece " + getRoomNameById(idPiece).toLowerCase(Locale.FRANCE));	
 			updateFragment(idPiece,inflater,container, rootView);
 			return rootView;
 		}
