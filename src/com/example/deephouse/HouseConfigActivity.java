@@ -303,7 +303,11 @@ ActionBar.TabListener {
 					lowerTemperatureButton.setVisibility(TextView.VISIBLE);
 
 					//update value
-					temperatureValue.setText(r.getSensors().get(key).getLastValue().toString());
+					String valueTemperature = r.getSensors().get(key).getLastValue().toString();
+					if (valueTemperature.length()>4){
+						valueTemperature = valueTemperature.substring(0,4);
+					}
+					temperatureValue.setText(valueTemperature);
 				}
 				else
 				{

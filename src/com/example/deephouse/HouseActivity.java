@@ -208,7 +208,11 @@ public class HouseActivity extends Activity {
 				{
 					//System.out.println("Piece " + r.getIdRoom() + " : temperature = "  + r.getSensors().get(key).getLastValue());
 					TextView textView = (TextView) findViewById(textViewTemperature);
-					textView.setText(r.getSensors().get(key).getLastValue() + " C");
+					String temperatureValue = r.getSensors().get(key).getLastValue().toString();
+					if (temperatureValue.length() >4){
+						temperatureValue = temperatureValue.substring(0,4);
+					}
+					textView.setText(temperatureValue + " C");
 				}
 				else if(r.getSensors().get(key).getType() == SensorType.PRESENCE)
 				{
@@ -255,5 +259,12 @@ public class HouseActivity extends Activity {
             	e.printStackTrace();
             }
         }
+    }
+    
+    public void displayStats(View view){
+    	//Launching stats intent
+        Intent statsIntent = new Intent(this, StatsActivity.class);
+        statsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(statsIntent);
     }
 }
