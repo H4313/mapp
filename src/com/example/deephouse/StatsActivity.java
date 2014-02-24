@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.support.v4.app.NavUtils;
 
 public class StatsActivity extends Activity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,7 +17,8 @@ public class StatsActivity extends Activity {
 		setupActionBar();
 		//Setting up web content
 		WebView myWebView = (WebView) findViewById(R.id.webview);
-		myWebView.loadUrl("http://www.example.com");
+	    myWebView.getSettings().setJavaScriptEnabled(true);
+		myWebView.loadUrl(EchangesModeleMaison.getBaseIp()+"/deepHouse/chart/index.html");
 	}
 
 	/**

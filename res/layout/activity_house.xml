@@ -5,14 +5,24 @@
     android:layout_height="match_parent"
     tools:context=".HouseActivity"
     tools:ignore="MergeRootFrame" >
+    
+        <ImageButton
+            android:id="@+id/button1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/chart"
+            android:contentDescription="Settings logo"
+            android:onClick="displayStats" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="50dp"
-        android:onClick="displayStats"
-        android:text="Statistiques" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="150dp"
+            android:text="Statistiques"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </FrameLayout>

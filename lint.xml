@@ -7,4 +7,7 @@
     <issue id="HardcodedText">
         <ignore path="res/layout/fragment_houseconfig.xml" />
     </issue>
+    <issue id="SetJavaScriptEnabled">
+        <ignore path="src/com/example/deephouse/StatsActivity.java" />
+    </issue>
 </lint>

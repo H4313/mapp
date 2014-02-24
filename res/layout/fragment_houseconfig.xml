@@ -18,6 +18,7 @@
         android:layout_centerHorizontal="true" />
     
     <ImageButton
+        android:contentDescription="Settings logo"
     	android:id="@+id/buttonAdd"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -124,6 +125,7 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:contentDescription="Thermometer picture"
         android:id="@+id/imageTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -186,6 +188,7 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:contentDescription="Light picture"
         android:id="@+id/imageLight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -198,6 +201,7 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:contentDescription="Door picture"
         android:id="@+id/imageDoor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -210,6 +214,7 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:contentDescription="Door picture"
         android:id="@+id/imageWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -222,6 +227,7 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:contentDescription="Flap picture"
         android:id="@+id/imageVolets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -234,6 +240,7 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:contentDescription="Person logo"
         android:id="@+id/imagePerson"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

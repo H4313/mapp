@@ -220,6 +220,8 @@ public class HouseActivity extends Activity {
 					ImageView imageView = (ImageView) findViewById(idImagePerson);
 					if((Boolean)r.getSensors().get(key).getLastValue())
 						imageView.setVisibility(ImageView.VISIBLE);
+					else
+						imageView.setVisibility(ImageView.INVISIBLE);
 				}
 			}
 		}

@@ -13,7 +13,6 @@
     <string name="title_section4">Chambre</string>
     <string name="title_section5">Bureau</string>
     <string name="title_section6">Couloir</string>
-    <string name="title_activity_house_config_activity2">HouseConfigActivity2</string>
-    <string name="title_activity_stats">StatsActivity</string>
+    <string name="title_activity_stats">Temperatures mesurees dans la maison"</string>
 
 </resources>

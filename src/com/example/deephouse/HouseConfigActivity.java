@@ -142,7 +142,7 @@ ActionBar.TabListener {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.house_config_activity2, menu);
+		getMenuInflater().inflate(R.menu.house_config, menu);
 		return true;
 	}
 
@@ -274,17 +274,19 @@ ActionBar.TabListener {
 					TextView presence = (TextView) rootView.findViewById(R.id.TextViewPresence);
 					TextView presenceValue = (TextView) rootView.findViewById(R.id.TextViewPresenceValue);
 					ImageView imgPerson = (ImageView) rootView.findViewById(R.id.imagePerson);
+					presenceValue.setText("Aucune");
 
 					//set visibility
 					presence.setVisibility(TextView.VISIBLE);
 					if((Boolean) r.getSensors().get(key).getLastValue())
 					{
 						imgPerson.setVisibility(TextView.VISIBLE);
+						presenceValue.setVisibility(TextView.INVISIBLE);
 					}
 					else
 					{
+						imgPerson.setVisibility(TextView.INVISIBLE);
 						presenceValue.setVisibility(TextView.VISIBLE);
-						presenceValue.setText("Aucune");
 					}
 				}
 				else if(sensorType == SensorType.TEMPERATURE)

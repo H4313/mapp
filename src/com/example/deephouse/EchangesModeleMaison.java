@@ -23,7 +23,7 @@ import com.h4313.deephouse.sensor.Sensor;
  */
 public class EchangesModeleMaison
 {
-	private static String url; //"http://192.168.43.141:53500"; //real device url
+	private static String url;
 	private static String url_maison;
 	private static String url_userAction;
 	private static String url_addSensor;
@@ -43,6 +43,10 @@ public class EchangesModeleMaison
 		url_userAction = url+"/deepHouse/rest/userAction";
 		url_addSensor = url+"/deepHouse/rest/addSensor";
 		url_addActuator = url+"/deepHouse/rest/addActuator";
+	}
+	
+	public static String getBaseIp(){
+		return url;
 	}
 	
     public static void actionUtilisateur(int numPiece, String objetAction, double newValue) throws JSONException
