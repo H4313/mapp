@@ -62,7 +62,8 @@ public class HouseActivity extends Activity {
 				EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
 				localHouseInstanciation();
 				updateView(); // mise a jour de la vue avec ce nouveau modele.
-				handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);}         
+				handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
+			}         
 		}
 	};
 
@@ -146,16 +147,9 @@ public class HouseActivity extends Activity {
 	}
 
 	private void updateTime(){
-		String date="0";
-		String urlDate = EchangesModeleMaison.getBaseIp()+"/deepHouse/rest/date";
-		ParseJSON parser = new ParseJSON(urlDate);
-		try {
-			date = (String) parser.getJSONArray().get(0);
-		} catch (JSONException e) {
-			e.printStackTrace();}
 		TextView textView = (TextView) findViewById(R.id.textViewHeure);
-		Date date2 = new Date(date);
-		textView.setText(date2.toString());
+		Date date = EchangesModeleMaison.getCurrentDate();
+		textView.setText(date.toString());
 	}
 
 	// Updates temperature and human presence in every room.

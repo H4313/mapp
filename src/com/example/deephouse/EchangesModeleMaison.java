@@ -1,12 +1,15 @@
 package com.example.deephouse;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
+
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +31,7 @@ public class EchangesModeleMaison
 	private static String url_userAction;
 	private static String url_addSensor;
 	private static String url_addActuator;
+	private static String url_date;
 	
     /**
      * Informer le modele de la maison d'une action a VALEUR de la part de l'utilisateur.
@@ -38,11 +42,13 @@ public class EchangesModeleMaison
      */
 	
 	public static void setIp(String ip){
+		System.out.println("ip = " + ip);
 		url = "http://"+ip;
 		url_maison = url+"/deepHouse/rest/houseModel";
 		url_userAction = url+"/deepHouse/rest/userAction";
 		url_addSensor = url+"/deepHouse/rest/addSensor";
 		url_addActuator = url+"/deepHouse/rest/addActuator";
+		url_date = url+"/deepHouse/rest/date";
 	}
 	
 	public static String getBaseIp(){
@@ -156,7 +162,7 @@ public class EchangesModeleMaison
      */
 	public static String recupererMaison()
 	{
-		//System.out.println("Updating house from server."); //TODO : Delete when debug is done
+		System.out.println("Updating house from server."); //TODO : Delete when debug is done
         ParseJSON jsonParser = new ParseJSON(url_maison);
         String maison = jsonParser.getJson();
         return maison;
@@ -187,5 +193,17 @@ public class EchangesModeleMaison
 			e.printStackTrace();
 		}
     	return success;
+    }
+    
+    public static Date getCurrentDate() {
+    	String miliseconds="0";
+    	
+		ParseJSON parser = new ParseJSON(url_date);
+		try {
+			miliseconds = (String) parser.getJSONArray().get(0);
+		} catch (JSONException e) {
+			e.printStackTrace();}
+
+		return new Date(Long.parseLong(miliseconds));
     }
 }
