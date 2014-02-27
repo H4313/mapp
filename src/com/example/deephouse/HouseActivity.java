@@ -147,7 +147,7 @@ public class HouseActivity extends Activity {
 
 	private void updateTime(){
 		String date="0";
-		String urlDate = EchangesModeleMaison.getBaseIp()+"deepHouse/rest/date";
+		String urlDate = EchangesModeleMaison.getBaseIp()+"/deepHouse/rest/date";
 		ParseJSON parser = new ParseJSON(urlDate);
 		try {
 			date = (String) parser.getJSONArray().get(0);
