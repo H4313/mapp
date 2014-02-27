@@ -1,6 +1,9 @@
 package com.example.deephouse;
 
+import java.util.Date;
 import java.util.List;
+
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -27,180 +30,178 @@ import com.h4313.deephouse.util.DecToHexConverter;
 
 public class HouseActivity extends Activity {
 
-    public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
-    public static final String PREFS_NAME = "DeepHousePrefs";
-    public Handler handler;
-    public volatile Boolean stop = false;
-   
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_house);
+	public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
+	public static final String PREFS_NAME = "DeepHousePrefs";
+	public Handler handler;
+	public volatile Boolean stop = false;
 
-        //Getting intent content
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-        
-        // Update House Model
-        EchangesModeleMaison.updateHouse();
-        
-        //View updates
-        handler = new Handler();
-        handler.post(init); //first refresh
-        handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH); //automatic refresh
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_house);
+
+		//Getting intent content
+		if (savedInstanceState == null) {
+			getFragmentManager().beginTransaction()
+			.add(R.id.container, new PlaceholderFragment())
+			.commit();
+		}
+
+		//View updates
+		handler = new Handler();
+		handler.post(refresh); //automatic refresh
 	}
-	
-	private final Runnable init = new Runnable()
-	{
-		@Override
-	    public void run()
-	    {
-			if (!stop)
-	        updateView();
-	    }
-	};
-    
+
 	private final Runnable refresh = new Runnable()
 	{
 		@Override
-	    public void run()
-	    {
+		public void run()
+		{
 			if (!stop){
-	        EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
-	        updateView(); // MAJ de la vue avec ce nouveau modele.
-			handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);}         
-	    }
+				updateTime();
+				EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
+				localHouseInstanciation();
+				updateView(); // mise a jour de la vue avec ce nouveau modele.
+				handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);}         
+		}
 	};
-	
-    @Override
-    protected void onDestroy(){
-    	stop = true;
-    	super.onDestroy();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+	@Override
+	protected void onDestroy(){
+		stop = true;
+		super.onDestroy();
+	}
 
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.house, menu);
-        return true;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.house, menu);
+		return true;
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            case R.id.action_deconnexion:
-                //Clear login informations
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.remove("ip")
-                        .remove("login")
-                        .remove("password")
-                        .commit();
-                // Application automatic launch
-                Intent homeIntent = new Intent(this, MainActivity.class);
-                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			return true;
+		case R.id.action_deconnexion:
+			//Clear login informations
+			SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.remove("ip")
+			.remove("login")
+			.remove("password")
+			.commit();
+			// Application automatic launch
+			Intent homeIntent = new Intent(this, MainActivity.class);
+			homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(homeIntent);
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+	/**
+	 * A placeholder fragment containing a simple view.
+	 */
+	public static class PlaceholderFragment extends Fragment {
 
-        public PlaceholderFragment() {
-        }
+		public PlaceholderFragment() {
+		}
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			View rootView = inflater.inflate(R.layout.fragment_house, container, false);
+			return rootView;
+		}
+	}
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_house, container, false);
-            return rootView;
-        }
-    }
+	/** Called when the user clicks on a room of the house */
+	public void openConfigurationL(View view){
+		openConfiguration(view,0);
+	}
+	public void openConfigurationK(View view){
+		openConfiguration(view,1);
+	}
+	public void openConfigurationWC(View view){
+		openConfiguration(view,2);
+	}
+	public void openConfigurationB1(View view){
+		openConfiguration(view,3);
+	}
+	public void openConfigurationB2(View view){
+		openConfiguration(view,4);
+	}
+	public void openConfigurationC(View view){
+		openConfiguration(view,5);
+	}
 
-    /** Called when the user clicks on a room of the house */
-    public void openConfigurationL(View view){
-        openConfiguration(view,0);
-    }
-    public void openConfigurationK(View view){
-        openConfiguration(view,1);
-    }
-    public void openConfigurationWC(View view){
-        openConfiguration(view,2);
-    }
-    public void openConfigurationB1(View view){
-        openConfiguration(view,3);
-    }
-    public void openConfigurationB2(View view){
-        openConfiguration(view,4);
-    }
-    public void openConfigurationC(View view){
-        openConfiguration(view,5);
-    }
+	public void openConfiguration(View view, Integer position) {
+		Intent intent = new Intent(this, HouseConfigActivity.class); //creates configuration activity
+		//Putting text field content in intent
+		intent.putExtra(EXTRA_MESSAGE, position);
+		startActivity(intent);
+	}
 
-    public void openConfiguration(View view, Integer position) {
-        Intent intent = new Intent(this, HouseConfigActivity.class); //creates configuration activity
-        //Putting text field content in intent
-        intent.putExtra(EXTRA_MESSAGE, position);
-        startActivity(intent);
-    }
+	private void updateTime(){
+		String date="0";
+		String urlDate = EchangesModeleMaison.getBaseIp()+"deepHouse/rest/date";
+		ParseJSON parser = new ParseJSON(urlDate);
+		try {
+			date = (String) parser.getJSONArray().get(0);
+		} catch (JSONException e) {
+			e.printStackTrace();}
+		TextView textView = (TextView) findViewById(R.id.textViewHeure);
+		Date date2 = new Date(date);
+		textView.setText(date2.toString());
+	}
 
-	
 	// Updates temperature and human presence in every room.
 	private void updateView()
 	{
 		House house = House.getInstance();
-		
+
 		// Getting TextView's displaying temperature and presence in each room.
 		for(Room r : house.getRooms())
 		{
 			int textViewTemperature;
 			int idImagePerson;
-			
+
 			switch(r.getIdRoom())
 			{
-				case RoomConstants.ID_LIVING_ROOM : 
-					textViewTemperature = R.id.textViewLivingRoomTemperature;
-					idImagePerson = R.id.ImagePersonLivingroom;
-					break;
-				case RoomConstants.ID_KITCHEN : 
-					textViewTemperature = R.id.textViewKitchenTemperature;
-					idImagePerson = R.id.ImagePersonKitchen;
-					break;
-				case RoomConstants.ID_BATHROOM : 
-					textViewTemperature = R.id.textViewBathroomTemperature;
-					idImagePerson = R.id.ImagePersonBathroom;
-					break;
-				case RoomConstants.ID_BEDROOM : 
-					textViewTemperature = R.id.textViewBedroomTemperature;
-					idImagePerson = R.id.ImagePersonBedroom;
-					break;
-				case RoomConstants.ID_OFFICE : 
-					textViewTemperature = R.id.textViewOfficeTemperature;
-					idImagePerson = R.id.ImagePersonOffice;
-					break;
-				case RoomConstants.ID_CORRIDOR : 
-					textViewTemperature = R.id.textViewCorridorTemperature;
-					idImagePerson = R.id.ImagePersonCorridor;
-					break;
-				default :
-					textViewTemperature = -1;
-					idImagePerson = -1;
-					System.out.println("Erreur rencontree : tentative de MAJ de la piece n" + r.getIdRoom() + " inexistante.");
-					return;
+			case RoomConstants.ID_LIVING_ROOM : 
+				textViewTemperature = R.id.textViewLivingRoomTemperature;
+				idImagePerson = R.id.ImagePersonLivingroom;
+				break;
+			case RoomConstants.ID_KITCHEN : 
+				textViewTemperature = R.id.textViewKitchenTemperature;
+				idImagePerson = R.id.ImagePersonKitchen;
+				break;
+			case RoomConstants.ID_BATHROOM : 
+				textViewTemperature = R.id.textViewBathroomTemperature;
+				idImagePerson = R.id.ImagePersonBathroom;
+				break;
+			case RoomConstants.ID_BEDROOM : 
+				textViewTemperature = R.id.textViewBedroomTemperature;
+				idImagePerson = R.id.ImagePersonBedroom;
+				break;
+			case RoomConstants.ID_OFFICE : 
+				textViewTemperature = R.id.textViewOfficeTemperature;
+				idImagePerson = R.id.ImagePersonOffice;
+				break;
+			case RoomConstants.ID_CORRIDOR : 
+				textViewTemperature = R.id.textViewCorridorTemperature;
+				idImagePerson = R.id.ImagePersonCorridor;
+				break;
+			default :
+				textViewTemperature = -1;
+				idImagePerson = -1;
+				System.out.println("Erreur rencontree : tentative de MAJ de la piece n" + r.getIdRoom() + " inexistante.");
+				return;
 			}
-			
+
 			// Updates if the sensor exists
 			for(String key : r.getSensors().keySet())
 			{
@@ -226,47 +227,46 @@ public class HouseActivity extends Activity {
 			}
 		}
 	}
-		
-	
-    /**
-     * To be used for debug only
-     */
-    public static void localHouseInstanciation()
-    {
-    	List<Room> rooms = House.getInstance().getRooms();
-        int id = 0;
-        for(Room room : rooms)
-        {
-	        try{
-	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.TEMPERATURE);
-	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.WINDOW);
-	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.LIGHT);
-	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.DOOR);
-	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.FLAP);
-	            room.addSensor(DecToHexConverter.decToHex(id++), SensorType.PRESENCE);
-	
-	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.RADIATOR);
-	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.WINDOWCLOSER);
-	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.LIGHTCONTROL);
-	            room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.DOORCONTROL);
-	            
-	            room.getSensorByType(SensorType.PRESENCE).get(0).setLastValue(true);
-            }
-            catch (DeepHouseDuplicateException e)
-            {
-            	e.printStackTrace();
-            }
-            catch (Exception e)
-            {
-            	e.printStackTrace();
-            }
-        }
-    }
-    
-    public void displayStats(View view){
-    	//Launching stats intent
-        Intent statsIntent = new Intent(this, StatsActivity.class);
-        statsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(statsIntent);
-    }
+
+	/**
+	 * To be used for debug only
+	 */
+	public static void localHouseInstanciation()
+	{
+		List<Room> rooms = House.getInstance().getRooms();
+		int id = 0;
+		for(Room room : rooms)
+		{
+			try{
+				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.TEMPERATURE);
+				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.WINDOW);
+				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.LIGHT);
+				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.DOOR);
+				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.FLAP);
+				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.PRESENCE);
+
+				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.RADIATOR);
+				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.WINDOWCLOSER);
+				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.LIGHTCONTROL);
+				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.DOORCONTROL);
+
+				room.getSensorByType(SensorType.PRESENCE).get(0).setLastValue(true);
+			}
+			catch (DeepHouseDuplicateException e)
+			{
+				e.printStackTrace();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void displayStats(View view){
+		//Launching stats intent
+		Intent statsIntent = new Intent(this, StatsActivity.class);
+		statsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(statsIntent);
+	}
 }

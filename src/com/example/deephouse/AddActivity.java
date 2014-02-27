@@ -49,7 +49,7 @@ public class AddActivity extends Activity {
 		Intent intent = getIntent();
 		roomNb = intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0);
 		TextView textView = (TextView) findViewById(R.id.textViewTitre);
-		textView.setText("Ajout d'un capteur ou actionneur dans la piece " + getRoomNameById(roomNb).substring(0, 1).toLowerCase(Locale.FRANCE));
+		textView.setText("Ajout d'un capteur ou actionneur dans la piece " + getRoomNameById(roomNb).toLowerCase(Locale.FRANCE));
 		//Setting sensors type
 		setSensors();
 

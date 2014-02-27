@@ -310,9 +310,25 @@ ActionBar.TabListener {
 						valueTemperature = valueTemperature.substring(0,4);
 					}
 					temperatureValue.setText(valueTemperature);
+
+					//Temperature buttons visibility
+					if (temperatureOrderGiven(position)){
+						TextView temperatureValueTextView = (TextView) rootView.findViewById(R.id.TextViewTemperatureValue);
+
+						increaseTemperatureButton.setClickable(false);
+						lowerTemperatureButton.setClickable(false);
+
+						increaseTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
+						lowerTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
+						if(rootView.getId() == R.id.increaseTemperatureButton){
+							temperatureValueTextView.setTextColor(getResources().getColor(R.color.Coral));
+						}
+						else{
+							temperatureValueTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+						}
+					}
 				}
-				else
-				{
+				else{
 					Switch capteurSwitch;
 					TextView capteurText;
 					ImageView capteurImg;
@@ -349,28 +365,9 @@ ActionBar.TabListener {
 
 					//update value
 					capteurSwitch.setChecked((Boolean) r.getSensors().get(key).getLastValue());
-
-					//Temperature buttons visibility
-					if (temperatureOrderGiven(position)){
-						Button increaseTemperatureButton = (Button) rootView.findViewById(R.id.increaseTemperatureButton);
-						Button lowerTemperatureButton = (Button) rootView.findViewById(R.id.lowerTemperatureButton);
-						TextView temperatureValueTextView = (TextView) rootView.findViewById(R.id.TextViewTemperatureValue);
-
-						increaseTemperatureButton.setClickable(false);
-						lowerTemperatureButton.setClickable(false);
-
-						increaseTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
-						lowerTemperatureButton.setBackgroundColor(getResources().getColor(R.color.Lavender));
-						if(rootView.getId() == R.id.increaseTemperatureButton)
-							temperatureValueTextView.setTextColor(getResources().getColor(R.color.Coral));
-						else // (v.getId() == R.id.lowerTemperatureButton)
-							temperatureValueTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
-					}
 				}
 			}
 		}
-
-
 
 		public String getRoomNameById(int position) {
 			switch (position) {
