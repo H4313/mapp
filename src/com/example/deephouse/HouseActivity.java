@@ -148,8 +148,15 @@ public class HouseActivity extends Activity {
 
 	private void updateTime(){
 		TextView textView = (TextView) findViewById(R.id.textViewHeure);
-		Date date = EchangesModeleMaison.getCurrentDate();
-		textView.setText(date.toString());
+		try
+		{
+			Date date = EchangesModeleMaison.getCurrentDate();
+			textView.setText(date.toString());
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	// Updates temperature and human presence in every room.
