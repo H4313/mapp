@@ -199,10 +199,7 @@ public class EchangesModeleMaison
     	String miliseconds="0";
     	
 		ParseJSON parser = new ParseJSON(url_date);
-		try {
-			miliseconds = (String) parser.getJSONArray().get(0);
-		} catch (JSONException e) {
-			e.printStackTrace();}
+		miliseconds = parser.getJson();
 
 		return new Date(Long.parseLong(miliseconds));
     }
