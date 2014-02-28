@@ -10,6 +10,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -196,19 +197,18 @@ public class EchangesModeleMaison
     	return success;
     }
     
-    public static Date getCurrentDate() throws Exception {
-    	String miliseconds="0";
+    public static String getCurrentDate() throws Exception {
+    	String milliseconds="0";
     	
 		ParseJSON parser = new ParseJSON(url_date);
 		JSONObject obj = parser.getJSONObject();
-		Boolean success = Boolean.valueOf((String) obj.get("success"));
+		Boolean success = (obj.get("success").toString()).equals("true");
 		if(!success.booleanValue())
 		{
 			throw new Exception();
 		}
 		
-		miliseconds = (String) obj.get("date");
-
-		return new Date(Long.parseLong(miliseconds));
+		milliseconds = obj.get("date").toString();
+		return milliseconds;
     }
 }

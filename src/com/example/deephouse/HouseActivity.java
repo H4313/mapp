@@ -1,5 +1,6 @@
 package com.example.deephouse;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -58,10 +59,10 @@ public class HouseActivity extends Activity {
 		public void run()
 		{
 			if (!stop){
-				updateTime();
 				EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
 				localHouseInstanciation();
 				updateView(); // mise a jour de la vue avec ce nouveau modele.
+				updateTime();
 				handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
 			}         
 		}
@@ -150,8 +151,13 @@ public class HouseActivity extends Activity {
 		TextView textView = (TextView) findViewById(R.id.textViewHeure);
 		try
 		{
-			Date date = EchangesModeleMaison.getCurrentDate();
-			textView.setText(date.toString());
+			String timeMil = "0";
+			timeMil = EchangesModeleMaison.getCurrentDate();
+			@SuppressWarnings("deprecation")
+			Date date = new Date(timeMil);
+			SimpleDateFormat formatedDate = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat formatedHours = new SimpleDateFormat("HH:mm:ss");
+			textView.setText(formatedDate.format(date)+"\n"+formatedHours.format(date));
 		}
 		catch(Exception e)
 		{

@@ -10,4 +10,7 @@
     <issue id="SetJavaScriptEnabled">
         <ignore path="src/com/example/deephouse/StatsActivity.java" />
     </issue>
+    <issue id="SimpleDateFormat">
+        <ignore path="src/com/example/deephouse/HouseActivity.java" />
+    </issue>
 </lint>
