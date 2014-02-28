@@ -60,7 +60,7 @@ public class HouseActivity extends Activity {
 		{
 			if (!stop){
 				EchangesModeleMaison.updateHouse(); // Recuperation du Json House (modele a jour de la maison) sur le serveur
-				localHouseInstanciation();
+//				localHouseInstanciation();
 				updateView(); // mise a jour de la vue avec ce nouveau modele.
 				updateTime();
 				handler.postDelayed(refresh, Constant.MILLISECONDS_TILL_REFRESH);
@@ -154,7 +154,7 @@ public class HouseActivity extends Activity {
 			String timeMil = "0";
 			timeMil = EchangesModeleMaison.getCurrentDate();
 			@SuppressWarnings("deprecation")
-			Date date = new Date(timeMil);
+			Date date = new Date(Long.parseLong(timeMil));
 			SimpleDateFormat formatedDate = new SimpleDateFormat("dd/MM/yyyy");
 			SimpleDateFormat formatedHours = new SimpleDateFormat("HH:mm:ss");
 			textView.setText(formatedDate.format(date)+"\n"+formatedHours.format(date));
@@ -238,37 +238,37 @@ public class HouseActivity extends Activity {
 	/**
 	 * To be used for debug only
 	 */
-	public static void localHouseInstanciation()
-	{
-		List<Room> rooms = House.getInstance().getRooms();
-		int id = 0;
-		for(Room room : rooms)
-		{
-			try{
-				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.TEMPERATURE);
-				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.WINDOW);
-				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.LIGHT);
-				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.DOOR);
-				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.FLAP);
-				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.PRESENCE);
-
-				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.RADIATOR);
-				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.WINDOWCLOSER);
-				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.LIGHTCONTROL);
-				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.DOORCONTROL);
-
-				room.getSensorByType(SensorType.PRESENCE).get(0).setLastValue(true);
-			}
-			catch (DeepHouseDuplicateException e)
-			{
-				e.printStackTrace();
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-	}
+//	public static void localHouseInstanciation()
+//	{
+//		List<Room> rooms = House.getInstance().getRooms();
+//		int id = 0;
+//		for(Room room : rooms)
+//		{
+//			try{
+//				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.TEMPERATURE);
+//				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.WINDOW);
+//				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.LIGHT);
+//				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.DOOR);
+//				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.FLAP);
+//				room.addSensor(DecToHexConverter.decToHex(id++), SensorType.PRESENCE);
+//
+//				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.RADIATOR);
+//				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.WINDOWCLOSER);
+//				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.LIGHTCONTROL);
+//				room.addActuator(DecToHexConverter.decToHex(id++), ActuatorType.DOORCONTROL);
+//
+//				room.getSensorByType(SensorType.PRESENCE).get(0).setLastValue(true);
+//			}
+//			catch (DeepHouseDuplicateException e)
+//			{
+//				e.printStackTrace();
+//			}
+//			catch (Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	public void displayStats(View view){
 		//Launching stats intent

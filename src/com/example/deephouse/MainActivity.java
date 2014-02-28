@@ -96,10 +96,12 @@ public class MainActivity extends Activity {
 	public void connexion(View view) {
 		EditText editTextLogin = (EditText) findViewById(R.id.editTextLogin); 
 		String login = editTextLogin.getText().toString();
+		EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword); 
+		String password = editTextPassword.getText().toString();
 		EditText editTextIP = (EditText) findViewById(R.id.editTextIP);      
 		String ip = editTextIP.getText().toString();
 		EchangesModeleMaison.setIp(ip);
-		if (login.equals("Login")){
+		if (login.equals("admin") && password.equals("root")){
 			//Checking connectivity
 			try {
 				String retour = EchangesModeleMaison.recupererMaison();

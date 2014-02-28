@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ import android.widget.TextView;
 import com.h4313.deephouse.housemodel.House;
 import com.h4313.deephouse.housemodel.Room;
 import com.h4313.deephouse.housemodel.RoomConstants;
+import com.h4313.deephouse.sensor.BooleanSensor;
+import com.h4313.deephouse.sensor.Sensor;
 import com.h4313.deephouse.sensor.SensorType;
 import com.h4313.deephouse.util.Constant;
 
@@ -264,11 +267,9 @@ ActionBar.TabListener {
 		{
 			House house = House.getInstance();
 			Room r = house.getRooms().get(position);
-
-			for(String key : r.getSensors().keySet())
+			for(Sensor sensor : r.getSensors().values())
 			{
-				SensorType sensorType = r.getSensors().get(key).getType();
-
+				SensorType sensorType = sensor.getType();
 				if(sensorType == SensorType.PRESENCE)
 				{
 					TextView presence = (TextView) rootView.findViewById(R.id.TextViewPresence);
@@ -278,7 +279,7 @@ ActionBar.TabListener {
 
 					//set visibility
 					presence.setVisibility(TextView.VISIBLE);
-					if((Boolean) r.getSensors().get(key).getLastValue())
+					if((Boolean) sensor.getLastValue())
 					{
 						imgPerson.setVisibility(TextView.VISIBLE);
 						presenceValue.setVisibility(TextView.INVISIBLE);
@@ -305,7 +306,7 @@ ActionBar.TabListener {
 					lowerTemperatureButton.setVisibility(TextView.VISIBLE);
 
 					//update value
-					String valueTemperature = r.getSensors().get(key).getLastValue().toString();
+					String valueTemperature = sensor.getLastValue().toString();
 					if (valueTemperature.length()>4){
 						valueTemperature = valueTemperature.substring(0,4);
 					}
@@ -361,10 +362,12 @@ ActionBar.TabListener {
 					//set visibility
 					capteurSwitch.setVisibility(TextView.VISIBLE);
 					capteurText.setVisibility(TextView.VISIBLE);
-					capteurImg.setVisibility(TextView.VISIBLE);
-
+					Boolean value = ((BooleanSensor)sensor).getLastValue();
+					if (value){
+						capteurImg.setVisibility(TextView.VISIBLE);
+					}
 					//update value
-					capteurSwitch.setChecked((Boolean) r.getSensors().get(key).getLastValue());
+					capteurSwitch.setChecked(value);
 				}
 			}
 		}

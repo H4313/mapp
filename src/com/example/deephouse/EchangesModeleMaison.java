@@ -164,7 +164,7 @@ public class EchangesModeleMaison
      */
 	public static String recupererMaison()
 	{
-		System.out.println("Updating house from server."); //TODO : Delete when debug is done
+		//System.out.println("Updating house from server."); //TODO : Delete when debug is done
         ParseJSON jsonParser = new ParseJSON(url_maison);
         String maison = jsonParser.getJson();
         return maison;
