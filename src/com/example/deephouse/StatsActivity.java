@@ -18,7 +18,7 @@ public class StatsActivity extends Activity {
 		//Setting up web content
 		WebView myWebView = (WebView) findViewById(R.id.webview);
 	    myWebView.getSettings().setJavaScriptEnabled(true);
-		myWebView.loadUrl(EchangesModeleMaison.getBaseIp()+"/deepHouse/chart/index.html");
+		myWebView.loadUrl(EchangesModeleMaison.getBaseIp()+"/deepHouse/chart/weeklyTemperature.html");
 	}
 
 	/**
