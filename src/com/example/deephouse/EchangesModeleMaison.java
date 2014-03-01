@@ -1,7 +1,6 @@
 package com.example.deephouse;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -9,9 +8,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.util.Log;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,8 +39,8 @@ public class EchangesModeleMaison
      * @return
      */
 	
-	public static void setIp(String ip){
-		System.out.println("ip = " + ip);
+	public static void setIp(String ip)
+	{
 		url = "http://"+ip;
 		url_maison = url+"/deepHouse/rest/houseModel";
 		url_userAction = url+"/deepHouse/rest/userAction";
@@ -53,7 +49,8 @@ public class EchangesModeleMaison
 		url_date = url+"/deepHouse/rest/date";
 	}
 	
-	public static String getBaseIp(){
+	public static String getBaseIp()
+	{
 		return url;
 	}
 	
@@ -65,11 +62,8 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Double.toString(newValue)));
         
         try {
-            ParseJSONPost jsonParser = new ParseJSONPost(url_userAction,nameValuePairs);
-            String resultat = jsonParser.getJson();
-            System.out.println(nameValuePairs.toString()); //TODO : Remove when debug is done
-            System.out.println(resultat); //TODO : Remove when debug is done
-            } 
+            new ParseJSONPost(url_userAction,nameValuePairs);
+        } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,11 +84,8 @@ public class EchangesModeleMaison
 	    nameValuePairs.add(new BasicNameValuePair("valeur", Boolean.toString(valeurCapteur)));
         
         try {
-            ParseJSONPost jsonParser = new ParseJSONPost(url_userAction,nameValuePairs);
-            String resultat = jsonParser.getJson();
-            System.out.println(nameValuePairs.toString()); //TODO : Remove when debug is done
-            System.out.println(resultat); //TODO : Remove when debug is done
-            } 
+            new ParseJSONPost(url_userAction,nameValuePairs);
+        } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,10 +109,8 @@ public class EchangesModeleMaison
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url_addSensor,nameValuePairs);
             String resultat = jsonParser.getJson();
-            System.out.println(resultat); //TODO : Remove when debug is done
-            System.out.println(nameValuePairs.toString());
             success = resultat.contains("true");
-            } 
+        } 
         catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -147,7 +136,6 @@ public class EchangesModeleMaison
         try {
             ParseJSONPost jsonParser = new ParseJSONPost(url_addActuator,nameValuePairs);
             String resultat = jsonParser.getJson();
-            System.out.println(resultat); //TODO : Remove when debug is done
             success = resultat.contains("true");
         } 
         catch (Exception e) {
@@ -164,7 +152,6 @@ public class EchangesModeleMaison
      */
 	public static String recupererMaison()
 	{
-		//System.out.println("Updating house from server."); //TODO : Delete when debug is done
         ParseJSON jsonParser = new ParseJSON(url_maison);
         String maison = jsonParser.getJson();
         return maison;
@@ -184,31 +171,33 @@ public class EchangesModeleMaison
         return house;
     }
     
-    public static boolean updateHouse() {
+    public static boolean updateHouse()
+    {
     	String maison = recupererMaison();
     	boolean success = false;
+    	
     	try {
 			House house = getHouseFromJson(maison);
 			House.setInstance(house);
 			success = false;
-		} catch (Exception e) {
+		}
+    	catch (Exception e) {
 			e.printStackTrace();
 		}
+    	
     	return success;
     }
     
-    public static String getCurrentDate() throws Exception {
-    	String milliseconds="0";
-    	
+    public static String getCurrentDate() throws Exception
+    {	
 		ParseJSON parser = new ParseJSON(url_date);
 		JSONObject obj = parser.getJSONObject();
 		Boolean success = (obj.get("success").toString()).equals("true");
-		if(!success.booleanValue())
-		{
-			throw new Exception();
-		}
 		
-		milliseconds = obj.get("date").toString();
+		if(!success.booleanValue())
+			throw new Exception();
+		
+		String milliseconds = obj.get("date").toString();
 		return milliseconds;
     }
 }
