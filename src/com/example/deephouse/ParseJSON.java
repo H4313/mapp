@@ -14,16 +14,13 @@ public class ParseJSON
 	{    
 		AsyncTask<String, Integer, String> jsonTask = new ReadJSONTask().execute(url);
 		
-		try
-		{
+		try	{
 			json = jsonTask.get();
 		}
-		catch (InterruptedException e)
-		{
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		catch (ExecutionException e)
-		{
+		catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
@@ -36,12 +33,11 @@ public class ParseJSON
 	public JSONArray getJSONArray()
 	{
 		JSONArray array = null;
-		try
-		{
+		
+		try {
 			array = new JSONArray(this.json);
 		}
-		catch (JSONException e)
-		{
+		catch (JSONException e) {
 			e.printStackTrace();
 		}
 		
@@ -51,12 +47,11 @@ public class ParseJSON
 	public JSONObject getJSONObject()
 	{
 		JSONObject object = null;
-		try
-		{
+		
+		try {
 			object = new JSONObject(this.json);
 		}
-		catch (JSONException e)
-		{
+		catch (JSONException e) {
 			e.printStackTrace();
 		}
 		

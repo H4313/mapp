@@ -18,22 +18,22 @@ public class ParseJSONPost
 	{    
 		String[] urls= new String[2*argumentsList.size()+1];
 		urls[0] = url;
-		for (int i=0;i<argumentsList.size();i++){
+		
+		for (int i=0;i<argumentsList.size();i++)
+		{
 			urls[2*i+1] =argumentsList.get(i).getName();
 			urls[2*(i+1)] = argumentsList.get(i).getValue();
 		}
+		
 		AsyncTask<String, Integer, String> jsonTask = new ReadJSONPost().execute(urls);
 		
-		try
-		{
+		try {
 			json = jsonTask.get();
 		}
-		catch (InterruptedException e)
-		{
+		catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		catch (ExecutionException e)
-		{
+		catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 	}
@@ -46,12 +46,11 @@ public class ParseJSONPost
 	public JSONArray getJSONArray()
 	{
 		JSONArray array = null;
-		try
-		{
+		
+		try {
 			array = new JSONArray(this.json);
 		}
-		catch (JSONException e)
-		{
+		catch (JSONException e) {
 			e.printStackTrace();
 		}
 		
@@ -61,12 +60,11 @@ public class ParseJSONPost
 	public JSONObject getJSONObject()
 	{
 		JSONObject object = null;
-		try
-		{
+		
+		try {
 			object = new JSONObject(this.json);
 		}
-		catch (JSONException e)
-		{
+		catch (JSONException e) {
 			e.printStackTrace();
 		}
 		

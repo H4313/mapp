@@ -24,11 +24,12 @@ public class ReadJSONTask extends AsyncTask<String, Integer, String>
     	StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(urls[0]);
-		try
-		{
+		
+		try {
 			HttpResponse response = client.execute(httpGet);
 			StatusLine statusLine = response.getStatusLine();
 			int statusCode = statusLine.getStatusCode();
+			
 			if (statusCode == 200)
 			{
 				HttpEntity entity = response.getEntity();
@@ -37,29 +38,32 @@ public class ReadJSONTask extends AsyncTask<String, Integer, String>
 						new InputStreamReader(content));
 				
 				String line;
+				
 				while ((line = reader.readLine()) != null)
-				{
 					builder.append(line);
-				}
 			}
 			else
 			{
 				Log.e(ReadJSONTask.class.toString(), "Failed to download json file");
 			}
 		}
-		catch (ClientProtocolException e)
-		{
+		catch (ClientProtocolException e) {
 			e.printStackTrace();
 		}
-		catch (IOException e)
-		{
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		return builder.toString();
     }
 
-    protected void onprogressUpdate(Integer... progress) { }
+    protected void onprogressUpdate(Integer... progress)
+    {
+    	
+    }
 
-    protected void onPostExecute(String result) { }
+    protected void onPostExecute(String result)
+    {
+    	
+    }
 }
