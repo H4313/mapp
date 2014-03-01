@@ -21,25 +21,29 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity
+{
 	public final static String EXTRA_MESSAGE = "com.example.deephouse.MESSAGE";
 	public static final String PREFS_NAME = "DeepHousePrefs";
 
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		if (savedInstanceState == null){
+		if (savedInstanceState == null)
+		{
 			getFragmentManager().beginTransaction()
 			.add(R.id.container, new PlaceholderFragment())
 			.commit();
 		}
+		
 		restoreLoginInfos();
 		getActionBar().hide();
 	}
 
-	private void restoreLoginInfos(){
+	private void restoreLoginInfos()
+	{
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME,0);
 		String ip = settings.getString("ip","");
 		String login = settings.getString("login", "");
@@ -47,7 +51,8 @@ public class MainActivity extends Activity {
 		final TextView textViewIp = (TextView) findViewById(R.id.editTextIP);
 		final TextView textViewLogin = (TextView) findViewById(R.id.editTextLogin);
 		final TextView textViewPassword = (TextView) findViewById(R.id.editTextPassword);
-		if (!ip.equals("") || !login.equals("") || !password.equals("")){
+		if (!ip.equals("") || !login.equals("") || !password.equals(""))
+		{
 			textViewIp.setText(ip);
 			textViewLogin.setText(login);
 			textViewPassword.setText(password);
@@ -57,43 +62,46 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		switch (item.getItemId()) {
-		case R.id.action_settings:
+		if(item.getItemId() == R.id.action_settings)
 			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		else
+			return super.onOptionsItemSelected(item);
 	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
+	public static class PlaceholderFragment extends Fragment
+	{
+		public PlaceholderFragment()
+		{
+			
 		}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+		{
 			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 			return rootView;
 		}
 	}
 
 	/** Called when the user clicks the connection button */
-	public void connexion(View view) {
+	public void connexion(View view)
+	{
 		EditText editTextLogin = (EditText) findViewById(R.id.editTextLogin); 
 		String login = editTextLogin.getText().toString();
 		EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword); 
@@ -101,61 +109,77 @@ public class MainActivity extends Activity {
 		EditText editTextIP = (EditText) findViewById(R.id.editTextIP);      
 		String ip = editTextIP.getText().toString();
 		EchangesModeleMaison.setIp(ip);
-		if (login.equals("admin") && password.equals("root")){
+		if (login.equals("admin") && password.equals("root"))
+		{
 			//Checking connectivity
 			try {
 				String retour = EchangesModeleMaison.recupererMaison();
-				if (retour.contains("true")){
+				
+				if (retour.contains("true"))
+				{
 					Intent intent = new Intent(this, HouseActivity.class); //creates next activity
 					SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 					SharedPreferences.Editor editor = settings.edit();
 					editor.putString("ip", ip)
 					.commit();
 					startActivity(intent);}
-				else{
+				else
+				{
 					displayError("IP invalide 1");
 				}
-			} catch(Exception e){
+			}
+			catch(Exception e)
+			{
 				displayError("IP invalide 2"); //seems to never be used
 			}
 		}
-		else{
+		else
+		{
 			displayError("Adresse IP, nom d'utilisateur ou mot de passe invalide.");
-		};
+		}
 	}
 
-	public boolean isReachable(String ip){
-		if (android.os.Build.VERSION.SDK_INT > 9) {
+	public boolean isReachable(String ip)
+	{
+		if (android.os.Build.VERSION.SDK_INT > 9)
+		{
 			StrictMode.ThreadPolicy policy = 
 					new StrictMode.ThreadPolicy.Builder().permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		
 		try {
 			return InetAddress.getByName(ip).isReachable(100);
-		} catch (UnknownHostException e) {
+		}
+		catch (UnknownHostException e) {
 			e.printStackTrace();
 			return false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (IOException e) {
 			return false;
 		}
 	}
 
-	public void displayError(String error){
+	public void displayError(String error)
+	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(error)
 		.setCancelable(true)
-		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				//do things
+		.setPositiveButton("OK", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int id)
+			{
+
 			}
 		});
+		
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
 
 	@Override
-	protected void onStop(){
+	protected void onStop()
+	{
 		super.onStop();
 
 		// We need an Editor object to make preference changes.
@@ -163,7 +187,9 @@ public class MainActivity extends Activity {
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		final CheckBox checkBoxInfos = (CheckBox) findViewById(R.id.checkBoxSaveInfo);
-		if (checkBoxInfos.isChecked()){
+		
+		if (checkBoxInfos.isChecked())
+		{
 			//Retrieving infos
 			final TextView textViewLogin = (TextView) findViewById(R.id.editTextLogin);
 			final TextView textViewPassword = (TextView) findViewById(R.id.editTextPassword);
@@ -176,5 +202,4 @@ public class MainActivity extends Activity {
 			.commit();
 		}
 	}
-
 }
